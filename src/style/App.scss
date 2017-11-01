@@ -13,6 +13,10 @@
   padding: 20px;
   color: white;
 
+  * {
+    display: inline !important;
+  }
+
   a {
     color: white;
     text-decoration: none;

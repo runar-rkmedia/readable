@@ -43,6 +43,7 @@ export const defaultCatagories: Catagory[] = [
 
 export class Catagories extends React.Component<{
   list: Catagory[]
+  onSetOpen: (open: boolean) => void
 }> {
   render() {
     return (
@@ -54,7 +55,11 @@ export class Catagories extends React.Component<{
               <div className="catagory" key={item.id}>
                 <img src={item.icon} alt={item.name + ' icon'} />
                 <div className="catagory-name">
-                  <Link to={'/catagory/' + item.id}>{item.name}</Link>
+                  <Link
+                    to={'/catagory/' + item.id}
+                    onClick={() => this.props.onSetOpen(false)}
+                  >{item.name}
+                  </Link>
                 </div>
                 <div className="catagory-description">
                   {item.description}
