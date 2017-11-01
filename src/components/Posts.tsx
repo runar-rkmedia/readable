@@ -1,9 +1,10 @@
 import { CatagoriesType } from './Catagories'
 
-export interface Posts {
+export interface Post {
   id: string
-  timestamp: Date | null
+  timestamp: number | null
   title: string
   body: string
+  author: string
   catagory: CatagoriesType | null
 }

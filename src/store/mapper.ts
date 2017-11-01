@@ -1,14 +1,13 @@
 import { Dispatch } from 'react-redux'
-import { Posts } from '../components/Posts'
+import { Post } from '../components/Posts'
 import { CatagoriesType } from '../components/Catagories'
 import { getPost } from '../actions/posts'
 
-export type StorePosts = Posts[]
+export type StorePosts = Post[]
 
 export function mapStateToProps(
   { posts, catagories }: { posts: StorePosts, catagories: CatagoriesType }
 ): any {
-  console.log('posts', catagories)
   return { posts, catagories }
 }
 
