@@ -1,4 +1,4 @@
-import { CatagoriesType } from './Catagories'
+import { CategoriesType } from './Catagories'
 
 export interface Post {
   id: string
@@ -6,5 +6,5 @@ export interface Post {
   title: string
   body: string
   author: string
-  catagory: CatagoriesType | null
+  catagory: CategoriesType | null
 }

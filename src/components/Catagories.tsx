@@ -6,43 +6,40 @@ const udacityLogo = require('../icons/udacity.svg')
 
 import '../style/Catagories.css'
 
-export type CatagoriesType = 'react' | 'redux' | 'udacity'
+export type CategoriesType = 'react' | 'redux' | 'udacity'
 
-export interface Catagory {
-  id: CatagoriesType
+export interface Category {
   name: string
   description: string
   icon: string
-  path: CatagoriesType
+  path: CategoriesType
 }
 
 // Hardcoded since API doesn't serve enough information.
-export const defaultCatagories: Catagory[] = [
-  {
-    id: 'react',
-    name: 'React',
-    description: `React is a powerful JavaScript-framework for creating both webapps and native applications.`,
-    icon: reactLogo,
-    path: 'react'
-  },
-  {
-    id: 'redux',
-    name: 'Redux',
-    description: 'Redux is a predictable state container for JavaScript apps.',
-    icon: reduxLogo,
-    path: 'redux'
-  },
-  {
-    id: 'udacity',
-    name: 'Udacity',
-    description: 'Udacity is an innovative online education provider.',
-    icon: udacityLogo,
-    path: 'udacity'
-  },
-]
-
+export const defaultCatagories: {
+  [s: string]: Category
+} = {
+    react: {
+      name: 'React',
+      description: `React is a powerful JavaScript-framework for creating both webapps and native applications.`,
+      icon: reactLogo,
+      path: 'react'
+    },
+    redux: {
+      name: 'Redux',
+      description: 'Redux is a predictable state container for JavaScript apps.',
+      icon: reduxLogo,
+      path: 'redux'
+    },
+    udacity: {
+      name: 'Udacity',
+      description: 'Udacity is an innovative online education provider.',
+      icon: udacityLogo,
+      path: 'udacity'
+    }
+  }
 export class Catagories extends React.Component<{
-  list: Catagory[]
+  list: Category[]
   onSetOpen: (open: boolean) => void
 }> {
   render() {
@@ -52,11 +49,11 @@ export class Catagories extends React.Component<{
           <h2>Catagories</h2>
           <div className="catagory-container">
             {this.props.list.map((item => (
-              <div className="catagory" key={item.id}>
+              <div className="catagory" key={item.path}>
                 <img src={item.icon} alt={item.name + ' icon'} />
                 <div className="catagory-name">
                   <Link
-                    to={'/catagory/' + item.id}
+                    to={'/catagory/' + item.path}
                     onClick={() => this.props.onSetOpen(false)}
                   >{item.name}
                   </Link>

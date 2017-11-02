@@ -15,18 +15,24 @@ const headers = {
   'Content-Type': 'application/json'
 }
 
-export const myFetch = (url: string, method: string = 'GET', body?: {}) => (
-  fetch(`${api}/${url}`, {
+export interface APICategories {
+  name: string
+  path: string
+}
+
+export const myFetch = (url: string, method: string = 'GET', body?: {}) => {
+  // console.log(`fetching ${url} by ${method}`)
+  return fetch(`${api}/${url}`, {
     method: method,
     headers: headers,
     body: JSON.stringify(body)
   }).then(res => res.json())
-)
+}
 
 type voteOption = 'upVote' | 'downVote'
 
 export class CategoryAPI {
-  static get = (category?: string) => {
+  static get = (category?: string): Promise<APICategories[]> => {
     if (category) {
       return CategoryAPI.getPostsInCategory(category)
     }

@@ -2,14 +2,23 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from 'react-sidebar'
 import { connect } from 'react-redux'
-import { mapStateToProps, mapDispatchToProps } from '../store/mapper'
+import {
+  mapStateToProps,
+  mapDispatchToProps,
+  AppDispatchProps
+} from '../store/mapper'
 import { SidebarContent } from './SidebarContent'
+import { Category } from '../components/Catagories'
+import { Post } from '../components/Posts'
 
 import '../style/App.css'
 
 const mql = window.matchMedia(`(min-width: 800px)`)
 
-class App extends React.Component {
+class App extends React.Component<{
+  posts: Post[]
+  categories: Category[]
+} & AppDispatchProps> {
   state = {
     mql: mql,
     sidebarDocked: false,
@@ -20,9 +29,13 @@ class App extends React.Component {
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this)
     this.onSetOpen = this.onSetOpen.bind(this)
   }
+  componentDidMount() {
+    this.props.fetchCategories()
+  }
   mediaQueryChanged = () => {
     this.setState({ sidebarDocked: this.state.mql.matches })
   }
+
   onSetOpen(open: boolean) {
     this.setState({ sidebarDockedOpen: open })
   }
@@ -41,7 +54,7 @@ class App extends React.Component {
   render() {
     var sideBareContent = (
       <SidebarContent
-        catagories={(this.props as any).catagories}
+        catagories={(this.props as any).categories}
         onSetOpen={this.onSetOpen}
       />
     )

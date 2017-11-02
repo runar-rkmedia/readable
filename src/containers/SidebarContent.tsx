@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { Catagory, Catagories } from '../components/Catagories'
+import { Category, Catagories } from '../components/Catagories'
 
 import '../style/Sidebar.css'
 
 export class SidebarContent extends React.Component<{
-  catagories: Catagory[]
+  catagories: Category[]
   onSetOpen: (open: boolean) => void
 }> {
   render() {
@@ -13,10 +13,12 @@ export class SidebarContent extends React.Component<{
         <div className="App-header">
           <h2>Menu</h2>
         </div>
-        <Catagories
-          list={(this.props as any).catagories}
-          onSetOpen={this.props.onSetOpen}
-        />
+        {this.props.catagories && (
+          <Catagories
+            list={this.props.catagories}
+            onSetOpen={this.props.onSetOpen}
+          />
+        )}
       </div>
     )
   }

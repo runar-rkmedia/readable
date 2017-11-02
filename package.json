@@ -16,7 +16,8 @@
     "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.8.0",
     "react-sidebar": "^2.3.2",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "start-js": "react-scripts-ts start",
