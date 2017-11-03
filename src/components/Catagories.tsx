@@ -1,72 +1,64 @@
 import * as React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-const reduxLogo = require('../icons/redux.svg')
-const reactLogo = require('../icons/react.svg')
-const udacityLogo = require('../icons/udacity.svg')
+import { CategoriesState } from '../reducers/Categories'
+import {
+  mapCategories,
+  // AppDispatchProps
+} from '../store/mapper'
 
 import '../style/Catagories.css'
 
-export type CategoriesType = 'react' | 'redux' | 'udacity'
-
 export interface Category {
+  id: string
   name: string
   description: string
   icon: string
-  path: CategoriesType
+  path: string
 }
 
-// Hardcoded since API doesn't serve enough information.
-export const defaultCatagories: {
-  [s: string]: Category
-} = {
-    react: {
-      name: 'React',
-      description: `React is a powerful JavaScript-framework for creating both webapps and native applications.`,
-      icon: reactLogo,
-      path: 'react'
-    },
-    redux: {
-      name: 'Redux',
-      description: 'Redux is a predictable state container for JavaScript apps.',
-      icon: reduxLogo,
-      path: 'redux'
-    },
-    udacity: {
-      name: 'Udacity',
-      description: 'Udacity is an innovative online education provider.',
-      icon: udacityLogo,
-      path: 'udacity'
-    }
-  }
-export class Catagories extends React.Component<{
-  list: Category[]
+const Categories = (props: {
   onSetOpen: (open: boolean) => void
-}> {
-  render() {
-    return (
-      <div className="catagories">
-        <div className="catagories-header">
-          <h2>Catagories</h2>
-          <div className="catagory-container">
-            {this.props.list.map((item => (
-              <div className="catagory" key={item.path}>
-                <img src={item.icon} alt={item.name + ' icon'} />
-                <div className="catagory-name">
-                  <Link
-                    to={'/catagory/' + item.path}
-                    onClick={() => this.props.onSetOpen(false)}
-                  >{item.name}
-                  </Link>
-                </div>
-                <div className="catagory-description">
-                  {item.description}
-                </div>
+  categories: Category[]
+  loading: boolean
+  error: boolean
+}) =>
+  (
+    <div className="catagories">
+      <div className="catagories-header">
+        <h2>Catagories</h2>
+        <div className="catagory-container">
+          {props.loading ? (
+            <div>loading...</div>
+          ) : props.error && (
+            <div>Error retrieving categories from server. Please try again.</div>
+          )}
+          {props.categories.map((item => (
+            <div className="catagory" key={item.path}>
+              <img src={item.icon} alt={item.name + ' icon'} />
+              <div className="catagory-name">
+                <Link
+                  to={'/catagory/' + item.path}
+                  onClick={() => props.onSetOpen(false)}
+                >{item.name}
+                </Link>
               </div>
-            )))}
-          </div>
-
+              <div className="catagory-description">
+                {item.description}
+              </div>
+            </div>
+          )))}
         </div>
       </div>
-    )
+    </div>
+  )
+
+const mapStateToProps = ({ categories }: { categories: CategoriesState }
+) => {
+  return {
+    categories: mapCategories(categories.items),
+    loading: categories.loading,
+    error: categories.hasError
   }
 }
+export default connect(mapStateToProps)(Categories)

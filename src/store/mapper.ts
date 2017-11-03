@@ -1,42 +1,46 @@
-import { Dispatch } from 'react-redux'
-import {
-  CategoriesType, Category,
-  defaultCatagories
-} from '../components/Catagories'
-import { getPost } from '../actions/posts'
-import { fetchCategories } from '../actions/categories'
-import { StoreState, } from '../reducers'
+import { Category } from '../components/Catagories'
 import { StoreCategories } from '../reducers/Categories'
+const reduxLogo = require('../icons/redux.svg')
+const reactLogo = require('../icons/react.svg')
+const udacityLogo = require('../icons/udacity.svg')
 
+// Hardcoded since API doesn't serve enough information.
+const defaultCatagories: {
+  [s: string]: Category
+} = {
+    react: {
+      name: 'React',
+      description: `React is a powerful JavaScript-framework for creating both webapps and native applications.`,
+      icon: reactLogo,
+      path: 'react',
+      id: 'react'
+    },
+    redux: {
+      name: 'Redux',
+      description: 'Redux is a predictable state container for JavaScript apps.',
+      icon: reduxLogo,
+      path: 'redux',
+      id: 'redux'
+    },
+    udacity: {
+      name: 'Udacity',
+      description: 'Udacity is an innovative online education provider.',
+      icon: udacityLogo,
+      path: 'udacity',
+      id: 'udacity'
+    }
+  }
 export const mapCategories = (categories: StoreCategories): Category[] => {
   return Object.keys(categories).map(key => {
     if (key in defaultCatagories) {
       return defaultCatagories[key]
     }
     return {
-      id: (key as CategoriesType),
-      path: (categories[key] as CategoriesType),
+      id: key,
+      path: categories[key],
       icon: '',
       name: key,
       description: ''
     }
   })
-}
-export const mapStateToProps = ({ posts, categories }: StoreState
-) => {
-  return {
-    posts, categories: mapCategories(categories.items)
-  }
-}
-
-export interface AppDispatchProps {
-  getPost: any
-  fetchCategories: any
-}
-
-export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>): AppDispatchProps {
-  return {
-    getPost: (id: string) => dispatch(getPost({ id })),
-    fetchCategories: () => dispatch(fetchCategories()),
-  }
 }
