@@ -21,7 +21,7 @@ export interface APICategories {
 }
 
 export const myFetch = (url: string, method: string = 'GET', body?: {}) => {
-  // console.log(`fetching ${url} by ${method}`)
+  console.log(`fetching ${url} by ${method}`)
   return fetch(`${api}/${url}`, {
     method: method,
     headers: headers,

@@ -9,3 +9,19 @@ export function categories(state: Category[] = [], action: CategoriesActionType)
       return state
   }
 }
+export function catagoriesAreLoading(state: boolean = false, action: CategoriesActionType) {
+  switch (action.type) {
+    case CategoriesActions.LOADING:
+      return action.loading
+    default:
+      return state
+  }
+}
+export function catagoriesHasError(state: boolean = false, action: CategoriesActionType) {
+  switch (action.type) {
+    case CategoriesActions.ERROR:
+      return action.err
+    default:
+      return state
+  }
+}

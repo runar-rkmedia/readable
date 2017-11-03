@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
 import { posts } from './Posts'
-import { categories } from './Categories'
+import { categories, catagoriesAreLoading, catagoriesHasError } from './Categories'
 
 export default combineReducers({
   posts,
-  categories
+  categories,
+  catagoriesAreLoading,
+  catagoriesHasError
 })
