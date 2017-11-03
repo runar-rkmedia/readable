@@ -1,6 +1,8 @@
 import { CategoriesActions, CategoriesActionType } from '../actions/categories'
-// import { Category, } from '../components/Catagories'
+// import { Category, } from '../components/Categories'
 // import { APICategories } from '../utils/ReadableAPI'
+import { LOCATION_CHANGE, LocationChangeAction } from 'react-router-redux'
+import { CategoryInterface } from '../components/CategoryList'
 
 export interface StoreCategories {
   [s: string]: string
@@ -9,19 +11,29 @@ export interface CategoriesState {
   items: StoreCategories
   loading: boolean
   hasError: boolean
+  selectedCatagory: CategoryInterface | null | any
 }
-export const initialCatagoriesState: CategoriesState = {
+export const initialCategoriesState: CategoriesState = {
   items: {},
   loading: false,
-  hasError: false
+  hasError: false,
+  selectedCatagory: null
 }
 
 export function categories(
-  state: CategoriesState = initialCatagoriesState,
-  action: CategoriesActionType): CategoriesState {
+  state: CategoriesState = initialCategoriesState,
+  action: CategoriesActionType | LocationChangeAction): CategoriesState {
   switch (action.type) {
     case CategoriesActions.LOADING:
       return { ...state, loading: action.loading }
+    case LOCATION_CHANGE:
+      const pathcomps = action.payload.pathname.split('/')
+      if (pathcomps.length > 2 && pathcomps[1] === 'category') {
+        const selectedCatagory = pathcomps[2]
+        return { ...state, selectedCatagory }
+      }
+      return state
+
     case CategoriesActions.ERROR:
       return {
         ...state,

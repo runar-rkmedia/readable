@@ -1,8 +1,8 @@
-export interface Post {
+export interface PostInterface {
   id: string
   timestamp: number | null
   title: string
   body: string
   author: string
-  catagory: string
+  category: string
 }

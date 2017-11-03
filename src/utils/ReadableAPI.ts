@@ -1,5 +1,5 @@
-import { Post } from '../components/Posts'
-import { Comment } from '../components/Comment'
+import { PostInterface } from '../components/Posts'
+import { CommentInterface } from '../components/Comment'
 
 const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
 
@@ -54,8 +54,8 @@ export const PostAPI = {
   getByID: (id: string) => myFetch(`posts/${id}`),
   getByCategory: (category: string) => CategoryAPI.get(category),
   getComments: (id: string) => CommentAPI.get(id),
-  add: (post: Post) => myFetch(`posts/`, 'POST', post),
-  edit: (post: Post) => (
+  add: (post: PostInterface) => myFetch(`posts/`, 'POST', post),
+  edit: (post: PostInterface) => (
     myFetch(
       `posts/${post.id}`,
       'PUT',
@@ -71,12 +71,12 @@ export const PostAPI = {
 export const CommentAPI = {
   remove: (id: string) => myFetch(`comments/${id}`, 'DELETE'),
   get: (id: string) => myFetch(`posts/${id}/comments`),
-  add: (comment: Comment) => myFetch(`comments/`, 'POST', comment),
+  add: (comment: CommentInterface) => myFetch(`comments/`, 'POST', comment),
   vote: (
     id: string,
     option: voteOption
   ) => myFetch(`comments/${id}`, 'POST', { option }),
-  edit: (comment: Comment) => (
+  edit: (comment: CommentInterface) => (
     myFetch(
       `comments/${comment.id}`,
       'PUT',

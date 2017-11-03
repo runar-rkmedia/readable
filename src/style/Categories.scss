@@ -1,18 +1,32 @@
-$icon-width: 4em;
-$icon-height: 4em;
-
-.catagory-container {
+.category-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-.catagory {
+.category-main {
+  $icon-width: 1.5em;
+  $icon-height: 1.5em;
+  height: 50px;
+
+  img {
+    vertical-align: middle;
+    // padding: 0.2em;
+    width: $icon-width;
+    max-width: $icon-width;
+    height: $icon-height;
+    max-height: $icon-height;
+  }
+}
+
+.category {
+  text-align: center;
+  $icon-width: 4em;
+  $icon-height: 4em;
   max-width: 200px;
   margin: 20px auto;
-  text-align: center;
 
-  .catagory-name {
+  .category-name {
     font-size: 1.3em;
     font-weight: bold;
     text-transform: lowercase;
@@ -21,17 +35,13 @@ $icon-height: 4em;
 
   img {
     padding: 0.2em;
-    // display: block;
     width: $icon-width;
     max-width: $icon-width;
     height: $icon-height;
     min-height: $icon-height;
-    // border: 1px solid #2f2525;
-    // border-radius: 20%;
-    // box-shadow: 0.2em 0.2em 0.2em #403f3f;
   }
 
-  .catagory-description {
+  .category-description {
     font-size: 0.8em;
   }
 }

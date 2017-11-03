@@ -1,5 +1,5 @@
 import { Dispatch } from 'react-redux'
-import { Category } from '../components/Catagories'
+import { CategoryInterface } from '../components/CategoryList'
 import { CategoryAPI, APICategories } from '../utils/ReadableAPI'
 
 export const enum CategoriesActions {
@@ -8,7 +8,6 @@ export const enum CategoriesActions {
   ERROR = 'ERROR',
   LOADING = 'LOADING',
 }
-
 export type CategoriesActionType =
   { type: CategoriesActions.FETCH } |
   { type: CategoriesActions.RECIEVE, categories: APICategories[] } |
@@ -21,22 +20,22 @@ export const recieveCategories = (categories: APICategories[]): CategoriesAction
     categories
   }
 }
-export const catagoriesHasError = (e: boolean): CategoriesActionType => {
+export const categoriesHasError = (e: boolean): CategoriesActionType => {
   return {
     type: CategoriesActions.ERROR,
     error: e,
   }
 }
-export const catagoriesAreLoading = (loading: boolean): CategoriesActionType => {
+export const categoriesAreLoading = (loading: boolean): CategoriesActionType => {
   return {
     type: CategoriesActions.LOADING,
     loading,
   }
 }
-export const fetchCategories = () => ((dispatch: Dispatch<Category>) => {
-  dispatch(catagoriesAreLoading(true))
+export const fetchCategories = () => ((dispatch: Dispatch<CategoryInterface>) => {
+  dispatch(categoriesAreLoading(true))
   return CategoryAPI.get()
     .then(categories => dispatch(recieveCategories(categories)))
-    .catch((e) => dispatch(catagoriesHasError(true)))
+    .catch((e) => dispatch(categoriesHasError(true)))
 }
 )

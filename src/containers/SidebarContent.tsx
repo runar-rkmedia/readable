@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Categories from '../components/Catagories'
+import CategoryList from '../components/CategoryList'
 
 import '../style/Sidebar.css'
 
@@ -12,7 +12,7 @@ export class SidebarContent extends React.Component<{
         <div className="App-header">
           <h2>Menu</h2>
         </div>
-          <Categories
+          <CategoryList
             onSetOpen={this.props.onSetOpen}
           />
       </div>

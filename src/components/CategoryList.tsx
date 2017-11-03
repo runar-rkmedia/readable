@@ -2,14 +2,10 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { CategoriesState } from '../reducers/Categories'
-import {
-  mapCategories,
-  // AppDispatchProps
-} from '../store/mapper'
+import { mapCategories, } from '../store/mapper'
+import '../style/Categories.css'
 
-import '../style/Catagories.css'
-
-export interface Category {
+export interface CategoryInterface {
   id: string
   name: string
   description: string
@@ -17,33 +13,33 @@ export interface Category {
   path: string
 }
 
-const Categories = (props: {
+const CategoryList = (props: {
   onSetOpen: (open: boolean) => void
-  categories: Category[]
+  categories: CategoryInterface[]
   loading: boolean
   error: boolean
 }) =>
   (
-    <div className="catagories">
-      <div className="catagories-header">
-        <h2>Catagories</h2>
-        <div className="catagory-container">
+    <div className="categories">
+      <div className="categories-header">
+        <h2>Categories</h2>
+        <div className="category-container">
           {props.loading ? (
             <div>loading...</div>
           ) : props.error && (
             <div>Error retrieving categories from server. Please try again.</div>
           )}
           {props.categories.map((item => (
-            <div className="catagory" key={item.path}>
+            <div className="category" key={item.path}>
               <img src={item.icon} alt={item.name + ' icon'} />
-              <div className="catagory-name">
+              <div className="category-name">
                 <Link
-                  to={'/catagory/' + item.path}
+                  to={'/category/' + item.path}
                   onClick={() => props.onSetOpen(false)}
                 >{item.name}
                 </Link>
               </div>
-              <div className="catagory-description">
+              <div className="category-description">
                 {item.description}
               </div>
             </div>
@@ -61,4 +57,5 @@ const mapStateToProps = ({ categories }: { categories: CategoriesState }
     error: categories.hasError
   }
 }
-export default connect(mapStateToProps)(Categories)
+import { withRouter } from 'react-router-dom'
+export default connect(mapStateToProps)(withRouter(CategoryList))
