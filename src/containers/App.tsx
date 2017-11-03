@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import {
   mapStateToProps,
   mapDispatchToProps,
-  AppDispatchProps
+  // AppDispatchProps
 } from '../store/mapper'
 import { SidebarContent } from './SidebarContent'
 import { Category } from '../components/Catagories'
@@ -18,7 +18,7 @@ const mql = window.matchMedia(`(min-width: 800px)`)
 class App extends React.Component<{
   posts: Post[]
   categories: Category[]
-} & AppDispatchProps> {
+} & any> {
   state = {
     mql: mql,
     sidebarDocked: false,
@@ -41,6 +41,7 @@ class App extends React.Component<{
   }
   toggleSidebar(e: any) {
     e.preventDefault()
+    this.props.fetchCategories()
     this.setState({ sidebarDockedOpen: !this.state.sidebarDocked })
   }
   componentWillMount() {
@@ -52,6 +53,7 @@ class App extends React.Component<{
     this.state.mql.removeListener(this.mediaQueryChanged)
   }
   render() {
+    console.log('render')
     var sideBareContent = (
       <SidebarContent
         catagories={(this.props as any).categories}

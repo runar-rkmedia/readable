@@ -12,7 +12,7 @@ export const enum CategoriesActions {
 export type CategoriesActionType =
   { type: CategoriesActions.FETCH } |
   { type: CategoriesActions.RECIEVE, categories: APICategories[] } |
-  { type: CategoriesActions.ERROR, err: boolean } |
+  { type: CategoriesActions.ERROR, error: boolean } |
   { type: CategoriesActions.LOADING, loading: boolean }
 
 export const recieveCategories = (categories: APICategories[]): CategoriesActionType => {
@@ -24,20 +24,19 @@ export const recieveCategories = (categories: APICategories[]): CategoriesAction
 export const catagoriesHasError = (e: boolean): CategoriesActionType => {
   return {
     type: CategoriesActions.ERROR,
-    err: e,
+    error: e,
   }
 }
 export const catagoriesAreLoading = (loading: boolean): CategoriesActionType => {
   return {
     type: CategoriesActions.LOADING,
-    loading
+    loading,
   }
 }
 export const fetchCategories = () => ((dispatch: Dispatch<Category>) => {
   dispatch(catagoriesAreLoading(true))
   return CategoryAPI.get()
     .then(categories => dispatch(recieveCategories(categories)))
-    .then(() => dispatch(catagoriesAreLoading(false)))
     .catch((e) => dispatch(catagoriesHasError(true)))
 }
 )

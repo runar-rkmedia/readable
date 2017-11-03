@@ -31,56 +31,56 @@ export const myFetch = (url: string, method: string = 'GET', body?: {}) => {
 
 type voteOption = 'upVote' | 'downVote'
 
-export class CategoryAPI {
-  static get = (category?: string): Promise<APICategories[]> => {
+export const CategoryAPI = {
+  get: (category?: string): Promise<APICategories[]> => {
     if (category) {
       return CategoryAPI.getPostsInCategory(category)
     }
     return myFetch('categories').then(data => data.categories)
-  }
-  static getPostsInCategory = (category: string) => (
+  },
+  getPostsInCategory: (category: string) => (
     myFetch(`${category}/posts`)
   )
 }
 
-export class PostAPI {
-  static remove = (id: string) => myFetch(`posts/${id}`, 'DELETE')
-  static get = (id?: string) => {
+export const PostAPI = {
+  remove: (id: string) => myFetch(`posts/${id}`, 'DELETE'),
+  get: (id?: string) => {
     if (id) {
       return PostAPI.getByID(id)
     }
     return myFetch('posts')
-  }
-  static getByID = (id: string) => myFetch(`posts/${id}`)
-  static getByCategory = (category: string) => CategoryAPI.get(category)
-  static getComments = (id: string) => CommentAPI.get(id)
-  static add = (post: Post) => myFetch(`posts/`, 'POST', post)
-  static edit = (post: Post) => (
+  },
+  getByID: (id: string) => myFetch(`posts/${id}`),
+  getByCategory: (category: string) => CategoryAPI.get(category),
+  getComments: (id: string) => CommentAPI.get(id),
+  add: (post: Post) => myFetch(`posts/`, 'POST', post),
+  edit: (post: Post) => (
     myFetch(
       `posts/${post.id}`,
       'PUT',
       { title: post.title, body: post.body }
     )
-  )
-  static vote = (
+  ),
+  vote: (
     id: string,
     option: voteOption
-  ) => myFetch(`posts/${id}`, 'POST', { option })
+  ) => myFetch(`posts/${id}`, 'POST', { option }),
 }
 
-export class CommentAPI {
-  static remove = (id: string) => myFetch(`comments/${id}`, 'DELETE')
-  static get = (id: string) => myFetch(`posts/${id}/comments`)
-  static add = (comment: Comment) => myFetch(`comments/`, 'POST', comment)
-  static vote = (
+export const CommentAPI = {
+  remove: (id: string) => myFetch(`comments/${id}`, 'DELETE'),
+  get: (id: string) => myFetch(`posts/${id}/comments`),
+  add: (comment: Comment) => myFetch(`comments/`, 'POST', comment),
+  vote: (
     id: string,
     option: voteOption
-  ) => myFetch(`comments/${id}`, 'POST', { option })
-  static edit = (comment: Comment) => (
+  ) => myFetch(`comments/${id}`, 'POST', { option }),
+  edit: (comment: Comment) => (
     myFetch(
       `comments/${comment.id}`,
       'PUT',
       { body: comment.body }
     )
-  )
+  ),
 }

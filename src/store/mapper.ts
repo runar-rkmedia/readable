@@ -1,32 +1,33 @@
 import { Dispatch } from 'react-redux'
-import { Post } from '../components/Posts'
-import { CategoriesType, Category, defaultCatagories } from '../components/Catagories'
+import {
+  CategoriesType, Category,
+  defaultCatagories
+} from '../components/Catagories'
 import { getPost } from '../actions/posts'
 import { fetchCategories } from '../actions/categories'
-import { APICategories } from '../utils/ReadableAPI'
+import { StoreState, } from '../reducers'
+import { StoreCategories } from '../reducers/Categories'
 
-export type StorePosts = Post[]
-
-const mapCategories = (categories: APICategories[]): Category[] => (
-  categories.map(c => {
-    if (c.name in defaultCatagories) {
-      return defaultCatagories[c.name]
+export const mapCategories = (categories: StoreCategories): Category[] => {
+  return Object.keys(categories).map(key => {
+    if (key in defaultCatagories) {
+      return defaultCatagories[key]
     }
     return {
-      id: (c.name as CategoriesType),
-      path: (c.path as CategoriesType),
+      id: (key as CategoriesType),
+      path: (categories[key] as CategoriesType),
       icon: '',
-      name: c.name,
+      name: key,
       description: ''
     }
   })
-)
-
-export const mapStateToProps = (
-  { posts, categories }: { posts: StorePosts, categories: APICategories[] }
-) => ({
-  posts, categories: mapCategories(categories)
-})
+}
+export const mapStateToProps = ({ posts, categories }: StoreState
+) => {
+  return {
+    posts, categories: mapCategories(categories.items)
+  }
+}
 
 export interface AppDispatchProps {
   getPost: any
