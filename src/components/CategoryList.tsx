@@ -24,8 +24,8 @@ const CategoryList = (props: {
   (
     <List>
       {props.categories.map(item => (
-        <div>
-          <ListItem button={true} key={item.id} onClick={() => { props.goToCategory(item.path) }}>
+        <div key={item.id}>
+          <ListItem button={true} onClick={() => { props.goToCategory(item.path) }}>
             <img style={{ width: '3em' }} src={item.icon} alt={item.name + ' icon'} />
             <ListItemText primary={item.name} secondary={item.description} />
           </ListItem>

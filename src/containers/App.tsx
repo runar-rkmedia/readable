@@ -1,15 +1,14 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
-import { RouterState } from 'react-router-redux'
-import Category from '../components/CategoryHeader'
+import MainContent from './MainContent'
 import { fetchCategories } from '../actions/categories'
 import { CategoryInterface } from '../components/CategoryList'
-import { StoreCategories } from '../reducers/Categories'
 import Header from '../components/Header'
 import LeftDrawer from '../components/LeftDrawer'
 import { Dispatch } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
+import { ConnectedRouter } from 'react-router-redux'
+import { history } from '../store/store'
 
 import styles from '../style/base'
 
@@ -35,12 +34,9 @@ class App extends React.Component<{
             open={this.state.mobileOpen}
             handleDrawerToggle={this.handleDrawerToggle}
           />
-          <main className={classes.content}>
-            <Route
-              path="/category/"
-              component={Category}
-            />
-          </main>
+          <ConnectedRouter history={history}>
+            <MainContent />
+          </ConnectedRouter>
         </div>
       </div>
     )
@@ -50,21 +46,10 @@ class App extends React.Component<{
 export interface AppDispatchProps {
   fetchCategories: () => void
 }
-const mapStateToProps = (
-  { categories, router }: {
-    categories: StoreCategories
-    router: RouterState
-  }
-) => {
-  return {
-    category: null,
-    router: router
-  }
-}
 
 export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>): AppDispatchProps {
   return {
     fetchCategories: () => dispatch(fetchCategories()),
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles((styles as any), { withTheme: true })(App))
+export default connect(null, mapDispatchToProps)(withStyles((styles as any), { withTheme: true })(App))
