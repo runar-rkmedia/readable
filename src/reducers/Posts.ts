@@ -1,5 +1,4 @@
 import { PostActions, PostActionType } from '../actions/posts'
-// import { StorePosts } from '../store/mapper'
 
 export interface PostState {
   items: { [s: string]: {} }

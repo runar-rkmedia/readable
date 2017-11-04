@@ -9,12 +9,9 @@ export class SidebarContent extends React.Component<{
   render() {
     return (
       <div className="sidebar">
-        <div className="App-header">
-          <h2>Menu</h2>
-        </div>
-          <CategoryList
-            onSetOpen={this.props.onSetOpen}
-          />
+        <CategoryList
+          onSetOpen={this.props.onSetOpen}
+        />
       </div>
     )
   }

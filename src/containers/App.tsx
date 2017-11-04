@@ -1,83 +1,54 @@
 import * as React from 'react'
-import { RouterState } from 'react-router-redux'
-import { Route } from 'react-router-dom'
-import Sidebar from 'react-sidebar'
 import { connect } from 'react-redux'
-import { SidebarContent } from './SidebarContent'
-import Header from '../components/Header'
-import CategoryHeader from '../components/CategoryHeader'
+import { Route } from 'react-router-dom'
+import { RouterState } from 'react-router-redux'
+import Category from '../components/CategoryHeader'
 import { fetchCategories } from '../actions/categories'
-import { StoreCategories } from '../reducers/Categories'
 import { CategoryInterface } from '../components/CategoryList'
-// import { mapCatagory, } from '../store/mapper'
+import { StoreCategories } from '../reducers/Categories'
+import Header from '../components/Header'
+import LeftDrawer from '../components/LeftDrawer'
 import { Dispatch } from 'react-redux'
+import { withStyles } from 'material-ui/styles'
 
-import '../style/App.css'
-
-const mql = window.matchMedia(`(min-width: 800px)`)
+import styles from '../style/base'
 
 class App extends React.Component<{
   category: CategoryInterface | null
-} & AppDispatchProps&any> {
+} & AppDispatchProps & any> {
   state = {
-    mql: mql,
-    sidebarDocked: false,
-    sidebarDockedOpen: false,
+    mobileOpen: false,
   }
-  constructor(props: any) {
-    super(props)
-    this.mediaQueryChanged = this.mediaQueryChanged.bind(this)
-    this.onSetOpen = this.onSetOpen.bind(this)
+  componentDidMount() {
+    this.props.fetchCategories()
   }
-  componentWillMount() {
-    mql.addListener(this.mediaQueryChanged)
-    this.setState({ mql: mql, sidebarDocked: mql.matches })
-  }
-  componentDidMount() { this.props.fetchCategories() }
-  componentWillUnmount() {
-    this.state.mql.removeListener(this.mediaQueryChanged)
-  }
-  mediaQueryChanged = () => {
-    this.setState({ sidebarDocked: this.state.mql.matches })
-  }
-  onSetOpen(open: boolean) { this.setState({ sidebarDockedOpen: open }) }
-  toggleSidebar = (e: any) => {
-    e.preventDefault()
-    this.setState({ sidebarDockedOpen: !this.state.sidebarDocked })
+  handleDrawerToggle = () => {
+    this.setState({ mobileOpen: !this.state.mobileOpen })
   }
   render() {
-    var sideBareContent = (
-      <SidebarContent onSetOpen={this.onSetOpen} />
-    )
-    const sidebarProps = {
-      onSetOpen: () => this.onSetOpen(false),
-      sidebar: sideBareContent,
-      docked: this.state.sidebarDocked,
-      sidebarClassName: 'custom-sidebar-class',
-      open: this.state.sidebarDockedOpen,
-      touch: true,
-      shadow: true,
-      transitions: true,
-    }
+    const { classes } = this.props
     return (
-      <div className="App">
-        {true && (<Sidebar {...sidebarProps}>
-          <Header toggleSidebar={this.toggleSidebar} />
-          <div className="content">
+      <div className={classes.root}>
+        <div className={classes.appFrame}>
+          <Header handleDrawerToggle={this.handleDrawerToggle} />
+          <LeftDrawer
+            open={this.state.mobileOpen}
+            handleDrawerToggle={this.handleDrawerToggle}
+          />
+          <main className={classes.content}>
             <Route
               path="/category/"
-              component={CategoryHeader}
+              component={Category}
             />
-          </div>
-        </Sidebar>)}
+          </main>
+        </div>
       </div>
     )
   }
 }
 
 export interface AppDispatchProps {
-  // getPost: any
-  fetchCategories: any
+  fetchCategories: () => void
 }
 const mapStateToProps = (
   { categories, router }: {
@@ -96,4 +67,4 @@ export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>): AppDis
     fetchCategories: () => dispatch(fetchCategories()),
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles((styles as any), { withTheme: true })(App))

@@ -5,11 +5,14 @@
   "dependencies": {
     "@types/history": "^4.6.1",
     "@types/react-redux": "^5.0.12",
+    "@types/react-router": "^4.0.16",
     "@types/react-router-dom": "^4.2.0",
     "@types/react-router-redux": "^5.0.9",
     "@types/react-sidebar": "^2.2.2",
     "history": "^4.7.2",
     "loaders.css": "^0.1.2",
+    "material-ui": "^1.0.0-beta.19",
+    "material-ui-icons": "^1.0.0-beta.17",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.1.1",
     "react": "^16.0.0",
@@ -21,7 +24,8 @@
     "react-scripts-ts": "2.8.0",
     "react-sidebar": "^2.3.2",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "typeface-roboto": "^0.0.43"
   },
   "scripts": {
     "start-js": "react-scripts-ts start",

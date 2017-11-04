@@ -5,6 +5,7 @@ import { CategoriesState } from '../reducers/Categories'
 import { mapCatagory } from '../store/mapper'
 import { RouterState } from 'react-router-redux'
 import { withRouter } from 'react-router-dom'
+import Typography from 'material-ui/Typography'
 
 const Catagory = (props: CategoryInterface) => {
   if (!props.path) {
@@ -14,11 +15,14 @@ const Catagory = (props: CategoryInterface) => {
   }
   return (
     <div className="category-main">
-      <h1><img src={props.icon} alt=""/>{props.name}</h1>
-      <p>{props.description}</p>
+      <Typography type="display3" >
+        <img src={props.icon} alt="" />{props.name}
+      </Typography>
+      <Typography type="subheading">{props.description}</Typography>
       <hr/>
       <div className="posts">
-      Here you can see all the posts in this section.</div>
+        <Typography>Here you can see all the posts in this section.</Typography>
+      </div>
     </div>
   )
 }

@@ -1,6 +1,4 @@
 import { CategoriesActions, CategoriesActionType } from '../actions/categories'
-// import { Category, } from '../components/Categories'
-// import { APICategories } from '../utils/ReadableAPI'
 import { LOCATION_CHANGE, LocationChangeAction } from 'react-router-redux'
 import { CategoryInterface } from '../components/CategoryList'
 
