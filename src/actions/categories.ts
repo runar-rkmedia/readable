@@ -3,10 +3,10 @@ import { CategoryInterface } from '../components/CategoryList'
 import { CategoryAPI, APICategories } from '../utils/ReadableAPI'
 
 export const enum CategoriesActions {
-  FETCH = 'FETCH',
-  RECIEVE = 'RECIEVE',
-  ERROR = 'ERROR',
-  LOADING = 'LOADING',
+  FETCH = 'CATEGORIES_FETCH',
+  RECIEVE = 'CATEGORIES_RECIEVE',
+  ERROR = 'CATEGORIES_ERROR',
+  LOADING = 'CATEGORIES_LOADING',
 }
 export type CategoriesActionType =
   { type: CategoriesActions.FETCH } |
