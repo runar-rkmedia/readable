@@ -9,6 +9,7 @@ import { push } from 'react-router-redux'
 import { CircularProgress } from 'material-ui/Progress'
 import { connect, Dispatch } from 'react-redux'
 import { StoreState } from '../reducers'
+import urls from '../utils/urls'
 
 const ButtonAppBar = (props: {
   handleDrawerToggle: () => void
@@ -54,7 +55,7 @@ export interface AppDispatchProps {
 }
 export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
   return {
-    goHome: () => dispatch(push('/')),
+    goHome: () => dispatch(push(urls.root)),
     ...ownprops
   }
 }

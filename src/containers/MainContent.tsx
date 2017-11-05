@@ -15,6 +15,7 @@ import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
 import Typography from 'material-ui/Typography'
 import { initializeNewPost } from '../utils/ReadableAPI'
+import urls from '../utils/urls'
 
 interface SidebarContentProps {
   onSetOpen: (open: boolean) => void
@@ -39,7 +40,7 @@ export class SidebarContent extends React.Component<SidebarMappedProps & Dispatc
   render() {
     const {
       classes, category, posts,
-      goToAddPostForm,
+      goTo,
       postIsSending, categoriesAreloading
     } = this.props
     return (
@@ -67,7 +68,7 @@ export class SidebarContent extends React.Component<SidebarMappedProps & Dispatc
                   color="primary"
                   aria-label="add"
                   className={classes.button}
-                  onClick={() => goToAddPostForm(category.id)}
+                  onClick={() => goTo(urls.addPost(category.id))}
                 >
                   <AddIcon />
                 </Button>
@@ -126,14 +127,14 @@ const mapStateToProps = (state: StoreState, ownprops: any) => {
 interface DispatchProps {
   fetchPosts: (category?: string) => void,
   addPost: (post: PostInterface) => void,
-  goToAddPostForm: (category: string) => void,
+  goTo: (path: string) => void,
 }
 
 function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ): DispatchProps {
   return {
     fetchPosts: (category) => dispatch(fetchPosts(category)),
     addPost: (post) => dispatch(addPost(post)),
-    goToAddPostForm: (category) => dispatch(push(`/category/${category}/post/add`)),
+    goTo: (path: string) => dispatch(push(path)),
   }
 }
 export default connect(

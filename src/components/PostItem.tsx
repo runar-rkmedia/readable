@@ -14,18 +14,24 @@ import {
 } from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
 import { mapCatagory } from '../store/mapper'
+import urls from '../utils/urls'
 import * as moment from 'moment'
 import Badge from 'material-ui/Badge'
 import { PostInterface } from './PostList'
+import { connect, Dispatch } from 'react-redux'
+import { push } from 'react-router-redux'
 
-const PostItem = (props: {
+interface Props {
   post: PostInterface
   showCategory?: boolean
-} & WithMyStyle) => {
-  const { id, title, author, timestamp, category, commentCount, voteScore } = props.post
+}
+
+const PostItem = (props: Props & WithMyStyle & DispatchProps) => {
+  const {
+     id, title, author, timestamp, category, commentCount, voteScore } = props.post
   const { status } = props.theme
   return (
-    <ListItem button={true} key={id}>
+    <ListItem button={true} key={id} onClick={() => props.goTo(urls.viewPost(props.post))}>
       <ListItemIcon>
         {commentCount ? (
           <Badge
@@ -74,5 +80,18 @@ const PostItem = (props: {
     </ListItem>
   )
 }
+interface DispatchProps {
+  goTo: (category?: string) => void,
+}
 
-export default withMyStyle(PostItem)
+function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ): DispatchProps {
+  return {
+    goTo: (url: string) => dispatch(push(url)),
+  }
+}
+const mapStateToProps = (state: any, ownprops: any) => {
+  return {
+    ...ownprops
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withMyStyle(PostItem))

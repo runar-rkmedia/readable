@@ -1,7 +1,5 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Dispatch } from 'react-redux'
-import { push } from 'react-router-redux'
 import { CategoriesState } from '../reducers/Categories'
 import CategoryItem from './CategoryHeader'
 import { mapCategories, } from '../store/mapper'
@@ -20,7 +18,7 @@ const CategoryList = (props: {
   categories: CategoryInterface[]
   loading: boolean
   error: boolean
-} & AppDispatchProps) =>
+}) =>
   (
     <List>
       {props.categories.map(item => (
@@ -42,19 +40,8 @@ const mapStateToProps = ({ categories }: { categories: CategoriesState }
   }
 }
 
-export interface AppDispatchProps {
-  goToCategory: (path: string) => void
-}
-export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
-  return {
-    goToCategory: (path: string) => dispatch(push(`/category/${path}`)),
-    ...ownprops
-  }
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps)(
+  mapStateToProps)(
   withMyStyle(
     CategoryList
     )

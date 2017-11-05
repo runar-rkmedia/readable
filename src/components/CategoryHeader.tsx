@@ -6,6 +6,7 @@ import Divider from 'material-ui/Divider'
 import { connect } from 'react-redux'
 import { Dispatch } from 'react-redux'
 import { push } from 'react-router-redux'
+import urls from '../utils/urls'
 
 import { withMyStyle, WithMyStyle } from '../style/base'
 
@@ -15,20 +16,21 @@ interface CategoryHeaderI {
 }
 
 const CategoryHeader = (props: CategoryHeaderI & AppDispatchProps & WithMyStyle) => {
-  const { category, classes, goToCategory, type } = props
+  const { category, classes, goTo, type } = props
   const { path, icon, name, description } = category
   if (!path) {
     return (
       <div className="warning">Not a valid category</div>
     )
   }
+  const fullPath = urls.category(path)
   switch (type) {
     case 'header':
       return (
         <div>
           <Typography
             type="display3"
-            onClick={() => goToCategory(path)}
+            onClick={() => goTo(fullPath)}
             className={classes.link}
           >
             <img className={classes.headericon} src={icon} alt="" />{name}
@@ -43,7 +45,7 @@ const CategoryHeader = (props: CategoryHeaderI & AppDispatchProps & WithMyStyle)
         <div>
           <ListItem
             button={true}
-            onClick={() => goToCategory(path)}
+            onClick={() => goTo(fullPath)}
           >
             <img className={classes.sidebaricon} src={icon} alt={name + ' icon'} />
             <ListItemText primary={name} secondary={description} />
@@ -57,11 +59,11 @@ const CategoryHeader = (props: CategoryHeaderI & AppDispatchProps & WithMyStyle)
 }
 
 export interface AppDispatchProps {
-  goToCategory: (path: string) => void
+  goTo: (path: string) => void
 }
 export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
   return {
-    goToCategory: (path: string) => dispatch(push(`/category/${path}`)),
+    goTo: (path: string) => dispatch(push(path)),
     ...ownprops
   }
 }
