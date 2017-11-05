@@ -3,7 +3,6 @@ import * as ReactDOM from 'react-dom'
 import App from './containers/App'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
-import './style/index.css'
 
 export default store
 

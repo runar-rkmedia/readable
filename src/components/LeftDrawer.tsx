@@ -1,21 +1,20 @@
 import * as React from 'react'
-import { withStyles } from 'material-ui/styles'
+import { withMyStyle } from '../style/base'
 import Drawer from 'material-ui/Drawer'
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
 import CategoryList from '../components/CategoryList'
-import styles from '../style/base'
 
 const LeftDrawer = (props: {
   handleDrawerToggle: () => void
   open: boolean
-} & any) => {
-  const { classes, theme } = props
+}) => {
+  const { classes, theme } = (props as any)
   const drawer = (
     <div>
       <div className={classes.drawerHeader} />
       <Divider/>
-      <CategoryList onSetOpen={props.onSetOpen}/>
+      <CategoryList/>
     </div>
   )
   return (
@@ -48,4 +47,4 @@ const LeftDrawer = (props: {
   )
 }
 
-export default withStyles((styles as any), { withTheme: true })(LeftDrawer)
+export default withMyStyle(LeftDrawer)

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { withStyles } from 'material-ui/styles'
 import { RouterState } from 'react-router-redux'
 import CategoryHeader from '../components/CategoryHeader'
 import { CategoryInterface } from '../components/CategoryList'
@@ -12,14 +11,14 @@ import { StoreState } from '../reducers'
 import { fetchPosts } from '../actions/posts'
 import { Dispatch } from 'react-redux'
 import FrontPage from './FrontPage'
-import styles from '../style/base'
+import { withMyStyle, WithMyStyle } from '../style/base'
 
 interface SidebarContentProps {
   onSetOpen: (open: boolean) => void
   classes: any
 }
 
-export class SidebarContent extends React.Component<SidebarMappedProps & DispatchProps, DispatchProps> {
+export class SidebarContent extends React.Component<SidebarMappedProps & DispatchProps & WithMyStyle, DispatchProps> {
   componentDidMount() {
     this.retrievePosts()
   }
@@ -42,7 +41,7 @@ export class SidebarContent extends React.Component<SidebarMappedProps & Dispatc
           path="/category/"
           render={() => (
             <div>
-              <CategoryHeader category={category} />
+              <CategoryHeader category={category} type="header"/>
               <PostList
                 posts={posts.filter(
                   post => post.category === category.id)
@@ -94,4 +93,4 @@ function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ): DispatchProps 
 }
 export default connect(
   mapStateToProps, mapDispatchToProps
-)(withStyles((styles as any), { withTheme: true })(SidebarContent))
+)(withMyStyle(SidebarContent))

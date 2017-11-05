@@ -6,15 +6,14 @@ import { CategoryInterface } from '../components/CategoryList'
 import Header from '../components/Header'
 import LeftDrawer from '../components/LeftDrawer'
 import { Dispatch } from 'react-redux'
-import { withStyles } from 'material-ui/styles'
 import { ConnectedRouter } from 'react-router-redux'
 import { history } from '../store/store'
 
-import styles from '../style/base'
+import { withMyStyle, WithMyStyle } from '../style/base'
 
 class App extends React.Component<{
   category: CategoryInterface | null
-} & AppDispatchProps & any> {
+} & AppDispatchProps & WithMyStyle> {
   state = {
     mobileOpen: false,
   }
@@ -47,9 +46,10 @@ export interface AppDispatchProps {
   fetchCategories: () => void
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>): AppDispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
   return {
     fetchCategories: () => dispatch(fetchCategories()),
+    ...ownprops
   }
 }
-export default connect(null, mapDispatchToProps)(withStyles((styles as any), { withTheme: true })(App))
+export default connect(null, mapDispatchToProps)(withMyStyle(App))

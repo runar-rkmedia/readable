@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { CategoriesState } from '../reducers/Categories'
-import { mapCategories, } from '../store/mapper'
-import '../style/Categories.css'
-import List, { ListItem, ListItemText } from 'material-ui/List'
-import Divider from 'material-ui/Divider'
 import { Dispatch } from 'react-redux'
 import { push } from 'react-router-redux'
+import { CategoriesState } from '../reducers/Categories'
+import CategoryItem from './CategoryHeader'
+import { mapCategories, } from '../store/mapper'
+import List from 'material-ui/List'
+
+import { withMyStyle } from '../style/base'
 
 export interface CategoryInterface {
   id: string
@@ -15,7 +16,6 @@ export interface CategoryInterface {
   icon: string
   path: string
 }
-
 const CategoryList = (props: {
   categories: CategoryInterface[]
   loading: boolean
@@ -24,13 +24,11 @@ const CategoryList = (props: {
   (
     <List>
       {props.categories.map(item => (
-        <div key={item.id}>
-          <ListItem button={true} onClick={() => { props.goToCategory(item.path) }}>
-            <img style={{ width: '3em' }} src={item.icon} alt={item.name + ' icon'} />
-            <ListItemText primary={item.name} secondary={item.description} />
-          </ListItem>
-          <Divider />
-        </div>
+        <CategoryItem
+          category={item}
+          type="listitem"
+          key={item.id}
+        />
       ))}
     </List>
   )
@@ -50,7 +48,14 @@ export interface AppDispatchProps {
 export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
   return {
     goToCategory: (path: string) => dispatch(push(`/category/${path}`)),
+    ...ownprops
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryList)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)(
+  withMyStyle(
+    CategoryList
+    )
+  )

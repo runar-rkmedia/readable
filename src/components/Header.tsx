@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { withStyles } from 'material-ui/styles'
+import { withMyStyle, WithMyStyle } from '../style/base'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
@@ -9,11 +9,9 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { Dispatch } from 'react-redux'
 
-import styles from '../style/base'
-
 const ButtonAppBar = (props: {
   handleDrawerToggle: () => void
-} & any) => {
+} & AppDispatchProps & WithMyStyle) => {
   const { classes } = props
   return (
       <AppBar className={classes.appBar}>
@@ -40,7 +38,8 @@ export interface AppDispatchProps {
 export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
   return {
     goHome: () => dispatch(push('/')),
+    ...ownprops
   }
 }
 
-export default connect(null, mapDispatchToProps)(withStyles((styles as any), { withTheme: true })(ButtonAppBar))
+export default connect(null, mapDispatchToProps)(withMyStyle(ButtonAppBar))

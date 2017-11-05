@@ -4,7 +4,7 @@ import MailIcon from 'material-ui-icons/Mail'
 import DeleteIcon from 'material-ui-icons/Delete'
 import List, {
   ListItem,
-  ListItemAvatar,
+  ListItemIcon,
   // ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
@@ -26,10 +26,10 @@ export default (props: {
   return (
     <List>
       {props.posts.map(item => (
-        <ListItem button={true}>
-          <ListItemAvatar>
+        <ListItem button={true} key={item.id}>
+          <ListItemIcon >
             <MailIcon />
-          </ListItemAvatar>
+          </ListItemIcon>
           <ListItemText
             primary={item.title}
             secondary={item.author}

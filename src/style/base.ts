@@ -1,5 +1,20 @@
+import { withStyles, StyleRules, Theme } from 'material-ui/styles'
+
+export const withMyStyle = (component: any) => (
+  withStyles(styles, { withTheme: true })(component) as typeof component
+)
+
+export interface WithMyStyle {
+  classes: any
+  theme: Theme
+}
+
 const drawerWidth = 280
-export default (theme: any) => ({
+const sidebariconWidth = '3em'
+const sidebariconHeight = '3em'
+const headerIconsWidth = '1.5em'
+const headerIconsHeight = '1.5em'
+const styles = (theme: Theme): StyleRules => ({
   root: {
     width: '100%',
     zIndex: 1,
@@ -43,4 +58,28 @@ export default (theme: any) => ({
       marginTop: 64,
     },
   },
+  link: {
+    cursor: 'pointer'
+  },
+  sidebarCategoryContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap'
+  },
+  sidebaricon: {
+    // padding: '0.2em',
+    width: sidebariconWidth,
+    maxWidth: sidebariconWidth,
+    height: sidebariconHeight,
+    minHeight: sidebariconHeight,
+  },
+  headericon: {
+    padding: '0 0.2em',
+    width: headerIconsWidth,
+    maxWidth: headerIconsWidth,
+    height: headerIconsHeight,
+    minHeight: headerIconsHeight,
+  },
 })
+
+export default styles
