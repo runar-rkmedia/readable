@@ -24,7 +24,7 @@ const ButtonAppBar = (props: {
           >
             <MenuIcon />
           </IconButton>
-          <Typography onClick={props.goHome} type="title" color="inherit" noWrap={true}>
+          <Typography onClick={props.goHome} type="title" color="inherit" noWrap={true} className={classes.link}>
             Readable<small> – comments and posts</small>
                   </Typography>
         </Toolbar>

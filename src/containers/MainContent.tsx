@@ -57,6 +57,7 @@ export class SidebarContent extends React.Component<SidebarMappedProps & Dispatc
             <div>
               <FrontPage />
               <PostList
+                showCategory={true}
                 posts={posts}
               />
             </div>

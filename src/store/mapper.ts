@@ -31,13 +31,13 @@ const defaultCategories: {
     }
   }
 
-export const mapCatagory = (key: string, categories: StoreCategories): CategoryInterface => {
+export const mapCatagory = (key: string, categories?: StoreCategories): CategoryInterface => {
   if (key in defaultCategories) {
     return defaultCategories[key]
   }
   return {
     id: key,
-    path: categories[key],
+    path: categories ? categories[key] : key,
     icon: '',
     name: key,
     description: ''

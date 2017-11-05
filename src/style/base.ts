@@ -1,4 +1,19 @@
-import { withStyles, StyleRules, Theme } from 'material-ui/styles'
+import { withStyles, StyleRules } from 'material-ui/styles'
+import { createMuiTheme } from 'material-ui/styles'
+import primary from 'material-ui/colors/blueGrey'
+import recondary from 'material-ui/colors/red'
+
+export const myTheme = createMuiTheme({
+  palette: {
+    primary: primary,
+    secondary: recondary,
+  },
+  status: {
+    danger: 'orange',
+    upVote: 'green',
+    downVote: 'red',
+  },
+})
 
 export const withMyStyle = (component: any) => (
   withStyles(styles, { withTheme: true })(component) as typeof component
@@ -6,7 +21,7 @@ export const withMyStyle = (component: any) => (
 
 export interface WithMyStyle {
   classes: any
-  theme: Theme
+  theme: typeof myTheme
 }
 
 const drawerWidth = 280
@@ -14,7 +29,7 @@ const sidebariconWidth = '3em'
 const sidebariconHeight = '3em'
 const headerIconsWidth = '1.5em'
 const headerIconsHeight = '1.5em'
-const styles = (theme: Theme): StyleRules => ({
+const styles = (theme: typeof myTheme): StyleRules => ({
   root: {
     width: '100%',
     zIndex: 1,
@@ -80,6 +95,9 @@ const styles = (theme: Theme): StyleRules => ({
     height: headerIconsHeight,
     minHeight: headerIconsHeight,
   },
+  badge: {
+    margin: `0 ${theme.spacing.unit * 2}px`,
+  }
 })
 
 export default styles

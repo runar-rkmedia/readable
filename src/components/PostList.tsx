@@ -1,50 +1,28 @@
 import * as React from 'react'
-// import Typography from 'material-ui/Typography'
-import MailIcon from 'material-ui-icons/Mail'
-import DeleteIcon from 'material-ui-icons/Delete'
-import List, {
-  ListItem,
-  ListItemIcon,
-  // ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText,
-} from 'material-ui/List'
-import IconButton from 'material-ui/IconButton'
+import List from 'material-ui/List'
+import PostItem from './PostItem'
 
 export interface PostInterface {
   id: string
-  timestamp: number | null
+  timestamp: string
   title: string
   body: string
   author: string
   category: string
+  voteScore: number,
+  deleted: boolean
+  commentCount: number
 }
 
 export default (props: {
   posts: PostInterface[]
+  showCategory?: boolean
 }) => {
   return (
     <List>
-      {props.posts.map(item => (
-        <ListItem button={true} key={item.id}>
-          <ListItemIcon >
-            <MailIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary={item.title}
-            secondary={item.author}
-          />
-          <ListItemSecondaryAction>
-            <IconButton aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
+      {props.posts.map(post => (
+        <PostItem post={post} key={post.id}/>
       ))}
     </List>
   )
 }
-    // <div>{props.posts.map(item => (
-    //   <div key={item.id}>{item.title}</div>
-    // )
-    // )}</div>
