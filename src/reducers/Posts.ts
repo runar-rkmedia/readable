@@ -4,11 +4,13 @@ import { PostActions, PostActionType } from '../actions/posts'
 export interface PostState {
   items: { [s: string]: {} }
   loading: boolean
+  sending: boolean
   hasError: boolean
 }
 export const initialPostState: PostState = {
   items: {},
   loading: false,
+  sending: false,
   hasError: false
 }
 
@@ -18,12 +20,14 @@ export function posts(
   switch (action.type) {
     case PostActions.LOADING:
       return { ...state, loading: action.loading }
-
+    case PostActions.SENDING:
+      return { ...state, sending: action.sending }
     case PostActions.ERROR:
       return {
         ...state,
         hasError: action.error,
         loading: false,
+        sending: false
       }
     case PostActions.RECIEVE:
       return {
@@ -36,6 +40,12 @@ export function posts(
           },
           { ...action.previousPosts }
         )
+      }
+    case PostActions.RECIEVEAFTERSEND:
+      return {
+        ...state,
+        sending: false,
+        items: { ...action.previousPosts, [action.post.id]: action.post }
       }
     default:
       return state

@@ -24,7 +24,6 @@ const PostItem = (props: {
 } & WithMyStyle) => {
   const { id, title, author, timestamp, category, commentCount, voteScore } = props.post
   const { status } = props.theme
-  console.log(props.theme)
   return (
     <ListItem button={true} key={id}>
       <ListItemIcon>

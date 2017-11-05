@@ -1,17 +1,20 @@
 import * as React from 'react'
-import { RouterState } from 'react-router-redux'
+import { connect, Dispatch } from 'react-redux'
+import { Switch, Route } from 'react-router-dom'
+import { RouterState, push } from 'react-router-redux'
 import CategoryHeader from '../components/CategoryHeader'
 import { CategoryInterface } from '../components/CategoryList'
 import PostList, { PostInterface } from '../components/PostList'
-import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import PostForm from '../components/PostForm'
 import { mapCatagory } from '../store/mapper'
-// import { CategoriesState } from '../reducers/Categories'
 import { StoreState } from '../reducers'
-import { fetchPosts } from '../actions/posts'
-import { Dispatch } from 'react-redux'
+import { fetchPosts, addPost } from '../actions/posts'
 import FrontPage from './FrontPage'
 import { withMyStyle, WithMyStyle } from '../style/base'
+import Button from 'material-ui/Button'
+import AddIcon from 'material-ui-icons/Add'
+import Typography from 'material-ui/Typography'
+import { initializeNewPost } from '../utils/ReadableAPI'
 
 interface SidebarContentProps {
   onSetOpen: (open: boolean) => void
@@ -34,35 +37,66 @@ export class SidebarContent extends React.Component<SidebarMappedProps & Dispatc
   }
 
   render() {
-    const { classes, category, posts } = this.props
+    const {
+      classes, category, posts,
+      goToAddPostForm,
+      postIsSending, categoriesAreloading
+    } = this.props
     return (
       <main className={classes.content}>
-        <Route
-          path="/category/"
-          render={() => (
-            <div>
-              <CategoryHeader category={category} type="header"/>
-              <PostList
-                posts={posts.filter(
-                  post => post.category === category.id)
-                }
+        <Switch>
+          <Route
+            path="/category/:category/post/add"
+            render={() => (
+              <PostForm
+                category={category}
+                post={initializeNewPost(category.id)}
+                onSubmit={this.props.addPost}
+                postIsSending={postIsSending}
               />
-            </div>
-          )}
-        />
-        <Route
-          exact={true}
-          path="/"
-          render={() => (
-            <div>
-              <FrontPage />
-              <PostList
-                showCategory={true}
-                posts={posts}
-              />
-            </div>
-          )}
-        />
+            )}
+
+          />
+          <Route
+            path="/category/"
+            render={() => (category.path ? (
+              <div>
+                <CategoryHeader category={category} type="header" />
+                <Button
+                  fab={true}
+                  color="primary"
+                  aria-label="add"
+                  className={classes.button}
+                  onClick={() => goToAddPostForm(category.id)}
+                >
+                  <AddIcon />
+                </Button>
+                <PostList
+                  posts={posts.filter(
+                    post => post.category === category.id)
+                  }
+                />
+              </div>) : (
+                !categoriesAreloading && (
+                  <Typography color="error">Not a valid category</Typography>
+                )
+              )
+            )}
+          />
+          <Route
+            exact={true}
+            path="/"
+            render={() => (
+              <div>
+                <FrontPage />
+                <PostList
+                  showCategory={true}
+                  posts={posts}
+                />
+              </div>
+            )}
+          />
+        </Switch>
       </main>
     )
   }
@@ -71,12 +105,18 @@ interface SidebarMappedProps extends SidebarContentProps {
   router: RouterState
   posts: PostInterface[]
   category: CategoryInterface
+  postIsSending: boolean
+  postsAreLoading: boolean
+  categoriesAreloading: boolean
 }
 const mapStateToProps = (state: StoreState, ownprops: any) => {
   const { categories, router, posts } = state
   return {
     posts: Object.keys(posts.items).map(key => posts.items[key]),
     category: mapCatagory(categories.selectedCatagory, categories.items),
+    postIsSending: posts.sending,
+    postsAreLoading: posts.loading,
+    categoriesAreloading: categories.loading,
     router: router,
     ...ownprops
   }
@@ -84,12 +124,16 @@ const mapStateToProps = (state: StoreState, ownprops: any) => {
 // export default connect(mapStateToProps)(withStyles((styles as any), { withTheme: true })(SidebarContent))
 
 interface DispatchProps {
-  fetchPosts: (category?: string) => void
+  fetchPosts: (category?: string) => void,
+  addPost: (post: PostInterface) => void,
+  goToAddPostForm: (category: string) => void,
 }
 
 function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ): DispatchProps {
   return {
     fetchPosts: (category) => dispatch(fetchPosts(category)),
+    addPost: (post) => dispatch(addPost(post)),
+    goToAddPostForm: (category) => dispatch(push(`/category/${category}/post/add`)),
   }
 }
 export default connect(

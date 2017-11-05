@@ -1,5 +1,6 @@
 import { PostInterface } from '../components/PostList'
 import { CommentInterface } from '../components/Comment'
+import uuid from 'uuid'
 
 const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
 
@@ -27,7 +28,31 @@ export interface APIPost {
   body: string
   author: string
   category: string
+  voteScore: number
+  deleted: boolean
+  commentCount: number
 }
+export interface APIPostSendNew {
+  id: string
+  timestamp: number | null
+  title: string
+  body: string
+  author: string
+  category: string
+}
+export interface APIPostSendEdit {
+  title: string
+  body: string
+}
+export const initializeNewPost = (category: string): APIPostSendNew => ({
+  author: '',
+  title: '',
+  body: '',
+  id: uuid(),
+  timestamp: null,
+  category
+}
+)
 
 export const myFetch = (url: string, method: string = 'GET', body?: {}) => {
   console.log(`fetching ${url} by ${method}`)
@@ -60,7 +85,14 @@ export const PostAPI = {
   getByID: (id: string) => myFetch(`posts/${id}`),
   getByCategory: (category: string) => CategoryAPI.getPostsInCategory(category),
   getComments: (id: string) => CommentAPI.get(id),
-  add: (post: PostInterface) => myFetch(`posts/`, 'POST', post),
+  add: (post: PostInterface) => {
+    const { id, title, body, author, category } = post
+    const postWithNewDate: APIPostSendNew = {
+      timestamp: Date.now(),
+      id, title, body, author, category
+    }
+    return myFetch(`posts/`, 'POST', postWithNewDate)
+  },
   edit: (post: PostInterface) => (
     myFetch(
       `posts/${post.id}`,
