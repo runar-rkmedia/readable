@@ -1,6 +1,8 @@
 import { StyleRules } from 'material-ui/styles'
 import { myTheme } from './base'
 import green from 'material-ui/colors/green'
+import grey from 'material-ui/colors/grey'
+import red from 'material-ui/colors/red'
 
 const drawerWidth = 280
 const sidebariconWidth = '3em'
@@ -54,6 +56,17 @@ export default (theme: typeof myTheme): StyleRules => ({
   },
   button: {
     margin: theme.spacing.unit,
+  },
+  voteButton: {
+    '&:disabled': {
+      color: grey[500]
+    },
+  },
+  downVoteButton: {
+    color: red[500]
+  },
+  upVoteButton: {
+    color: green[500]
   },
   textCenter: {
     textAlign: 'center',

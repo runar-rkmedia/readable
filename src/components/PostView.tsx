@@ -15,11 +15,14 @@ import ThumbDown from 'material-ui-icons/ThumbDown'
 import IconButton from 'material-ui/IconButton'
 import * as ReactMarkdown from 'react-markdown'
 
-const PostView = (props: {
+export class PostView extends React.Component<{
   post: PostI
-} & WithMyStyle) => {
-    const { classes, theme } = props
-    const { author, title, body, voteScore } = props.post
+  isVoting: boolean
+  onVote: (post: PostI, isUpvote: boolean) => void
+} & WithMyStyle> {
+  render() {
+    const { classes, post, isVoting, onVote} = this.props
+    const { author, title, body, voteScore } = post
     return (
       <div className={classes.root}>
         <Paper className={classes.formRoot} elevation={4}>
@@ -31,11 +34,22 @@ const PostView = (props: {
               <span>by {author}</span>
               <Grid item={true}>
                 {voteScore}
-                <IconButton className={classes.button} aria-label="Vote up">
-                  <ThumbUp color={theme.status.upVote} />
+                <IconButton
+                  className={[classes.voteButton, classes.upVoteButton].join(' ')}
+                  aria-label="Vote up"
+                  onClick={() => onVote(post, true)}
+                  disabled={isVoting}
+                  color="primary"
+                >
+                  <ThumbUp />
                 </IconButton>
-                <IconButton className={classes.button} aria-label="Vote down">
-                  <ThumbDown color={theme.status.downVote} />
+                <IconButton
+                  className={[classes.voteButton, classes.downVoteButton].join(' ')}
+                  aria-label="Vote down"
+                  onClick={() => onVote(post, false)}
+                  disabled={isVoting}
+                >
+                  <ThumbDown />
                 </IconButton>
 
               </Grid>
@@ -47,6 +61,7 @@ const PostView = (props: {
         </Paper>
       </div>
     )
+  }
 }
 function mapDispatchToProps(dispatch: Dispatch<any>, ownprops: any) {
   return {

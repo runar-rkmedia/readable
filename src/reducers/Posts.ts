@@ -7,12 +7,14 @@ export interface PostStateI {
   sending: boolean
   hasError: boolean
   selectedPost: string
+  isVoting: boolean
 }
 export const initialPostState: PostStateI = {
   items: {},
   loading: false,
   sending: false,
   hasError: false,
+  isVoting: false,
   selectedPost: ''
 }
 
@@ -24,12 +26,14 @@ export function posts(
       return { ...state, loading: action.loading }
     case PostActions.SENDING:
       return { ...state, sending: action.sending }
+    case PostActions.VOTING:
+      return { ...state, isVoting: action.isVoting }
     case PostActions.ERROR:
       return {
         ...state,
         hasError: action.error,
         loading: false,
-        sending: false
+        sending: false,
       }
     case LOCATION_CHANGE:
       const pathcomps = action.payload.pathname.split('/')

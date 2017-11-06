@@ -11,7 +11,9 @@ export const enum PostActions {
   ERROR = 'POST_ERROR',
   LOADING = 'POST_LOADING',
   SENDING = 'POST_SENDING',
+  VOTING = 'POST_VOTING',
   ADD = 'POST_ADD',
+  VOTE = 'POST_VOTE',
 }
 export type PostActionType =
   { type: PostActions.FETCH } |
@@ -20,6 +22,8 @@ export type PostActionType =
   { type: PostActions.ERROR, error: boolean } |
   { type: PostActions.LOADING, loading: boolean } |
   { type: PostActions.SENDING, sending: boolean } |
+  { type: PostActions.VOTING, isVoting: boolean } |
+  { type: PostActions.VOTE, isUpVote: boolean } |
   { type: PostActions.ADD, post: PostI }
 
 export const recievePosts = (posts: APIPostI[], previousPosts: any): PostActionType => {
@@ -62,6 +66,12 @@ export const postIsSending = (sending: boolean): PostActionType => {
     sending,
   }
 }
+export const postIsVoting = (isVoting: boolean): PostActionType => {
+  return {
+    type: PostActions.VOTING,
+    isVoting,
+  }
+}
 export const fetchPosts = (categoryID?: string) => ((dispatch: Dispatch<PostI>, getState: any) => {
   dispatch(postsAreLoading(true))
   const state: StoreStateI = getState()
@@ -72,7 +82,6 @@ export const fetchPosts = (categoryID?: string) => ((dispatch: Dispatch<PostI>, 
 )
 export const fetchSinglePost = (postID: string) => ((dispatch: Dispatch<PostI>, getState: any) => {
   dispatch(postsAreLoading(true))
-  console.log('byid', postID)
   const state: StoreStateI = getState()
   return PostAPI.getByID(postID)
     .then(singlePost => dispatch(recievePosts(singlePost, state.posts.items)))
@@ -94,5 +103,15 @@ export const addPost = (post: PostI) => ((dispatch: Dispatch<PostI>, getState: a
   return PostAPI.add(post)
     .then(returnedPost => dispatch(recieveAfterSend(returnedPost, state.posts.items)))
     .catch((e) => dispatch(postsHasError(true)))
+}
+)
+
+export const votePost = (post: PostI, isUpVote: boolean) => ((dispatch: Dispatch<PostI>, getState: any) => {
+  dispatch(postIsVoting(true))
+  const state: StoreStateI = getState()
+  return PostAPI.vote(post.id, isUpVote ? 'upVote' : 'downVote')
+    .then(returnedPost => dispatch(recieveAfterSend(returnedPost, state.posts.items)))
+    .catch((e) => dispatch(postsHasError(true)))
+    .then(() => setTimeout(() => dispatch(postIsVoting(false)), 1000))
 }
 )

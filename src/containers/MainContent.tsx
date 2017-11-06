@@ -12,7 +12,7 @@ import {
 import PostForm from '../components/PostForm'
 import PostView from '../components/PostView'
 import { mapCatagory } from '../store/mapper'
-import { fetchSinglePost, fetchPosts, addPost } from '../actions/posts'
+import { fetchSinglePost, fetchPosts, addPost, votePost } from '../actions/posts'
 import FrontPage from './FrontPage'
 import { withMyStyle, WithMyStyle } from '../style/base'
 import Button from 'material-ui/Button'
@@ -57,8 +57,8 @@ export class SidebarContent extends React.Component
   render() {
     const {
       classes, category, posts, selectedPost,
-      goTo,
-      postIsSending, loading,
+      goTo, voteOnPost, addNewPost,
+      postIsSending, loading, isVoting
     } = this.props
     return (
       <main className={classes.content}>
@@ -69,7 +69,7 @@ export class SidebarContent extends React.Component
               <PostForm
                 category={category}
                 post={initializeNewPost(category.id)}
-                onSubmit={this.props.addPost}
+                onSubmit={addNewPost}
                 postIsSending={postIsSending}
               />
             )
@@ -83,6 +83,8 @@ export class SidebarContent extends React.Component
                 this.checkCorrectPath(
                 <PostView
                   post={selectedPost}
+                  onVote={voteOnPost}
+                  isVoting={isVoting}
                 />
               )) : (loading ? (
                 <div>Finding your post....</div>
@@ -144,6 +146,7 @@ interface SidebarMappedProps extends SidebarContentProps {
   postsAreLoading: boolean
   categoriesAreloading: boolean
   loading: boolean
+  isVoting: boolean
 }
 const mapStateToProps = (state: StoreStateI, ownprops: any) => {
   const { categories, router, posts } = state
@@ -155,6 +158,7 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
     postIsSending: posts.sending,
     postsAreLoading: posts.loading,
     categoriesAreloading: categories.loading,
+    isVoting: posts.isVoting,
     loading: posts.sending || posts.loading || categories.loading,
     router: router,
     ...ownprops
@@ -165,7 +169,8 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
 interface DispatchProps {
   fetchPosts: (category?: string) => void,
   fetchSinglePost: (postID: string) => void,
-  addPost: (post: PostI) => void,
+  addNewPost: (post: PostI) => void,
+  voteOnPost: (post: PostI, isUpVote: boolean) => void,
   goTo: (path: string) => void,
 }
 
@@ -173,7 +178,8 @@ function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ): DispatchProps 
   return {
     fetchPosts: (category) => dispatch(fetchPosts(category)),
     fetchSinglePost: (postID) => dispatch(fetchSinglePost(postID)),
-    addPost: (post) => dispatch(addPost(post)),
+    addNewPost: (post) => dispatch(addPost(post)),
+    voteOnPost: (post, isUpVote) => dispatch(votePost(post, isUpVote)),
     goTo: (path: string) => dispatch(push(path)),
   }
 }
