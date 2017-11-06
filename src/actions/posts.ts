@@ -72,6 +72,7 @@ export const fetchPosts = (categoryID?: string) => ((dispatch: Dispatch<PostI>, 
 )
 export const fetchSinglePost = (postID: string) => ((dispatch: Dispatch<PostI>, getState: any) => {
   dispatch(postsAreLoading(true))
+  console.log('byid', postID)
   const state: StoreStateI = getState()
   return PostAPI.getByID(postID)
     .then(singlePost => dispatch(recievePosts(singlePost, state.posts.items)))

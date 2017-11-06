@@ -33,13 +33,17 @@ export function posts(
       }
     case LOCATION_CHANGE:
       const pathcomps = action.payload.pathname.split('/')
-      if (pathcomps.length > 4 && pathcomps[3] === 'post') {
+      const ignoreList = ['add', 'edit']
+      if (
+        pathcomps.length > 4 &&
+        pathcomps[3] === 'post' &&
+        ignoreList.indexOf(pathcomps[4]) === -1
+      ) {
         const selectedPost = pathcomps[4]
         return { ...state, selectedPost }
       }
       return state
     case PostActions.RECIEVE:
-      console.log('action says', action.posts)
       return {
         ...state,
         loading: false,
