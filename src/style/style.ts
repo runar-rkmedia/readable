@@ -47,6 +47,9 @@ export default (theme: typeof myTheme): StyleRules => ({
   button: {
     margin: theme.spacing.unit,
   },
+  textCenter: {
+    textAlign: 'center',
+  },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,

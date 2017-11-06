@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
 import { push } from 'react-router-redux'
-import { CircularProgress } from 'material-ui/Progress'
+import { LinearProgress } from 'material-ui/Progress'
 import { connect, Dispatch } from 'react-redux'
 import { StoreStateI } from '../interfaces'
 import urls from '../utils/urls'
@@ -30,10 +30,11 @@ const ButtonAppBar = (props: {
           <Typography onClick={props.goHome} type="title" color="inherit" noWrap={true} className={classes.link}>
             Readable
           </Typography>
-          {loading && (
-            <div><CircularProgress size={50} style={{ color: theme.palette.common.darkWhite }} /> Loading</div>
-          )}
         </Toolbar>
+        <div style={{height: 5, marginTop: -5}}>
+          {loading && (
+            <LinearProgress mode="query" style={{ color: theme.palette.common.darkWhite }} />
+          )}</div>
       </AppBar>
     </div>
   )
@@ -45,7 +46,7 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
   const { categories, posts } = state
   return {
     postIsSending: posts.sending,
-    loading: posts.loading || categories.loading,
+    loading: posts.loading || categories.loading || posts.sending,
     ...ownprops
   }
 }

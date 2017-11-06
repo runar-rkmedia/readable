@@ -1,18 +1,23 @@
 import * as React from 'react'
-import { withMyStyle } from '../style/base'
+import { withMyStyle, WithMyStyle } from '../style/base'
 import Drawer from 'material-ui/Drawer'
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
 import CategoryList from '../components/CategoryList'
+// import {  } from 'material-ui/Progress'
 
 const LeftDrawer = (props: {
   handleDrawerToggle: () => void
   open: boolean
-}) => {
-  const { classes, theme } = (props as any)
+  loading: boolean
+} & WithMyStyle) => {
+  const { classes, theme , loading} = props
   const drawer = (
     <div>
       <div className={classes.drawerHeader} />
+      {loading && (
+        <div className={classes.textCenter}>Categories are loading...</div>
+      )}
       <Divider/>
       <CategoryList/>
     </div>

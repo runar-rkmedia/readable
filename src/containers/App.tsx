@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import MainContent from './MainContent'
 import { fetchCategories } from '../actions/categories'
-import { CategoryI } from '../interfaces'
+import { CategoryI, StoreStateI } from '../interfaces'
 import Header from '../components/Header'
 import LeftDrawer from '../components/LeftDrawer'
 import { Dispatch } from 'react-redux'
@@ -13,7 +13,7 @@ import { withMyStyle, WithMyStyle } from '../style/base'
 
 class App extends React.Component<{
   category: CategoryI | null
-} & AppDispatchProps & WithMyStyle> {
+} & AppDispatchProps & WithMyStyle & PropsMappedI> {
   state = {
     mobileOpen: false,
   }
@@ -32,6 +32,7 @@ class App extends React.Component<{
           <LeftDrawer
             open={this.state.mobileOpen}
             handleDrawerToggle={this.handleDrawerToggle}
+            loading={this.props.loading}
           />
           <ConnectedRouter history={history}>
             <MainContent />
@@ -41,15 +42,25 @@ class App extends React.Component<{
     )
   }
 }
+interface PropsMappedI {
+  loading: boolean
+}
+const mapStateToProps = (state: StoreStateI, ownprops: any) => {
+  const { categories } = state
+  return {
+    loading: categories.loading,
+    ...ownprops
+  }
+}
 
-export interface AppDispatchProps {
+interface AppDispatchProps {
   fetchCategories: () => void
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
+function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
   return {
     fetchCategories: () => dispatch(fetchCategories()),
     ...ownprops
   }
 }
-export default connect(null, mapDispatchToProps)(withMyStyle(App))
+export default connect(mapStateToProps, mapDispatchToProps)(withMyStyle(App))
