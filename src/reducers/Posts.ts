@@ -1,21 +1,24 @@
 import { PostActions, PostActionType } from '../actions/posts'
+import { LOCATION_CHANGE, LocationChangeAction } from 'react-router-redux'
 
 export interface PostStateI {
   items: { [s: string]: {} }
   loading: boolean
   sending: boolean
   hasError: boolean
+  selectedPost: string
 }
 export const initialPostState: PostStateI = {
   items: {},
   loading: false,
   sending: false,
-  hasError: false
+  hasError: false,
+  selectedPost: ''
 }
 
 export function posts(
   state: PostStateI = initialPostState,
-  action: PostActionType): PostStateI {
+  action: PostActionType | LocationChangeAction): PostStateI {
   switch (action.type) {
     case PostActions.LOADING:
       return { ...state, loading: action.loading }
@@ -28,7 +31,15 @@ export function posts(
         loading: false,
         sending: false
       }
+    case LOCATION_CHANGE:
+      const pathcomps = action.payload.pathname.split('/')
+      if (pathcomps.length > 4 && pathcomps[3] === 'post') {
+        const selectedPost = pathcomps[4]
+        return { ...state, selectedPost }
+      }
+      return state
     case PostActions.RECIEVE:
+      console.log('action says', action.posts)
       return {
         ...state,
         loading: false,

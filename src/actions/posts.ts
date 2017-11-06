@@ -70,6 +70,14 @@ export const fetchPosts = (categoryID?: string) => ((dispatch: Dispatch<PostI>, 
     .catch((e) => dispatch(postsHasError(true)))
 }
 )
+export const fetchSinglePost = (postID: string) => ((dispatch: Dispatch<PostI>, getState: any) => {
+  dispatch(postsAreLoading(true))
+  const state: StoreStateI = getState()
+  return PostAPI.getByID(postID)
+    .then(singlePost => dispatch(recievePosts(singlePost, state.posts.items)))
+    .catch((e) => dispatch(postsHasError(true)))
+}
+)
 export function verifyOkToSubmitPost(post: APIPostSendNewI) {
   const { author, title, body } = post
   if (!(author && title && body)) {

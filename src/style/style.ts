@@ -1,5 +1,6 @@
 import { StyleRules } from 'material-ui/styles'
 import { myTheme } from './base'
+import green from 'material-ui/colors/green'
 
 const drawerWidth = 280
 const sidebariconWidth = '3em'
@@ -11,6 +12,7 @@ export default (theme: typeof myTheme): StyleRules => ({
     width: '100%',
     zIndex: 1,
     overflow: 'hidden',
+    flexGrow: 1
   },
   appFrame: {
     position: 'relative',
@@ -34,6 +36,12 @@ export default (theme: typeof myTheme): StyleRules => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
+  },
+
+  authorAvatar: {
+    margin: 10,
+    color: '#fff',
+    backgroundColor: green[500],
   },
   drawerHeader: theme.mixins.toolbar,
   drawerPaper: {

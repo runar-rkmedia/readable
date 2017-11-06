@@ -10,8 +10,9 @@ import {
   StoreStateI
 } from '../interfaces'
 import PostForm from '../components/PostForm'
+import PostView from '../components/PostView'
 import { mapCatagory } from '../store/mapper'
-import { fetchPosts, addPost } from '../actions/posts'
+import { fetchSinglePost, fetchPosts, addPost } from '../actions/posts'
 import FrontPage from './FrontPage'
 import { withMyStyle, WithMyStyle } from '../style/base'
 import Button from 'material-ui/Button'
@@ -25,7 +26,8 @@ interface SidebarContentProps {
   classes: any
 }
 
-export class SidebarContent extends React.Component<SidebarMappedProps & DispatchProps & WithMyStyle, DispatchProps> {
+export class SidebarContent extends React.Component
+  <SidebarMappedProps & DispatchProps & WithMyStyle & DispatchProps> {
   componentDidMount() {
     this.retrievePosts()
   }
@@ -36,6 +38,10 @@ export class SidebarContent extends React.Component<SidebarMappedProps & Dispatc
     }
   }
   retrievePosts = (nextProps?: SidebarMappedProps) => {
+    const { postID, posts, postsAreLoading } = this.props
+    if (!postsAreLoading || !posts.find(p => (p.id === postID))) {
+      this.props.fetchSinglePost(this.props.postID)
+    }
     const { category } = nextProps || this.props
     this.props.fetchPosts(category.path)
   }
@@ -48,12 +54,11 @@ export class SidebarContent extends React.Component<SidebarMappedProps & Dispatc
     }
     return renderThis
   }
-
   render() {
     const {
-      classes, category, posts,
+      classes, category, posts, selectedPost,
       goTo,
-      postIsSending,
+      postIsSending, loading,
     } = this.props
     return (
       <main className={classes.content}>
@@ -71,6 +76,23 @@ export class SidebarContent extends React.Component<SidebarMappedProps & Dispatc
             }
 
           />
+            <Route
+              path="/category/:category/post/:postID"
+              render={() =>
+                selectedPost ? (
+                this.checkCorrectPath(
+                <PostView
+                  post={selectedPost}
+                />
+              )) : (loading ? (
+                <div>Finding your post....</div>
+              ) : (
+                <div>Post appears to not exist. It might have been deleted.</div>
+              ))
+              }
+            />
+          )
+
           <Route
             path="/category/"
             render={() => (this.checkCorrectPath(
@@ -115,19 +137,25 @@ export class SidebarContent extends React.Component<SidebarMappedProps & Dispatc
 interface SidebarMappedProps extends SidebarContentProps {
   router: RouterState
   posts: PostI[]
+  selectedPost: PostI
+  postID: string
   category: CategoryI
   postIsSending: boolean
   postsAreLoading: boolean
   categoriesAreloading: boolean
+  loading: boolean
 }
 const mapStateToProps = (state: StoreStateI, ownprops: any) => {
   const { categories, router, posts } = state
   return {
     posts: Object.keys(posts.items).map(key => posts.items[key]),
     category: mapCatagory(categories.selectedCatagory, categories.items),
+    postID: posts.selectedPost,
+    selectedPost: posts.items[posts.selectedPost],
     postIsSending: posts.sending,
     postsAreLoading: posts.loading,
     categoriesAreloading: categories.loading,
+    loading: posts.sending || posts.loading || categories.loading,
     router: router,
     ...ownprops
   }
@@ -136,6 +164,7 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
 
 interface DispatchProps {
   fetchPosts: (category?: string) => void,
+  fetchSinglePost: (postID: string) => void,
   addPost: (post: PostI) => void,
   goTo: (path: string) => void,
 }
@@ -143,6 +172,7 @@ interface DispatchProps {
 function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ): DispatchProps {
   return {
     fetchPosts: (category) => dispatch(fetchPosts(category)),
+    fetchSinglePost: (postID) => dispatch(fetchSinglePost(postID)),
     addPost: (post) => dispatch(addPost(post)),
     goTo: (path: string) => dispatch(push(path)),
   }
