@@ -3,6 +3,8 @@ import { PostI } from '../components/PostList'
 import { APIPostI, APIPostSendNewI } from '../interfaces'
 import { PostAPI } from '../utils/ReadableAPI'
 import { StoreStateI } from '../reducers'
+import urls from '../utils/urls'
+import { push } from 'react-router-redux'
 
 export const enum PostActions {
   FETCH = 'POST_FETCH',
@@ -19,7 +21,7 @@ export type PostActionType =
   { type: PostActions.FETCH } |
   { type: PostActions.RECIEVE, posts: APIPostI[], previousPosts: any } |
   { type: PostActions.RECIEVEAFTERSEND, post: APIPostI, previousPosts: any } |
-  { type: PostActions.ERROR, error: boolean } |
+  { type: PostActions.ERROR, hasError: boolean, error: string } |
   { type: PostActions.LOADING, loading: boolean } |
   { type: PostActions.SENDING, sending: boolean } |
   { type: PostActions.VOTING, isVoting: boolean } |
@@ -48,11 +50,13 @@ export const sendPost = (post: PostI): PostActionType => {
     post
   }
 }
-export const postsHasError = (e: boolean): PostActionType => {
+export const postsHasError = (hasError: boolean, error: string = ''): PostActionType => {
   return {
     type: PostActions.ERROR,
-    error: e,
+    hasError,
+    error
   }
+
 }
 export const postsAreLoading = (loading: boolean): PostActionType => {
   return {
@@ -77,7 +81,7 @@ export const fetchPosts = (categoryID?: string) => ((dispatch: Dispatch<PostI>, 
   const state: StoreStateI = getState()
   return PostAPI.get(categoryID)
     .then(posts => dispatch(recievePosts(posts, state.posts.items)))
-    .catch((e) => dispatch(postsHasError(true)))
+    .catch((e) => dispatch(postsHasError(true, `Retrieve posts: ${e.message}`)))
 }
 )
 export const fetchSinglePost = (postID: string) => ((dispatch: Dispatch<PostI>, getState: any) => {
@@ -85,7 +89,7 @@ export const fetchSinglePost = (postID: string) => ((dispatch: Dispatch<PostI>, 
   const state: StoreStateI = getState()
   return PostAPI.getByID(postID)
     .then(singlePost => dispatch(recievePosts(singlePost, state.posts.items)))
-    .catch((e) => dispatch(postsHasError(true)))
+    .catch((e) => dispatch(postsHasError(true, `Retrieve post: ${e.message}`)))
 }
 )
 export function verifyOkToSubmitPost(post: APIPostSendNewI) {
@@ -102,7 +106,8 @@ export const addPost = (post: PostI) => ((dispatch: Dispatch<PostI>, getState: a
   const state: StoreStateI = getState()
   return PostAPI.add(post)
     .then(returnedPost => dispatch(recieveAfterSend(returnedPost, state.posts.items)))
-    .catch((e) => dispatch(postsHasError(true)))
+    .then(() => dispatch(push(urls.viewPost(post))))
+    .catch((e) => dispatch(postsHasError(true, `Add post: ${e.message}`)))
 }
 )
 
@@ -111,7 +116,7 @@ export const votePost = (post: PostI, isUpVote: boolean) => ((dispatch: Dispatch
   const state: StoreStateI = getState()
   return PostAPI.vote(post.id, isUpVote ? 'upVote' : 'downVote')
     .then(returnedPost => dispatch(recieveAfterSend(returnedPost, state.posts.items)))
-    .catch((e) => dispatch(postsHasError(true)))
+    .catch((e) => dispatch(postsHasError(true, `Vote on post: ${e.message}`)))
     .then(() => setTimeout(() => dispatch(postIsVoting(false)), 1000))
 }
 )

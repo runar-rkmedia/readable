@@ -11,7 +11,7 @@ export const enum CategoriesActions {
 export type CategoriesActionType =
   { type: CategoriesActions.FETCH } |
   { type: CategoriesActions.RECIEVE, categories: APICategoriesI[] } |
-  { type: CategoriesActions.ERROR, error: boolean } |
+  { type: CategoriesActions.ERROR, hasError: boolean, error: string } |
   { type: CategoriesActions.LOADING, loading: boolean }
 
 export const recieveCategories = (categories: APICategoriesI[]): CategoriesActionType => {
@@ -20,10 +20,12 @@ export const recieveCategories = (categories: APICategoriesI[]): CategoriesActio
     categories
   }
 }
-export const categoriesHasError = (e: boolean): CategoriesActionType => {
+export const categoriesHasError = (hasError: boolean, error: string = ''): CategoriesActionType => {
   return {
     type: CategoriesActions.ERROR,
-    error: e,
+    hasError,
+    error
+
   }
 }
 export const categoriesAreLoading = (loading: boolean): CategoriesActionType => {
@@ -36,6 +38,6 @@ export const fetchCategories = () => ((dispatch: Dispatch<CategoryI>) => {
   dispatch(categoriesAreLoading(true))
   return CategoryAPI.get()
     .then(categories => dispatch(recieveCategories(categories)))
-    .catch((e) => dispatch(categoriesHasError(true)))
+    .catch((e) => dispatch(categoriesHasError(true, `Categories: ${e.message}`)))
 }
 )

@@ -50,7 +50,7 @@ const PostItem = (props: Props & WithMyStyle & DispatchProps) => {
           {props.showCategory && (
             `, posted in ${mapCatagory(category).name}`
           )}
-          <span> at {moment(timestamp).calendar()}
+          <span>. {moment(timestamp).calendar()}
           </span>
           <span> <Hidden mdDown={true}>popularity:</Hidden> {voteScore === 0 ? (voteScore) :
             (voteScore > 0 ? (

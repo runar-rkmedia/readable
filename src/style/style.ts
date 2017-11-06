@@ -54,6 +54,10 @@ export default (theme: typeof myTheme): StyleRules => ({
       height: '100%',
     },
   },
+  close: {
+    width: theme.spacing.unit * 4,
+    height: theme.spacing.unit * 4,
+  },
   button: {
     margin: theme.spacing.unit,
   },

@@ -8,6 +8,7 @@ export interface PostStateI {
   hasError: boolean
   selectedPost: string
   isVoting: boolean
+  error: string
 }
 export const initialPostState: PostStateI = {
   items: {},
@@ -15,7 +16,8 @@ export const initialPostState: PostStateI = {
   sending: false,
   hasError: false,
   isVoting: false,
-  selectedPost: ''
+  selectedPost: '',
+  error: ''
 }
 
 export function posts(
@@ -29,9 +31,11 @@ export function posts(
     case PostActions.VOTING:
       return { ...state, isVoting: action.isVoting }
     case PostActions.ERROR:
+      const error = action.error || state.error
       return {
         ...state,
-        hasError: action.error,
+        hasError: action.hasError,
+        error,
         loading: false,
         sending: false,
       }

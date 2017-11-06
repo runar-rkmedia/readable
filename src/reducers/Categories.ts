@@ -8,12 +8,15 @@ export interface CategoriesStateI {
   items: StoreCategories
   loading: boolean
   hasError: boolean
+  error: string
   selectedCatagory: string
 }
 export const initialCategoriesState: CategoriesStateI = {
   items: {},
   loading: false,
+  error: '',
   hasError: false,
+
   selectedCatagory: ''
 }
 
@@ -32,9 +35,11 @@ export function categories(
       return state
 
     case CategoriesActions.ERROR:
+      const error = action.error || state.error
       return {
         ...state,
-        hasError: action.error,
+        hasError: action.hasError,
+        error,
         loading: false,
       }
     case CategoriesActions.RECIEVE:

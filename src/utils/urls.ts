@@ -4,6 +4,6 @@ export default {
   root: '/',
   category: (categoryID: string) => (`/category/${categoryID}`),
   addPost: (categoryID: string) => (`/category/${categoryID}/post/add`),
-  editPost: (categoryID: string) => (`/category/${categoryID}/post/edit`),
+  editPost: (post: PostI) => (`/category/${post.category}/post/${post.id}/edit`),
   viewPost: (post: PostI) => (`/category/${post.category}/post/${post.id}`),
 }
