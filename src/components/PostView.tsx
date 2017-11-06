@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+// import { push } from 'react-router-redux'
 import { Dispatch } from 'react-redux'
 import { PostI } from '../interfaces'
 
@@ -13,27 +13,13 @@ import Grid from 'material-ui/Grid'
 import ThumbUp from 'material-ui-icons/ThumbUp'
 import ThumbDown from 'material-ui-icons/ThumbDown'
 import IconButton from 'material-ui/IconButton'
+import * as ReactMarkdown from 'react-markdown'
 
-class PostView extends React.Component<{
+const PostView = (props: {
   post: PostI
-} & AppDispatchProps & WithMyStyle> {
-  state: {
-    post: PostI
-  } = {
-    post: { ...this.props.post }
-  }
-  handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      post: {
-        ...this.state.post,
-        [prop]: event.target.value,
-      }
-    })
-  }
-
-  render() {
-    const { classes, theme } = this.props
-    const { author, title, body, voteScore } = this.state.post
+} & WithMyStyle) => {
+    const { classes, theme } = props
+    const { author, title, body, voteScore } = props.post
     return (
       <div className={classes.root}>
         <Paper className={classes.formRoot} elevation={4}>
@@ -57,21 +43,13 @@ class PostView extends React.Component<{
           </Typography>
         </Paper>
         <Paper className={classes.formRoot} elevation={4}>
-          <Typography gutterBottom={true} type="body1" color="inherit">
-            {body}
-          </Typography>
+          <ReactMarkdown source={body} />
         </Paper>
       </div>
     )
-  }
 }
-
-interface AppDispatchProps {
-  goHome: () => void
-}
-function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
+function mapDispatchToProps(dispatch: Dispatch<any>, ownprops: any) {
   return {
-    goHome: () => dispatch(push('/')),
     ...ownprops
   }
 }
