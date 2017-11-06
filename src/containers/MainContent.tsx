@@ -39,31 +39,41 @@ export class SidebarContent extends React.Component<SidebarMappedProps & Dispatc
     const { category } = nextProps || this.props
     this.props.fetchPosts(category.path)
   }
+  checkCorrectPath = (renderThis: JSX.Element) => {
+    if (!this.props.category.path) {
+      return (
+        !this.props.categoriesAreloading && (
+          <Typography color="error">Not a valid category</Typography>
+        ))
+    }
+    return renderThis
+  }
 
   render() {
     const {
       classes, category, posts,
       goTo,
-      postIsSending, categoriesAreloading
+      postIsSending,
     } = this.props
     return (
       <main className={classes.content}>
         <Switch>
           <Route
             path="/category/:category/post/add"
-            render={() => (
+            render={() => this.checkCorrectPath(
               <PostForm
                 category={category}
                 post={initializeNewPost(category.id)}
                 onSubmit={this.props.addPost}
                 postIsSending={postIsSending}
               />
-            )}
+            )
+            }
 
           />
           <Route
             path="/category/"
-            render={() => (category.path ? (
+            render={() => (this.checkCorrectPath(
               <div>
                 <CategoryHeader category={category} type="header" />
                 <Button
@@ -80,11 +90,8 @@ export class SidebarContent extends React.Component<SidebarMappedProps & Dispatc
                     post => post.category === category.id)
                   }
                 />
-              </div>) : (
-                !categoriesAreloading && (
-                  <Typography color="error">Not a valid category</Typography>
-                )
-              )
+              </div>
+            )
             )}
           />
           <Route
