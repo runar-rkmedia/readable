@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { CategoriesState } from '../reducers/Categories'
+import { CategoriesStateI } from '../interfaces'
 import CategoryItem from './CategoryHeader'
 import { mapCategories, } from '../store/mapper'
 import List from 'material-ui/List'
 
 import { withMyStyle } from '../style/base'
 
-export interface CategoryInterface {
+export interface CategoryI {
   id: string
   name: string
   description: string
@@ -15,7 +15,7 @@ export interface CategoryInterface {
   path: string
 }
 const CategoryList = (props: {
-  categories: CategoryInterface[]
+  categories: CategoryI[]
   loading: boolean
   error: boolean
 }) =>
@@ -31,7 +31,7 @@ const CategoryList = (props: {
     </List>
   )
 
-const mapStateToProps = ({ categories }: { categories: CategoriesState }
+const mapStateToProps = ({ categories }: { categories: CategoriesStateI }
 ) => {
   return {
     categories: mapCategories(categories.items),

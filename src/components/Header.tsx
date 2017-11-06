@@ -8,7 +8,7 @@ import MenuIcon from 'material-ui-icons/Menu'
 import { push } from 'react-router-redux'
 import { CircularProgress } from 'material-ui/Progress'
 import { connect, Dispatch } from 'react-redux'
-import { StoreState } from '../reducers'
+import { StoreStateI } from '../interfaces'
 import urls from '../utils/urls'
 
 const ButtonAppBar = (props: {
@@ -41,7 +41,7 @@ const ButtonAppBar = (props: {
 interface SidebarMappedProps {
   loading: boolean
 }
-const mapStateToProps = (state: StoreState, ownprops: any) => {
+const mapStateToProps = (state: StoreStateI, ownprops: any) => {
   const { categories, posts } = state
   return {
     postIsSending: posts.sending,
@@ -50,10 +50,10 @@ const mapStateToProps = (state: StoreState, ownprops: any) => {
   }
 }
 
-export interface AppDispatchProps {
+interface AppDispatchProps {
   goHome: () => void
 }
-export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
+function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
   return {
     goHome: () => dispatch(push(urls.root)),
     ...ownprops

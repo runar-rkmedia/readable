@@ -2,7 +2,7 @@ import * as React from 'react'
 import List from 'material-ui/List'
 import PostItem from './PostItem'
 
-export interface PostInterface {
+export interface PostI {
   id: string
   timestamp: string
   title: string
@@ -15,7 +15,7 @@ export interface PostInterface {
 }
 
 export default (props: {
-  posts: PostInterface[]
+  posts: PostI[]
   showCategory?: boolean
 }) => {
   return (

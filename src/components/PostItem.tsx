@@ -17,12 +17,12 @@ import { mapCatagory } from '../store/mapper'
 import urls from '../utils/urls'
 import * as moment from 'moment'
 import Badge from 'material-ui/Badge'
-import { PostInterface } from './PostList'
+import { PostI } from '../interfaces'
 import { connect, Dispatch } from 'react-redux'
 import { push } from 'react-router-redux'
 
 interface Props {
-  post: PostInterface
+  post: PostI
   showCategory?: boolean
 }
 

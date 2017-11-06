@@ -3,29 +3,25 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { Dispatch } from 'react-redux'
 
-import { CategoryInterface } from './CategoryList'
-import { PostInterface } from './PostList'
+import { CategoryI, APIPostSendNewI } from '../interfaces'
 import { verifyOkToSubmitPost } from '../actions/posts'
 
 import { withMyStyle, WithMyStyle } from '../style/base'
 import Typography from 'material-ui/Typography'
 import { CircularProgress } from 'material-ui/Progress'
-// import IconButton from 'material-ui/IconButton'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import MenuIcon from 'material-ui-icons/Add'
-// import Input from 'material-ui/Input'
-// import { FormControl, FormHelperText } from 'material-ui/Form'
 import TextField from 'material-ui/TextField'
 
 class PostForm extends React.Component<{
-  onSubmit: (post: PostInterface) => void
-  category: CategoryInterface
-  post: PostInterface
+  onSubmit: (post: APIPostSendNewI) => void
+  category: CategoryI
+  post: APIPostSendNewI
   postIsSending: boolean
 } & AppDispatchProps & WithMyStyle> {
   state: {
-    post: PostInterface
+    post: APIPostSendNewI
   } = {
     post: { ...this.props.post }
   }
@@ -110,10 +106,10 @@ class PostForm extends React.Component<{
   }
 }
 
-export interface AppDispatchProps {
+interface AppDispatchProps {
   goHome: () => void
 }
-export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
+function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
   return {
     goHome: () => dispatch(push('/')),
     ...ownprops

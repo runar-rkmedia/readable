@@ -3,11 +3,14 @@ import { connect, Dispatch } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 import { RouterState, push } from 'react-router-redux'
 import CategoryHeader from '../components/CategoryHeader'
-import { CategoryInterface } from '../components/CategoryList'
-import PostList, { PostInterface } from '../components/PostList'
+import PostList from '../components/PostList'
+import {
+  PostI,
+  CategoryI,
+  StoreStateI
+} from '../interfaces'
 import PostForm from '../components/PostForm'
 import { mapCatagory } from '../store/mapper'
-import { StoreState } from '../reducers'
 import { fetchPosts, addPost } from '../actions/posts'
 import FrontPage from './FrontPage'
 import { withMyStyle, WithMyStyle } from '../style/base'
@@ -104,13 +107,13 @@ export class SidebarContent extends React.Component<SidebarMappedProps & Dispatc
 }
 interface SidebarMappedProps extends SidebarContentProps {
   router: RouterState
-  posts: PostInterface[]
-  category: CategoryInterface
+  posts: PostI[]
+  category: CategoryI
   postIsSending: boolean
   postsAreLoading: boolean
   categoriesAreloading: boolean
 }
-const mapStateToProps = (state: StoreState, ownprops: any) => {
+const mapStateToProps = (state: StoreStateI, ownprops: any) => {
   const { categories, router, posts } = state
   return {
     posts: Object.keys(posts.items).map(key => posts.items[key]),
@@ -126,7 +129,7 @@ const mapStateToProps = (state: StoreState, ownprops: any) => {
 
 interface DispatchProps {
   fetchPosts: (category?: string) => void,
-  addPost: (post: PostInterface) => void,
+  addPost: (post: PostI) => void,
   goTo: (path: string) => void,
 }
 

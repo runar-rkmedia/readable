@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { CategoryInterface } from '../components/CategoryList'
+import { CategoryI } from '../interfaces'
 import Typography from 'material-ui/Typography'
 import { ListItem, ListItemText } from 'material-ui/List'
 import Divider from 'material-ui/Divider'
@@ -11,7 +11,7 @@ import urls from '../utils/urls'
 import { withMyStyle, WithMyStyle } from '../style/base'
 
 interface CategoryHeaderI {
-  category: CategoryInterface
+  category: CategoryI
   type: 'header' | 'listitem'
 }
 
@@ -58,10 +58,10 @@ const CategoryHeader = (props: CategoryHeaderI & AppDispatchProps & WithMyStyle)
   }
 }
 
-export interface AppDispatchProps {
+interface AppDispatchProps {
   goTo: (path: string) => void
 }
-export function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
+function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
   return {
     goTo: (path: string) => dispatch(push(path)),
     ...ownprops

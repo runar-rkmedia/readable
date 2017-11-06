@@ -1,4 +1,4 @@
-export interface CommentInterface {
+export interface CommentI {
   id: string
   timestamp: number
   title: string

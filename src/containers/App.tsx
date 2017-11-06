@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import MainContent from './MainContent'
 import { fetchCategories } from '../actions/categories'
-import { CategoryInterface } from '../components/CategoryList'
+import { CategoryI } from '../interfaces'
 import Header from '../components/Header'
 import LeftDrawer from '../components/LeftDrawer'
 import { Dispatch } from 'react-redux'
@@ -12,7 +12,7 @@ import { history } from '../store/store'
 import { withMyStyle, WithMyStyle } from '../style/base'
 
 class App extends React.Component<{
-  category: CategoryInterface | null
+  category: CategoryI | null
 } & AppDispatchProps & WithMyStyle> {
   state = {
     mobileOpen: false,

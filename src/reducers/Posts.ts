@@ -1,13 +1,12 @@
 import { PostActions, PostActionType } from '../actions/posts'
-// import { PostAPI } from '../utils/ReadableAPI'
 
-export interface PostState {
+export interface PostStateI {
   items: { [s: string]: {} }
   loading: boolean
   sending: boolean
   hasError: boolean
 }
-export const initialPostState: PostState = {
+export const initialPostState: PostStateI = {
   items: {},
   loading: false,
   sending: false,
@@ -15,8 +14,8 @@ export const initialPostState: PostState = {
 }
 
 export function posts(
-  state: PostState = initialPostState,
-  action: PostActionType): PostState {
+  state: PostStateI = initialPostState,
+  action: PostActionType): PostStateI {
   switch (action.type) {
     case PostActions.LOADING:
       return { ...state, loading: action.loading }

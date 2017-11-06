@@ -1,4 +1,4 @@
-import { CategoryInterface } from '../components/CategoryList'
+import { CategoryI } from '../interfaces'
 import { StoreCategories } from '../reducers/Categories'
 const reduxLogo = require('../icons/redux.svg')
 const reactLogo = require('../icons/react.svg')
@@ -6,7 +6,7 @@ const reactLogo = require('../icons/react.svg')
 
 // Hardcoded since API doesn't serve enough information.
 const defaultCategories: {
-  [s: string]: CategoryInterface
+  [s: string]: CategoryI
 } = {
     react: {
       name: 'React',
@@ -31,7 +31,7 @@ const defaultCategories: {
     // }
   }
 
-export const mapCatagory = (key: string, categories?: StoreCategories): CategoryInterface => {
+export const mapCatagory = (key: string, categories?: StoreCategories): CategoryI => {
   if (key in defaultCategories) {
     return defaultCategories[key]
   }
@@ -43,6 +43,6 @@ export const mapCatagory = (key: string, categories?: StoreCategories): Category
     description: ''
   }
 }
-export const mapCategories = (categories: StoreCategories): CategoryInterface[] => {
+export const mapCategories = (categories: StoreCategories): CategoryI[] => {
   return Object.keys(categories).map(key => mapCatagory(key, categories))
 }

@@ -1,17 +1,17 @@
 import { CategoriesActions, CategoriesActionType } from '../actions/categories'
 import { LOCATION_CHANGE, LocationChangeAction } from 'react-router-redux'
-import { CategoryInterface } from '../components/CategoryList'
+import { CategoryI } from '../interfaces'
 
 export interface StoreCategories {
   [s: string]: string
 }
-export interface CategoriesState {
+export interface CategoriesStateI {
   items: StoreCategories
   loading: boolean
   hasError: boolean
-  selectedCatagory: CategoryInterface | null | any
+  selectedCatagory: CategoryI | null | any
 }
-export const initialCategoriesState: CategoriesState = {
+export const initialCategoriesState: CategoriesStateI = {
   items: {},
   loading: false,
   hasError: false,
@@ -19,8 +19,8 @@ export const initialCategoriesState: CategoriesState = {
 }
 
 export function categories(
-  state: CategoriesState = initialCategoriesState,
-  action: CategoriesActionType | LocationChangeAction): CategoriesState {
+  state: CategoriesStateI = initialCategoriesState,
+  action: CategoriesActionType | LocationChangeAction): CategoriesStateI {
   switch (action.type) {
     case CategoriesActions.LOADING:
       return { ...state, loading: action.loading }

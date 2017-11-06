@@ -1,5 +1,5 @@
-import { PostInterface } from '../components/PostList'
-import { CommentInterface } from '../components/Comment'
+import { PostI } from '../components/PostList'
+import { CommentI } from '../components/Comment'
 import uuid from 'uuid'
 
 const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
@@ -16,12 +16,12 @@ const headers = {
   'Content-Type': 'application/json'
 }
 
-export interface APICategories {
+export interface APICategoriesI {
   name: string
   path: string
 }
 
-export interface APIPost {
+export interface APIPostI {
   id: string
   timestamp: number | null
   title: string
@@ -32,7 +32,7 @@ export interface APIPost {
   deleted: boolean
   commentCount: number
 }
-export interface APIPostSendNew {
+export interface APIPostSendNewI {
   id: string
   timestamp: number | null
   title: string
@@ -40,11 +40,11 @@ export interface APIPostSendNew {
   author: string
   category: string
 }
-export interface APIPostSendEdit {
+export interface APIPostSendEditI {
   title: string
   body: string
 }
-export const initializeNewPost = (category: string): APIPostSendNew => ({
+export const initializeNewPost = (category: string): APIPostSendNewI => ({
   author: '',
   title: '',
   body: '',
@@ -55,7 +55,6 @@ export const initializeNewPost = (category: string): APIPostSendNew => ({
 )
 
 export const myFetch = (url: string, method: string = 'GET', body?: {}) => {
-  console.log(`fetching ${url} by ${method}`)
   return fetch(`${api}/${url}`, {
     method: method,
     headers: headers,
@@ -66,17 +65,17 @@ export const myFetch = (url: string, method: string = 'GET', body?: {}) => {
 type voteOption = 'upVote' | 'downVote'
 
 export const CategoryAPI = {
-  get: (): Promise<APICategories[]> => {
+  get: (): Promise<APICategoriesI[]> => {
     return myFetch('categories').then(data => data.categories)
   },
-  getPostsInCategory: (category: string): Promise<APIPost[]> => (
+  getPostsInCategory: (category: string): Promise<APIPostI[]> => (
     myFetch(`${category}/posts`)
   )
 }
 
 export const PostAPI = {
   remove: (id: string) => myFetch(`posts/${id}`, 'DELETE'),
-  get: (categoryID?: string): Promise<APIPost[]> => {
+  get: (categoryID?: string): Promise<APIPostI[]> => {
     if (categoryID) {
       return PostAPI.getByCategory(categoryID)
     }
@@ -85,15 +84,15 @@ export const PostAPI = {
   getByID: (id: string) => myFetch(`posts/${id}`),
   getByCategory: (category: string) => CategoryAPI.getPostsInCategory(category),
   getComments: (id: string) => CommentAPI.get(id),
-  add: (post: PostInterface) => {
+  add: (post: PostI) => {
     const { id, title, body, author, category } = post
-    const postWithNewDate: APIPostSendNew = {
+    const postWithNewDate: APIPostSendNewI = {
       timestamp: Date.now(),
       id, title, body, author, category
     }
     return myFetch(`posts/`, 'POST', postWithNewDate)
   },
-  edit: (post: PostInterface) => (
+  edit: (post: PostI) => (
     myFetch(
       `posts/${post.id}`,
       'PUT',
@@ -109,12 +108,12 @@ export const PostAPI = {
 export const CommentAPI = {
   remove: (id: string) => myFetch(`comments/${id}`, 'DELETE'),
   get: (id: string) => myFetch(`posts/${id}/comments`),
-  add: (comment: CommentInterface) => myFetch(`comments/`, 'POST', comment),
+  add: (comment: CommentI) => myFetch(`comments/`, 'POST', comment),
   vote: (
     id: string,
     option: voteOption
   ) => myFetch(`comments/${id}`, 'POST', { option }),
-  edit: (comment: CommentInterface) => (
+  edit: (comment: CommentI) => (
     myFetch(
       `comments/${comment.id}`,
       'PUT',
