@@ -4,7 +4,7 @@ import { Dispatch } from 'react-redux'
 import { PostI } from '../interfaces'
 import { CommentsRetriever } from './'
 
-import { withMyStyle, WithMyStyle } from '../style/base'
+import { withMyStyle, WithMyStyle } from '../style'
 import Typography from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'

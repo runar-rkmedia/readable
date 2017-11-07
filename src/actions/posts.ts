@@ -88,8 +88,10 @@ export const fetchSinglePost = (postID: string) => ((dispatch: Dispatch<PostI>, 
   dispatch(postsAreLoading(true))
   const state: StoreStateI = getState()
   return PostAPI.getByID(postID)
-    .then(singlePost => dispatch(recievePosts([singlePost], state.posts.items)))
-    .catch((e) => dispatch(postsHasError(true, `Retrieve post: ${e.message}`)))
+    .then(singlePost => {
+      return dispatch(recievePosts([singlePost], state.posts.items))
+    })
+    .catch((e) => dispatch(postsHasError(true, `Retrievescres post: ${e.message}`)))
 }
 )
 export function verifyOkToSubmitPost(post: APIPostSendNewI) {

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import MailIcon from 'material-ui-icons/Mail'
-import { withMyStyle, WithMyStyle } from '../style/base'
+import { withMyStyle, WithMyStyle } from '../style'
 import DeleteIcon from 'material-ui-icons/Delete'
 import KeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'

@@ -6,7 +6,7 @@ import { mapCategories, } from '../store/mapper'
 import List from 'material-ui/List'
 import Divider from 'material-ui/Divider'
 
-import { withMyStyle } from '../style/base'
+import { withMyStyle } from '../style'
 
 export interface CategoryI {
   id: string

@@ -1,5 +1,5 @@
 import { StyleRules } from 'material-ui/styles'
-import { myTheme } from './base'
+import { myTheme } from './'
 import green from 'material-ui/colors/green'
 import grey from 'material-ui/colors/grey'
 import red from 'material-ui/colors/red'

@@ -1,9 +1,8 @@
-import { PostActions, PostActionType } from '../actions/'
-import { APIPostI } from '../interfaces'
+import { CommentActions, CommentActionType } from '../actions/'
 import { LOCATION_CHANGE, LocationChangeAction } from 'react-router-redux'
 
-export interface PostStateI {
-  items: { [s: string]: APIPostI }
+export interface CommentStateI {
+  items: { [s: string]: {} }
   loading: boolean
   sending: boolean
   hasError: boolean
@@ -11,7 +10,7 @@ export interface PostStateI {
   isVoting: boolean
   error: string
 }
-export const initialPostState: PostStateI = {
+export const initialCommentState: CommentStateI = {
   items: {},
   loading: false,
   sending: false,
@@ -21,17 +20,17 @@ export const initialPostState: PostStateI = {
   error: ''
 }
 
-export function posts(
-  state: PostStateI = initialPostState,
-  action: PostActionType | LocationChangeAction): PostStateI {
+export function comments(
+  state: CommentStateI = initialCommentState,
+  action: CommentActionType | LocationChangeAction): CommentStateI {
   switch (action.type) {
-    case PostActions.LOADING:
+    case CommentActions.LOADING:
       return { ...state, loading: action.loading }
-    case PostActions.SENDING:
+    case CommentActions.SENDING:
       return { ...state, sending: action.sending }
-    case PostActions.VOTING:
+    case CommentActions.VOTING:
       return { ...state, isVoting: action.isVoting }
-    case PostActions.ERROR:
+    case CommentActions.ERROR:
       const error = action.error || state.error
       return {
         ...state,
@@ -52,23 +51,24 @@ export function posts(
         return { ...state, selectedPost }
       }
       return state
-    case PostActions.RECIEVE:
+    case CommentActions.RECIEVE:
+      console.log(action)
       return {
         ...state,
         loading: false,
-        items: action.posts.reduce(
+        items: action.comments.reduce(
           (map: any, obj: any) => {
             map[obj.id] = obj
             return map
           },
-          { ...action.previousPosts }
+          { ...action.previousComments }
         )
       }
-    case PostActions.RECIEVEAFTERSEND:
+    case CommentActions.RECIEVEAFTERSEND:
       return {
         ...state,
         sending: false,
-        items: { ...action.previousPosts, [action.post.id]: action.post }
+        items: { ...action.previousComments, [action.comment.id]: action.comment }
       }
     default:
       return state

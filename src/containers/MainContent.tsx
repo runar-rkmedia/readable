@@ -6,12 +6,13 @@ import { CategoryHeader, PostList, PostForm, PostView } from '../components/'
 import {
   PostI,
   CategoryI,
-  StoreStateI
+  StoreStateI,
+  APIPostI
 } from '../interfaces'
 import { mapCatagory } from '../store/mapper'
-import { fetchSinglePost, fetchPosts, addPost, votePost } from '../actions/posts'
+import { fetchSinglePost, fetchPosts, addPost, votePost, PostActionType } from '../actions/'
 import FrontPage from './FrontPage'
-import { withMyStyle, WithMyStyle } from '../style/base'
+import { withMyStyle, WithMyStyle } from '../style'
 import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
 import Typography from 'material-ui/Typography'
@@ -35,11 +36,12 @@ export class MainContentC extends React.Component
     }
   }
   retrievePosts = (nextProps?: SidebarMappedProps) => {
-    const { postID, posts, postsAreLoading } = this.props
-    if (!postsAreLoading || !posts.find(p => (p.id === postID))) {
-      this.props.fetchSinglePost(this.props.postID)
-    }
+    const { postID, postsHash, postsAreLoading } = this.props
     const { category } = nextProps || this.props
+    // Fetch single post, but only if viewed directly, and post is not already downloaded.
+    if (postID && (!postsAreLoading || !postsHash[postID])) {
+      this.props.fetchSinglePost(postID)
+    }
     this.props.fetchPosts(category.path)
   }
   checkCorrectPath = (renderThis: JSX.Element) => {
@@ -142,6 +144,7 @@ export class MainContentC extends React.Component
 interface SidebarMappedProps extends MainContentProps {
   router: RouterState
   posts: PostI[]
+  postsHash: { [s: string]: APIPostI }
   selectedPost: PostI
   postID: string
   category: CategoryI
@@ -155,6 +158,7 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
   const { categories, router, posts } = state
   return {
     posts: Object.keys(posts.items).map(key => posts.items[key]),
+    postsHash: posts.items,
     category: mapCatagory(categories.selectedCatagory, categories.items),
     postID: posts.selectedPost,
     selectedPost: posts.items[posts.selectedPost],
@@ -171,7 +175,7 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
 
 interface DispatchProps {
   fetchPosts: (category?: string) => void,
-  fetchSinglePost: (postID: string) => void,
+  fetchSinglePost: (postID: string) => Promise<PostActionType>,
   addNewPost: (post: PostI) => void,
   voteOnPost: (post: PostI, isUpVote: boolean) => void,
   goTo: (path: string) => void,

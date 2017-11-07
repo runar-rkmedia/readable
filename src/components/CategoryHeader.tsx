@@ -7,7 +7,7 @@ import { Dispatch } from 'react-redux'
 import { push } from 'react-router-redux'
 import { urls } from '../utils/'
 
-import { withMyStyle, WithMyStyle } from '../style/base'
+import { withMyStyle, WithMyStyle } from '../style'
 
 interface CategoryHeaderI {
   category: CategoryI

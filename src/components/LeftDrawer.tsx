@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { withMyStyle, WithMyStyle } from '../style/base'
+import { withMyStyle, WithMyStyle } from '../style'
 import Drawer from 'material-ui/Drawer'
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'

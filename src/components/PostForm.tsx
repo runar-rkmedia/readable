@@ -7,7 +7,7 @@ import { CategoryI, APIPostSendNewI } from '../interfaces'
 import { verifyOkToSubmitPost } from '../actions/posts'
 import PostView from './PostView'
 
-import { withMyStyle, WithMyStyle } from '../style/base'
+import { withMyStyle, WithMyStyle } from '../style'
 import Typography from 'material-ui/Typography'
 import { CircularProgress } from 'material-ui/Progress'
 import Button from 'material-ui/Button'

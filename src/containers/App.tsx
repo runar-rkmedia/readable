@@ -9,7 +9,7 @@ import { Dispatch } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import { history } from '../store/store'
 
-import { withMyStyle, WithMyStyle } from '../style/base'
+import { withMyStyle, WithMyStyle } from '../style'
 
 class AppC extends React.Component<{
   category: CategoryI | null

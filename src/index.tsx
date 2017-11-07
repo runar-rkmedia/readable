@@ -4,7 +4,7 @@ import { App } from './containers/'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
 import { MuiThemeProvider } from 'material-ui/styles'
-import { myTheme } from './style/base'
+import { myTheme } from './style'
 
 export default store
 

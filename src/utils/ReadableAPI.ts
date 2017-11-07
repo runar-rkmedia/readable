@@ -31,6 +31,18 @@ export interface APIPostI {
   deleted: boolean
   commentCount: number
 }
+export interface APICommentI {
+  // TODO: Needs verification
+  id: string
+  timestamp: number | null
+  title: string
+  body: string
+  author: string
+  category: string
+  voteScore: number
+  deleted: boolean
+  commentCount: number
+}
 export interface APIPostSendNewI {
   id: string
   timestamp: number | null
@@ -39,8 +51,19 @@ export interface APIPostSendNewI {
   author: string
   category: string
 }
+export interface APICommentSendNewI {
+  id: string
+  timestamp: number | null
+  body: string
+  author: string
+  parentID: string
+}
 export interface APIPostSendEditI {
   title: string
+  body: string
+}
+export interface APICommentSendEditI {
+  timestamp: number | null
   body: string
 }
 export const initializeNewPost = (category: string): APIPostSendNewI => ({

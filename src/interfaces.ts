@@ -1,5 +1,12 @@
 export { PostI, CategoryI, CommentI } from './components/'
 export { StoreStateI } from './reducers'
-export { CategoriesStateI } from './reducers/Categories'
-export { PostStateI } from './reducers/Posts'
-export { APIPostSendNewI, APIPostSendEditI, APIPostI, APICategoriesI } from './utils/ReadableAPI'
+export { CategoriesStateI, PostStateI, CommentStateI } from './reducers/'
+export {
+  APIPostSendNewI,
+  APIPostSendEditI,
+  APIPostI,
+  APICategoriesI,
+  APICommentI,
+  APICommentSendNewI,
+  APICommentSendEditI
+} from './utils/ReadableAPI'
