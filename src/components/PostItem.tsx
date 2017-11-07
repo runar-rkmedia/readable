@@ -5,6 +5,7 @@ import DeleteIcon from 'material-ui-icons/Delete'
 import KeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import Typography from 'material-ui/Typography'
+import Truncate from 'react-truncate'
 import Hidden from 'material-ui/Hidden'
 import {
   ListItem,
@@ -20,6 +21,7 @@ import Badge from 'material-ui/Badge'
 import { PostI } from '../interfaces'
 import { connect, Dispatch } from 'react-redux'
 import { push } from 'react-router-redux'
+const removeMd = require('remove-markdown')
 
 interface Props {
   post: PostI
@@ -28,10 +30,10 @@ interface Props {
 
 const PostItem = (props: Props & WithMyStyle & DispatchProps) => {
   const {
-     id, title, author, timestamp, category, commentCount, voteScore } = props.post
+     title, body, author, timestamp, category, commentCount, voteScore } = props.post
   const { status } = props.theme
   return (
-    <ListItem button={true} key={id} onClick={() => props.goTo(urls.viewPost(props.post))}>
+    <ListItem button={true} onClick={() => props.goTo(urls.viewPost(props.post))}>
       <ListItemIcon>
         {commentCount ? (
           <Badge
@@ -69,8 +71,12 @@ const PostItem = (props: Props & WithMyStyle & DispatchProps) => {
                 </span>
               ))}
           </span>
-
         </Typography>
+        <div>
+          <Truncate lines={3} ellipsis={<b>Click to read more</b>}>
+            {removeMd(body)}
+          </Truncate>
+        </div>
       </div>
       <ListItemSecondaryAction>
         <IconButton aria-label="Delete">

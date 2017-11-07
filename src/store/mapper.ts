@@ -2,7 +2,7 @@ import { CategoryI } from '../interfaces'
 import { StoreCategories } from '../reducers/Categories'
 const reduxLogo = require('../icons/redux.svg')
 const reactLogo = require('../icons/react.svg')
-// const udacityLogo = require('../icons/udacity.svg')
+const udacityLogo = require('../icons/udacity.svg')
 
 // Hardcoded since API doesn't serve enough information.
 const defaultCategories: {
@@ -22,13 +22,13 @@ const defaultCategories: {
       path: 'redux',
       id: 'redux'
     },
-    // udacity: {
-    //   name: 'Udacity',
-    //   description: 'Udacity is an innovative online education provider.',
-    //   icon: udacityLogo,
-    //   path: 'udacity',
-    //   id: 'udacity'
-    // }
+    udacity: {
+      name: 'Udacity',
+      description: 'Udacity is an innovative online education provider.',
+      icon: udacityLogo,
+      path: 'udacity',
+      id: 'udacity'
+    }
   }
 
 export const mapCatagory = (key: string, categories?: StoreCategories): CategoryI => {

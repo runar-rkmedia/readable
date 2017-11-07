@@ -62,6 +62,13 @@ export class SidebarContent extends React.Component
     } = this.props
     return (
       <main className={classes.content}>
+        <Route
+          path="/category/"
+          render={() => (
+            <CategoryHeader category={category} type="header" />
+
+          )}
+        />
         <Switch>
           <Route
             path="/category/:category/post/add"
@@ -76,30 +83,29 @@ export class SidebarContent extends React.Component
             }
 
           />
-            <Route
-              path="/category/:category/post/:postID"
-              render={() =>
-                selectedPost ? (
+          <Route
+            path="/category/:category/post/:postID"
+            render={() =>
+              selectedPost ? (
                 this.checkCorrectPath(
-                <PostView
-                  post={selectedPost}
-                  onVote={voteOnPost}
-                  isVoting={isVoting}
-                />
-              )) : (loading ? (
-                <div>Finding your post....</div>
-              ) : (
-                <div>Post appears to not exist. It might have been deleted.</div>
-              ))
-              }
-            />
+                  <PostView
+                    post={selectedPost}
+                    onVote={voteOnPost}
+                    isVoting={isVoting}
+                  />
+                )) : (loading ? (
+                  <div>Finding your post....</div>
+                ) : (
+                    <div>Post appears to not exist. It might have been deleted.</div>
+                  ))
+            }
+          />
           )
 
           <Route
             path="/category/"
             render={() => (this.checkCorrectPath(
               <div>
-                <CategoryHeader category={category} type="header" />
                 <Button
                   fab={true}
                   color="primary"

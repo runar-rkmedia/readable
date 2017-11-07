@@ -81,7 +81,7 @@ export const PostAPI = {
     }
     return myFetch('posts')
   },
-  getByID: (id: string): Promise<APIPostI[]> => myFetch(`posts/${id}`),
+  getByID: (id: string): Promise<APIPostI> => myFetch(`posts/${id}`),
   getByCategory: (category: string) => CategoryAPI.getPostsInCategory(category),
   getComments: (id: string) => CommentAPI.get(id),
   add: (post: PostI) => {

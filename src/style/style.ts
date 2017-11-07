@@ -13,7 +13,7 @@ export default (theme: typeof myTheme): StyleRules => ({
   root: {
     width: '100%',
     zIndex: 1,
-    overflow: 'hidden',
+    // overflow: 'hidden',
     flexGrow: 1
   },
   appFrame: {

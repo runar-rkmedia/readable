@@ -51,6 +51,7 @@ class App extends React.Component<{
               onClose={this.props.closePostErrorMessage}
             />
         </div>
+        <footer>This is a footer</footer>
       </div>
     )
   }
