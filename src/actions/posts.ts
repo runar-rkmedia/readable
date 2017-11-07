@@ -1,9 +1,9 @@
 import { Dispatch } from 'react-redux'
-import { PostI } from '../components/PostList'
+import { PostI } from '../interfaces'
 import { APIPostI, APIPostSendNewI } from '../interfaces'
 import { PostAPI } from '../utils/ReadableAPI'
 import { StoreStateI } from '../reducers'
-import urls from '../utils/urls'
+import { urls } from '../utils/'
 import { push } from 'react-router-redux'
 
 export const enum PostActions {

@@ -6,7 +6,7 @@ import Divider from 'material-ui/Divider'
 import { connect } from 'react-redux'
 import { Dispatch } from 'react-redux'
 import { push } from 'react-router-redux'
-import urls from '../utils/urls'
+import { urls } from '../utils/'
 
 import { withMyStyle, WithMyStyle } from '../style/base'
 
@@ -15,7 +15,7 @@ interface CategoryHeaderI {
   type: 'header' | 'listitem'
 }
 
-const CategoryHeader = (props: CategoryHeaderI & AppDispatchProps & WithMyStyle) => {
+const CategoryHeaderC = (props: CategoryHeaderI & AppDispatchProps & WithMyStyle) => {
   const { category, classes, goTo, type } = props
   const { path, icon, name, description } = category
   if (!path) {
@@ -68,4 +68,4 @@ function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any)
   }
 }
 
-export default connect(null, mapDispatchToProps)(withMyStyle(CategoryHeader))
+export const CategoryHeader = connect(null, mapDispatchToProps)(withMyStyle(CategoryHeaderC))

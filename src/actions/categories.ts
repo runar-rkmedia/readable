@@ -1,5 +1,5 @@
 import { Dispatch } from 'react-redux'
-import { CategoryI } from '../components/CategoryList'
+import { CategoryI } from '../interfaces'
 import { CategoryAPI, APICategoriesI } from '../utils/ReadableAPI'
 
 export const enum CategoriesActions {

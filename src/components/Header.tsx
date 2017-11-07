@@ -9,7 +9,7 @@ import { push } from 'react-router-redux'
 import { LinearProgress } from 'material-ui/Progress'
 import { connect, Dispatch } from 'react-redux'
 import { StoreStateI } from '../interfaces'
-import urls from '../utils/urls'
+import { urls } from '../utils/'
 
 const ButtonAppBar = (props: {
   handleDrawerToggle: () => void
@@ -31,7 +31,7 @@ const ButtonAppBar = (props: {
             Readable
           </Typography>
         </Toolbar>
-        <div style={{height: 5, marginTop: -5}}>
+        <div style={{ height: 5, marginTop: -5 }}>
           {loading && (
             <LinearProgress mode="query" style={{ color: theme.palette.common.darkWhite }} />
           )}</div>
@@ -61,4 +61,4 @@ function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any)
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withMyStyle(ButtonAppBar))
+export const Header = connect(mapStateToProps, mapDispatchToProps)(withMyStyle(ButtonAppBar))

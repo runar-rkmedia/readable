@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'react-redux'
 import { PostI } from '../interfaces'
-// import CommentsList from './CommentsList'
+import { CommentsRetriever } from './'
 
 import { withMyStyle, WithMyStyle } from '../style/base'
 import Typography from 'material-ui/Typography'
@@ -14,13 +14,13 @@ import IconButton from 'material-ui/IconButton'
 import * as ReactMarkdown from 'react-markdown'
 import * as moment from 'moment'
 
-export class PostView extends React.Component<{
+export class PostViewC extends React.Component<{
   post: PostI
   isVoting: boolean
   onVote: (post: PostI, isUpvote: boolean) => void
 } & WithMyStyle> {
   render() {
-    const { classes, post, isVoting, onVote} = this.props
+    const { classes, post, isVoting, onVote } = this.props
     const { author, title, body, voteScore, timestamp } = post
     return (
       <div className={classes.root}>
@@ -58,6 +58,9 @@ export class PostView extends React.Component<{
         <Paper className={classes.formRoot} elevation={4}>
           <ReactMarkdown source={body} />
         </Paper>
+        <Paper className={classes.formRoot} elevation={4}>
+          <CommentsRetriever post={post} />
+        </Paper>
       </div>
     )
   }
@@ -68,4 +71,5 @@ function mapDispatchToProps(dispatch: Dispatch<any>, ownprops: any) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(withMyStyle(PostView))
+export const PostView = connect(null, mapDispatchToProps)(withMyStyle(PostViewC))
+export default PostView

@@ -1,6 +1,4 @@
-export { PostI } from './components/PostList'
-export { CategoryI } from './components/CategoryList'
-export { CommentI } from './components/Comment'
+export { PostI, CategoryI, CommentI } from './components/'
 export { StoreStateI } from './reducers'
 export { CategoriesStateI } from './reducers/Categories'
 export { PostStateI } from './reducers/Posts'

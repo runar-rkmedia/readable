@@ -25,7 +25,7 @@ interface Props {
   comment: CommentI
 }
 
-const CommentItem = (props: Props & WithMyStyle & DispatchProps) => {
+const CommentItemC = (props: Props & WithMyStyle & DispatchProps) => {
   return (
     <ListItem>
       Here there be a comment
@@ -46,4 +46,4 @@ const mapStateToProps = (state: any, ownprops: any) => {
     ...ownprops
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withMyStyle(CommentItem))
+export const CommentItem = connect(mapStateToProps, mapDispatchToProps)(withMyStyle(CommentItemC))

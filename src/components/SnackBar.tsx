@@ -10,7 +10,7 @@ interface Props {
   onClose: () => void
 }
 
-const CommentItem = (props: Props & WithMyStyle) => {
+const SnackBarC = (props: Props & WithMyStyle) => {
   const { message, open, onClose, classes } = props
   return (
     <div>
@@ -42,4 +42,4 @@ const CommentItem = (props: Props & WithMyStyle) => {
   )
 }
 
-export default withMyStyle(CommentItem)
+export const SnackBar = withMyStyle(SnackBarC)

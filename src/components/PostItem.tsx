@@ -15,7 +15,7 @@ import {
 } from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
 import { mapCatagory } from '../store/mapper'
-import urls from '../utils/urls'
+import { urls } from '../utils/'
 import * as moment from 'moment'
 import Badge from 'material-ui/Badge'
 import { PostI } from '../interfaces'

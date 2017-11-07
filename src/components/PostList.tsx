@@ -14,14 +14,14 @@ export interface PostI {
   commentCount: number
 }
 
-export default (props: {
+export const PostList = (props: {
   posts: PostI[]
   showCategory?: boolean
 }) => {
   return (
     <List>
       {props.posts.map(post => (
-        <PostItem post={post} key={post.id}/>
+        <PostItem post={post} key={post.id} />
       ))}
     </List>
   )

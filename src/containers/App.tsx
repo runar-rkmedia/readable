@@ -1,19 +1,17 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import MainContent from './MainContent'
-import { fetchCategories, categoriesHasError as removeCategoriesError } from '../actions/categories'
+import { MainContent } from './'
+import { fetchCategories, categoriesHasError as removeCategoriesError } from '../actions/'
 import { postsHasError as removePostError } from '../actions/posts'
 import { CategoryI, StoreStateI } from '../interfaces'
-import Header from '../components/Header'
-import SnackBar from '../components/SnackBar'
-import LeftDrawer from '../components/LeftDrawer'
+import { Header, SnackBar, LeftDrawer } from '../components/'
 import { Dispatch } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import { history } from '../store/store'
 
 import { withMyStyle, WithMyStyle } from '../style/base'
 
-class App extends React.Component<{
+class AppC extends React.Component<{
   category: CategoryI | null
 } & AppDispatchProps & WithMyStyle & PropsMappedI> {
   state = {
@@ -40,16 +38,16 @@ class App extends React.Component<{
           <ConnectedRouter history={history}>
             <MainContent />
           </ConnectedRouter>
-            <SnackBar
-              open={categoriesHasError}
-              message={categoriesErrorMsg}
-              onClose={this.props.closeCategoriesErrorMessage}
-            />
-            <SnackBar
-              open={postsHasError}
-              message={postsErrorMsg}
-              onClose={this.props.closePostErrorMessage}
-            />
+          <SnackBar
+            open={categoriesHasError}
+            message={categoriesErrorMsg}
+            onClose={this.props.closeCategoriesErrorMessage}
+          />
+          <SnackBar
+            open={postsHasError}
+            message={postsErrorMsg}
+            onClose={this.props.closePostErrorMessage}
+          />
         </div>
         <footer>This is a footer</footer>
       </div>
@@ -89,4 +87,4 @@ function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any)
     ...ownprops
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withMyStyle(App))
+export const App = connect(mapStateToProps, mapDispatchToProps)(withMyStyle(AppC))

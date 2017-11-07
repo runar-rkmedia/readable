@@ -2,15 +2,12 @@ import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 import { RouterState, push } from 'react-router-redux'
-import CategoryHeader from '../components/CategoryHeader'
-import PostList from '../components/PostList'
+import { CategoryHeader, PostList, PostForm, PostView } from '../components/'
 import {
   PostI,
   CategoryI,
   StoreStateI
 } from '../interfaces'
-import PostForm from '../components/PostForm'
-import PostView from '../components/PostView'
 import { mapCatagory } from '../store/mapper'
 import { fetchSinglePost, fetchPosts, addPost, votePost } from '../actions/posts'
 import FrontPage from './FrontPage'
@@ -19,14 +16,14 @@ import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
 import Typography from 'material-ui/Typography'
 import { initializeNewPost } from '../utils/ReadableAPI'
-import urls from '../utils/urls'
+import { urls } from '../utils'
 
-interface SidebarContentProps {
+interface MainContentProps {
   onSetOpen: (open: boolean) => void
   classes: any
 }
 
-export class SidebarContent extends React.Component
+export class MainContentC extends React.Component
   <SidebarMappedProps & DispatchProps & WithMyStyle & DispatchProps> {
   componentDidMount() {
     this.retrievePosts()
@@ -142,7 +139,7 @@ export class SidebarContent extends React.Component
     )
   }
 }
-interface SidebarMappedProps extends SidebarContentProps {
+interface SidebarMappedProps extends MainContentProps {
   router: RouterState
   posts: PostI[]
   selectedPost: PostI
@@ -170,7 +167,7 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
     ...ownprops
   }
 }
-// export default connect(mapStateToProps)(withStyles((styles as any), { withTheme: true })(SidebarContent))
+// export default connect(mapStateToProps)(withStyles((styles as any), { withTheme: true })(MainContent))
 
 interface DispatchProps {
   fetchPosts: (category?: string) => void,
@@ -189,6 +186,6 @@ function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ): DispatchProps 
     goTo: (path: string) => dispatch(push(path)),
   }
 }
-export default connect(
+export const MainContent = connect(
   mapStateToProps, mapDispatchToProps
-)(withMyStyle(SidebarContent))
+)(withMyStyle(MainContentC))

@@ -1,6 +1,6 @@
 import { PostI } from '../interfaces'
 
-export default {
+export const urls = {
   root: '/',
   category: (categoryID: string) => (`/category/${categoryID}`),
   addPost: (categoryID: string) => (`/category/${categoryID}/post/add`),

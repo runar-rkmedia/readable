@@ -12,7 +12,6 @@ import Typography from 'material-ui/Typography'
 import { CircularProgress } from 'material-ui/Progress'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
-// import {Helper} from 'material-ui/Input'
 import MenuIcon from 'material-ui-icons/Add'
 import TextFieldsIcon from 'material-ui-icons/TextFields'
 import PreviewIcon from 'material-ui-icons/RemoveRedEye'
@@ -27,7 +26,7 @@ const maxLengths = {
   body: 99500
 }
 
-class PostForm extends React.Component<{
+class PostFormC extends React.Component<{
   onSubmit: (post: APIPostSendNewI) => void
   category: CategoryI
   post: APIPostSendNewI
@@ -169,4 +168,4 @@ function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any)
   }
 }
 
-export default connect(null, mapDispatchToProps)(withMyStyle(PostForm))
+export const PostForm = connect(null, mapDispatchToProps)(withMyStyle(PostFormC))

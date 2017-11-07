@@ -1,5 +1,5 @@
 import { CategoryI } from '../interfaces'
-import { StoreCategories } from '../reducers/Categories'
+import { StoreCategories } from '../reducers/'
 const reduxLogo = require('../icons/redux.svg')
 const reactLogo = require('../icons/react.svg')
 const udacityLogo = require('../icons/udacity.svg')

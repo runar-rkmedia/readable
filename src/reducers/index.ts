@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
+export * from './Categories'
+export * from './Posts'
 import { posts, initialPostState } from './Posts'
 import { PostStateI, CategoriesStateI } from '../interfaces'
 import { categories, initialCategoriesState } from './Categories'

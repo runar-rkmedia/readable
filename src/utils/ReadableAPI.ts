@@ -1,5 +1,4 @@
-import { PostI } from '../components/PostList'
-import { CommentI } from '../components/Comment'
+import { PostI, CommentI } from '../components/'
 import uuid from 'uuid'
 
 const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'

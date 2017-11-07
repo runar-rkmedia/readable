@@ -3,23 +3,23 @@ import { withMyStyle, WithMyStyle } from '../style/base'
 import Drawer from 'material-ui/Drawer'
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
-import CategoryList from '../components/CategoryList'
+import { CategoryList } from '../components/'
 // import {  } from 'material-ui/Progress'
 
-const LeftDrawer = (props: {
+const LeftDrawerC = (props: {
   handleDrawerToggle: () => void
   open: boolean
   loading: boolean
 } & WithMyStyle) => {
-  const { classes, theme , loading} = props
+  const { classes, theme, loading } = props
   const drawer = (
     <div>
       <div className={classes.drawerHeader} />
       {loading && (
         <div className={classes.textCenter}>Categories are loading...</div>
       )}
-      <Divider/>
-      <CategoryList/>
+      <Divider />
+      <CategoryList />
     </div>
   )
   return (
@@ -52,4 +52,4 @@ const LeftDrawer = (props: {
   )
 }
 
-export default withMyStyle(LeftDrawer)
+export const LeftDrawer = withMyStyle(LeftDrawerC)
