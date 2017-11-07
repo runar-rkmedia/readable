@@ -73,7 +73,7 @@ const PostItem = (props: Props & WithMyStyle & DispatchProps) => {
           </span>
         </Typography>
         <div>
-          <Truncate lines={3} ellipsis={<b>Click to read more</b>}>
+          <Truncate lines={3} ellipsis={<b> Click to read more</b>}>
             {removeMd(body)}
           </Truncate>
         </div>

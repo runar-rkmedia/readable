@@ -2,7 +2,6 @@ import * as React from 'react'
 import { CategoryI } from '../interfaces'
 import Typography from 'material-ui/Typography'
 import { ListItem, ListItemText } from 'material-ui/List'
-import Divider from 'material-ui/Divider'
 import { connect } from 'react-redux'
 import { Dispatch } from 'react-redux'
 import { push } from 'react-router-redux'
@@ -42,16 +41,13 @@ const CategoryHeaderC = (props: CategoryHeaderI & AppDispatchProps & WithMyStyle
 
     case 'listitem':
       return (
-        <div>
-          <ListItem
-            button={true}
-            onClick={() => goTo(fullPath)}
-          >
-            <img className={classes.sidebaricon} src={icon} alt={name + ' icon'} />
-            <ListItemText primary={name} secondary={description} />
-          </ListItem>
-          <Divider />
-        </div>
+        <ListItem
+          button={true}
+          onClick={() => goTo(fullPath)}
+        >
+          <img className={classes.sidebaricon} src={icon} alt={name + ' icon'} />
+          <ListItemText primary={name} secondary={description} />
+        </ListItem>
       )
     default:
       return null
