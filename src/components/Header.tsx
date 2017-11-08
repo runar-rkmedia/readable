@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { withMyStyle, WithMyStyle } from '../style'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
@@ -10,11 +9,14 @@ import { LinearProgress } from 'material-ui/Progress'
 import { connect, Dispatch } from 'react-redux'
 import { StoreStateI } from '../interfaces'
 import { urls } from '../utils/'
+import decorate from '../style'
 
-const ButtonAppBar = (props: {
+interface Props {
   handleDrawerToggle: () => void
-} & AppDispatchProps & SidebarMappedProps & WithMyStyle) => {
-  const { classes, theme, loading } = props
+}
+
+const HeaderC = decorate<Props & SidebarMappedProps & DispatchProps>((props) => {
+  const { loading, classes, theme } = props
   return (
     <div>
       <AppBar className={classes.appBar}>
@@ -33,12 +35,12 @@ const ButtonAppBar = (props: {
         </Toolbar>
         <div style={{ height: 5, marginTop: -5 }}>
           {loading && (
-            <LinearProgress mode="query" style={{ color: theme.palette.common.darkWhite }} />
+            <LinearProgress mode="query" style={{ color: theme!.palette.common.darkWhite }} />
           )}</div>
       </AppBar>
     </div>
   )
-}
+})
 interface SidebarMappedProps {
   loading: boolean
 }
@@ -51,14 +53,14 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
   }
 }
 
-interface AppDispatchProps {
+interface DispatchProps {
   goHome: () => void
 }
-function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
+function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ownprops: any) {
   return {
     goHome: () => dispatch(push(urls.root)),
     ...ownprops
   }
 }
 
-export const Header = connect(mapStateToProps, mapDispatchToProps)(withMyStyle(ButtonAppBar))
+export const Header = connect(mapStateToProps, mapDispatchToProps)(HeaderC)

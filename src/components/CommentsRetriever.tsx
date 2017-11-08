@@ -4,23 +4,25 @@ import { push } from 'react-router-redux'
 import { PostI, CommentI, StoreStateI } from '../interfaces'
 import { fetchComments } from '../actions'
 import { CommentsList } from './'
-import { withMyStyle, WithMyStyle } from '../style/'
+import decorate, { WithStyles } from '../style/'
 import { } from './'
 
 interface OwnProps {
   post: PostI
 }
-export class CommentsRetrieverC extends React.Component<OwnProps & WithMyStyle & DispatchProps & MappedProps> {
+export const CommentsRetrieverC = decorate(
+  class extends React.Component<OwnProps & WithStyles & DispatchProps & MappedProps> {
     componentDidMount() {
       this.props.fetchComments(this.props.post)
     }
-  render() {
+    render() {
 
-    return (
-        <CommentsList comments={this.props.comments}/>
-    )
+      return (
+        <CommentsList comments={this.props.comments} />
+      )
+    }
   }
-}
+)
 interface MappedProps {
   comments: CommentI[]
 }
@@ -29,7 +31,7 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
   return {
     comments: Object.keys(comments.items).map(
       key => comments.items[key]).filter(
-        c => c.parentId === ownprops.post.id
+      c => c.parentId === ownprops.post.id
       ),
     ...ownprops
   }
@@ -48,4 +50,4 @@ function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ownprops: any) {
   }
 }
 
-export const CommentsRetriever = connect(mapStateToProps, mapDispatchToProps)(withMyStyle(CommentsRetrieverC))
+export const CommentsRetriever = connect(mapStateToProps, mapDispatchToProps)(CommentsRetrieverC)

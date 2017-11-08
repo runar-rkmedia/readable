@@ -12,136 +12,138 @@ import {
 import { mapCatagory } from '../store/mapper'
 import { fetchSinglePost, fetchPosts, addPost, votePost, PostActionType } from '../actions/'
 import FrontPage from './FrontPage'
-import { withMyStyle, WithMyStyle } from '../style'
 import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
 import Typography from 'material-ui/Typography'
 import { initializeNewPost } from '../utils/ReadableAPI'
 import { urls } from '../utils'
+import decorate, { WithStyles } from '../style'
 
-interface MainContentProps {
+interface Props {
   onSetOpen: (open: boolean) => void
-  classes: any
 }
 
-export class MainContentC extends React.Component
-  <SidebarMappedProps & DispatchProps & WithMyStyle> {
-  componentDidMount() {
-    this.retrievePosts()
-  }
-  componentWillReceiveProps(nextProps: SidebarMappedProps) {
-    const newCategoryPath = nextProps.category.path
-    if (this.props.category.path !== newCategoryPath) {
-      this.retrievePosts(nextProps)
+type maincontent = SidebarMappedProps & DispatchProps & WithStyles
+
+export const MainContentC = decorate(
+  class extends React.Component<maincontent> {
+    componentDidMount() {
+      this.retrievePosts()
     }
-  }
-  retrievePosts = (nextProps?: SidebarMappedProps) => {
-    const { postID, postsHash, postsAreLoading } = this.props
-    const { category } = nextProps || this.props
-    // Fetch single post, but only if viewed directly, and post is not already downloaded.
-    if (postID && (!postsAreLoading || !postsHash[postID])) {
-      this.props.fetchSinglePost(postID)
+    componentWillReceiveProps(nextProps: SidebarMappedProps) {
+      const newCategoryPath = nextProps.category.path
+      if (this.props.category.path !== newCategoryPath) {
+        this.retrievePosts(nextProps)
+      }
     }
-    this.props.fetchPosts(category.path)
-  }
-  checkCorrectPath = (renderThis: JSX.Element) => {
-    if (!this.props.category.path) {
-      return (
-        !this.props.categoriesAreloading && (
-          <Typography color="error">Not a valid category</Typography>
-        ))
+    retrievePosts = (nextProps?: SidebarMappedProps) => {
+      const { postID, postsHash, postsAreLoading } = this.props
+      const { category } = nextProps || this.props
+      // Fetch single post, but only if viewed directly, and post is not already downloaded.
+      if (postID && (!postsAreLoading || !postsHash[postID])) {
+        this.props.fetchSinglePost(postID)
+      }
+      this.props.fetchPosts(category.path)
     }
-    return renderThis
-  }
-  render() {
-    const {
-      classes, category, posts, selectedPost,
-      goTo, voteOnPost, addNewPost,
-      postIsSending, loading, isVoting
+    checkCorrectPath = (renderThis: JSX.Element) => {
+      if (!this.props.category.path) {
+        return (
+          !this.props.categoriesAreloading && (
+            <Typography color="error">Not a valid category</Typography>
+          ))
+      }
+      return renderThis
+    }
+    render() {
+      const {
+      classes, category, posts, selectedPost, goTo,
+        // voteOnPost,
+        // isVoting
+        addNewPost,
+        postIsSending, loading,
     } = this.props
-    return (
-      <main className={classes.content}>
-        <Route
-          path="/category/"
-          render={() => (
-            <CategoryHeader category={category} type="header" />
-
-          )}
-        />
-        <Switch>
-          <Route
-            path="/category/:category/post/add"
-            render={() => this.checkCorrectPath(
-              <PostForm
-                category={category}
-                post={initializeNewPost(category.id)}
-                onSubmit={addNewPost}
-                postIsSending={postIsSending}
-              />
-            )
-            }
-
-          />
-          <Route
-            path="/category/:category/post/:postID"
-            render={() =>
-              selectedPost ? (
-                this.checkCorrectPath(
-                  <PostView
-                    post={selectedPost}
-                    onVote={voteOnPost}
-                    isVoting={isVoting}
-                  />
-                )) : (loading ? (
-                  <div>Finding your post....</div>
-                ) : (
-                    <div>Post appears to not exist. It might have been deleted.</div>
-                  ))
-            }
-          />
-          )
-
+      return (
+        <main className={classes.content}>
           <Route
             path="/category/"
-            render={() => (this.checkCorrectPath(
-              <div>
-                <Button
-                  fab={true}
-                  color="primary"
-                  aria-label="add"
-                  className={classes.button}
-                  onClick={() => goTo(urls.addPost(category.id))}
-                >
-                  <AddIcon />
-                </Button>
-                <PostList
-                  posts={posts.filter(
-                    post => post.category === category.id)
-                  }
-                />
-              </div>
-            )
-            )}
-          />
-          <Route
-            exact={true}
-            path="/"
             render={() => (
-              <div>
-                <FrontPage />
-                <PostList
-                  showCategory={true}
-                  posts={posts}
-                />
-              </div>
+              <CategoryHeader category={category} type="header" />
+
             )}
           />
-        </Switch>
-      </main>
-    )
-  }
-}
-interface SidebarMappedProps extends MainContentProps {
+          <Switch>
+            <Route
+              path="/category/:category/post/add"
+              render={() => this.checkCorrectPath(
+                <PostForm
+                  category={category}
+                  post={initializeNewPost(category.id)}
+                  onSubmit={addNewPost}
+                  postIsSending={postIsSending}
+                  classes={{}}
+                />
+              )
+              }
+
+            />
+            <Route
+              path="/category/:category/post/:postID"
+              render={() =>
+                selectedPost ? (
+                  this.checkCorrectPath(
+                    <PostView
+                      post={selectedPost}
+                    />
+                  )) : (loading ? (
+                    <div>Finding your post....</div>
+                  ) : (
+                      <div>Post appears to not exist. It might have been deleted.</div>
+                    ))
+              }
+            />
+            )
+
+          <Route
+              path="/category/"
+              render={() => (this.checkCorrectPath(
+                <div>
+                  <Button
+                    fab={true}
+                    color="primary"
+                    aria-label="add"
+                    className={classes.button}
+                    onClick={() => goTo(urls.addPost(category.id))}
+                  >
+                    <AddIcon />
+                  </Button>
+                  <PostList
+                    posts={posts.filter(
+                      post => post.category === category.id)
+                    }
+                  />
+                </div>
+              )
+              )}
+          />
+            <Route
+              exact={true}
+              path="/"
+              render={() => (
+                <div>
+                  <FrontPage />
+                  <PostList
+                    showCategory={true}
+                    posts={posts}
+                  />
+                </div>
+              )}
+            />
+          </Switch>
+        </main>
+      )
+    }
+  })
+interface SidebarMappedProps extends Props {
   router: RouterState
   posts: PostI[]
   postsHash: { [s: string]: APIPostI }
@@ -192,4 +194,4 @@ function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ): DispatchProps 
 }
 export const MainContent = connect(
   mapStateToProps, mapDispatchToProps
-)(withMyStyle(MainContentC))
+)(MainContentC)

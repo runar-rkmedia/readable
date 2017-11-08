@@ -9,7 +9,7 @@ const sidebariconWidth = '3em'
 // const sidebariconHeight = '3em'
 const headerIconsWidth = '1.5em'
 const headerIconsHeight = '1.5em'
-export default (theme: typeof myTheme): StyleRules => ({
+export const styles = (theme: typeof myTheme): StyleRules => ({
   root: {
     width: '100%',
     height: 'calc(100% - 56px)',
@@ -43,6 +43,9 @@ export default (theme: typeof myTheme): StyleRules => ({
   authorName: {
     fontWeight: 'bold',
     marginRight: theme.spacing.unit,
+  },
+  commentsPaper: {
+    backgroundColor: grey[100],
   },
   commentHeader: {
     marginBottom: '2ex'
@@ -121,6 +124,11 @@ export default (theme: typeof myTheme): StyleRules => ({
     cursor: 'pointer'
   },
   sidebarCategoryContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap'
+  },
+  justifyContent: {
     display: 'flex',
     justifyContent: 'space-between',
     flexWrap: 'wrap'

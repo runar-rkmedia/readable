@@ -21,14 +21,13 @@ export interface APICategoriesI {
 }
 export interface APIPostSendNewI {
   id: string
-  timestamp: number | null
+  timestamp: string
   title: string
   body: string
   author: string
   category: string
 }
 export interface APIPostI extends APIPostSendNewI {
-  timestamp: number | null
   voteScore: number
   deleted: boolean
   commentCount: number
@@ -54,12 +53,15 @@ export interface APICommentSendEditI {
   timestamp: number | null
   body: string
 }
-export const initializeNewPost = (category: string): APIPostSendNewI => ({
+export const initializeNewPost = (category: string): APIPostI => ({
   author: '',
   title: '',
   body: '',
   id: uuid(),
-  timestamp: null,
+  timestamp: '',
+  voteScore: 1,
+  deleted: false,
+  commentCount: 0,
   category
 }
 )
@@ -97,7 +99,7 @@ export const PostAPI = {
   add: (post: PostI) => {
     const { id, title, body, author, category } = post
     const postWithNewDate: APIPostSendNewI = {
-      timestamp: Date.now(),
+      timestamp: String(Date.now()),
       id, title, body, author, category
     }
     return myFetch(`posts/`, 'POST', postWithNewDate)

@@ -8,52 +8,55 @@ import { Header, SnackBar, LeftDrawer } from '../components/'
 import { Dispatch } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import { history } from '../store/store'
+import decorate, { WithStyles } from '../style'
 
-import { withMyStyle, WithMyStyle } from '../style'
-
-class AppC extends React.Component<{
+interface Props {
   category: CategoryI | null
-} & AppDispatchProps & WithMyStyle & PropsMappedI> {
-  state = {
-    mobileOpen: false,
-  }
-  componentDidMount() {
-    this.props.fetchCategories()
-  }
-  handleDrawerToggle = () => {
-    this.setState({ mobileOpen: !this.state.mobileOpen })
-  }
-  render() {
-    const { loading, categoriesHasError, categoriesErrorMsg, postsHasError, postsErrorMsg } = this.props
-    const { classes } = this.props
-    return (
-      <div className={classes.root}>
-        <div className={classes.appFrame}>
-          <Header handleDrawerToggle={this.handleDrawerToggle} />
-          <LeftDrawer
-            open={this.state.mobileOpen}
-            handleDrawerToggle={this.handleDrawerToggle}
-            loading={loading}
-          />
-          <ConnectedRouter history={history}>
-            <MainContent />
-          </ConnectedRouter>
-          <SnackBar
-            open={categoriesHasError}
-            message={categoriesErrorMsg}
-            onClose={this.props.closeCategoriesErrorMessage}
-          />
-          <SnackBar
-            open={postsHasError}
-            message={postsErrorMsg}
-            onClose={this.props.closePostErrorMessage}
-          />
-        </div>
-        <footer>This is a footer</footer>
-      </div>
-    )
-  }
 }
+
+type app = Props & AppDispatchProps & PropsMappedI & WithStyles
+
+const AppC = decorate(
+  class extends React.Component<app> {
+    state = {
+      mobileOpen: false,
+    }
+    componentDidMount() {
+      this.props.fetchCategories()
+    }
+    handleDrawerToggle = () => {
+      this.setState({ mobileOpen: !this.state.mobileOpen })
+    }
+    render() {
+      const { loading, categoriesHasError, categoriesErrorMsg, postsHasError, postsErrorMsg, classes } = this.props
+      return (
+        <div className={classes.root}>
+          <div className={classes.appFrame}>
+            <Header handleDrawerToggle={this.handleDrawerToggle} />
+            <LeftDrawer
+              open={this.state.mobileOpen}
+              handleDrawerToggle={this.handleDrawerToggle}
+              loading={loading}
+            />
+            <ConnectedRouter history={history}>
+              <MainContent />
+            </ConnectedRouter>
+            <SnackBar
+              open={categoriesHasError}
+              message={categoriesErrorMsg}
+              onClose={this.props.closeCategoriesErrorMessage}
+            />
+            <SnackBar
+              open={postsHasError}
+              message={postsErrorMsg}
+              onClose={this.props.closePostErrorMessage}
+            />
+          </div>
+          <footer>This is a footer</footer>
+        </div>
+      )
+    }
+  })
 interface PropsMappedI {
   loading: boolean
   categoriesHasError: boolean,
@@ -87,4 +90,4 @@ function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any)
     ...ownprops
   }
 }
-export const App = connect(mapStateToProps, mapDispatchToProps)(withMyStyle(AppC))
+export const App = connect(mapStateToProps, mapDispatchToProps)(AppC)

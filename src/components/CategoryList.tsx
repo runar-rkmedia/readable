@@ -5,9 +5,6 @@ import { CategoryHeader } from './'
 import { mapCategories, } from '../store/mapper'
 import List from 'material-ui/List'
 import Divider from 'material-ui/Divider'
-
-import { withMyStyle } from '../style'
-
 export interface CategoryI {
   id: string
   name: string
@@ -46,9 +43,4 @@ const mapStateToProps = ({ categories }: { categories: CategoriesStateI }
   }
 }
 
-export const CategoryList = connect(
-  mapStateToProps)(
-  withMyStyle(
-    CategoryListC
-  )
-  )
+export const CategoryList = connect(mapStateToProps)(CategoryListC)

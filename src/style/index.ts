@@ -1,9 +1,19 @@
+export { withStyles, WithStyles } from 'material-ui/styles'
 import { withStyles } from 'material-ui/styles'
 import { createMuiTheme } from 'material-ui/styles'
 import primary from 'material-ui/colors/blueGrey'
 import recondary from 'material-ui/colors/red'
-import styles from './style'
+import { styles } from './style'
+export * from './style'
 
+const decorate = withStyles(styles, { withTheme: true })
+// const decorate = withStyles(({ palette, spacing }) => ({
+//   root: {
+//     padding: spacing.unit,
+//     background: palette.background,
+//     color: palette.primary,
+//   },
+// }))
 export const myTheme = createMuiTheme({
   palette: {
     primary: primary,
@@ -16,13 +26,5 @@ export const myTheme = createMuiTheme({
   },
 })
 
-export const withMyStyle = (component: any): any => (
-  withStyles(styles, { withTheme: true })(component)
-)
-
-export interface WithMyStyle {
-  classes: any
-  theme: typeof myTheme
-}
-
-export default styles
+export default decorate
+// export const styles = styles

@@ -1,76 +1,36 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
-import { Dispatch } from 'react-redux'
-import { PostI } from '../interfaces'
-import { CommentsRetriever } from './'
+import { APIPostI } from '../interfaces'
+import { CommentsRetriever, PostHeader } from './'
+const classNames = require('classnames')
 
-import { withMyStyle, WithMyStyle } from '../style'
+import decorate from '../style'
 import Typography from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
 import Divider from 'material-ui/Divider'
-import Grid from 'material-ui/Grid'
-import ThumbUp from 'material-ui-icons/ThumbUp'
-import ThumbDown from 'material-ui-icons/ThumbDown'
-import IconButton from 'material-ui/IconButton'
 import * as ReactMarkdown from 'react-markdown'
-import * as moment from 'moment'
 
-export class PostViewC extends React.Component<{
-  post: PostI
-  isVoting: boolean
-  onVote: (post: PostI, isUpvote: boolean) => void
-} & WithMyStyle> {
-  render() {
-    const { classes, post, isVoting, onVote } = this.props
-    const { author, title, body, voteScore, timestamp } = post
-    return (
-      <div className={classes.root}>
-        <Paper className={classes.formRoot} elevation={4}>
-          <Typography gutterBottom={true} type="headline" color="inherit">
-            {title}
-          </Typography>
-          <Typography gutterBottom={true} type="subheading" color="inherit">
-            <Grid container={true} justify="space-between" alignItems="baseline">
-              <span>by {author}. {moment(timestamp).calendar()}</span>
-              <Grid item={true}>
-                {voteScore}
-                <IconButton
-                  className={[classes.voteButton, classes.upVoteButton].join(' ')}
-                  aria-label="Vote up"
-                  onClick={() => onVote(post, true)}
-                  disabled={isVoting}
-                  color="primary"
-                >
-                  <ThumbUp />
-                </IconButton>
-                <IconButton
-                  className={[classes.voteButton, classes.downVoteButton].join(' ')}
-                  aria-label="Vote down"
-                  onClick={() => onVote(post, false)}
-                  disabled={isVoting}
-                >
-                  <ThumbDown />
-                </IconButton>
+interface Props {
+  post: APIPostI
+  hideComments?: boolean
+}
 
-              </Grid>
-            </Grid>
-          </Typography>
-          <Divider className={classes.commentListDivider}/>
+export const PostView = decorate<Props>((props) => {
+  const { post, classes, hideComments } = props
+  return (
+    <div className={classes.root}>
+      <Paper className={classes.formRoot} elevation={4}>
+        <PostHeader post={post} />
+        <Divider />
+        <ReactMarkdown source={post.body} />
+      </Paper>
+      {!hideComments && (
+        <Paper className={classNames(classes.formRoot, classes.commentsPaper)} elevation={2}>
           <Typography type="title" gutterBottom={true}>
             Comments to this post
-          </Typography>
-          <ReactMarkdown source={body} />
+                </Typography>
           <CommentsRetriever post={post} />
         </Paper>
-      </div>
-    )
-  }
-}
-function mapDispatchToProps(dispatch: Dispatch<any>, ownprops: any) {
-  return {
-    ...ownprops
-  }
-}
-
-export const PostView = connect(null, mapDispatchToProps)(withMyStyle(PostViewC))
-export default PostView
+      )}
+    </div>
+  )
+})

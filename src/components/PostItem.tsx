@@ -1,6 +1,6 @@
 import * as React from 'react'
 import MailIcon from 'material-ui-icons/Mail'
-import { withMyStyle, WithMyStyle } from '../style'
+import decorate, { WithStyles } from '../style'
 import DeleteIcon from 'material-ui-icons/Delete'
 import KeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
@@ -28,10 +28,9 @@ interface Props {
   showCategory?: boolean
 }
 
-const PostItem = (props: Props & WithMyStyle & DispatchProps) => {
+const PostItemC = decorate<Props & WithStyles & DispatchProps>((props) => {
   const {
      title, body, author, timestamp, category, commentCount, voteScore } = props.post
-  const { status } = props.theme
   return (
     <ListItem button={true} onClick={() => props.goTo(urls.viewPost(props.post))}>
       <ListItemIcon>
@@ -57,14 +56,14 @@ const PostItem = (props: Props & WithMyStyle & DispatchProps) => {
           <span> <Hidden mdDown={true}>popularity:</Hidden> {voteScore === 0 ? (voteScore) :
             (voteScore > 0 ? (
               <span
-                style={{ color: status.upVote }}
+                // style={{ color: status.upVote }}
               >
                 {voteScore}
                 <KeyboardArrowUp />
               </span>
             ) : (
                 <span
-                  style={{ color: status.downVote }}
+                  // style={{ color: status.downVote }}
                 >
                   {voteScore}
                   <KeyboardArrowDown />
@@ -85,7 +84,7 @@ const PostItem = (props: Props & WithMyStyle & DispatchProps) => {
       </ListItemSecondaryAction>
     </ListItem>
   )
-}
+})
 interface DispatchProps {
   goTo: (category?: string) => void,
 }
@@ -100,4 +99,4 @@ const mapStateToProps = (state: any, ownprops: any) => {
     ...ownprops
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withMyStyle(PostItem))
+export const PostItem = connect(mapStateToProps, mapDispatchToProps)(PostItemC)

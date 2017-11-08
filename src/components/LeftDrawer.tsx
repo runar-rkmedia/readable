@@ -1,17 +1,19 @@
 import * as React from 'react'
-import { withMyStyle, WithMyStyle } from '../style'
+import decorate from '../style'
 import Drawer from 'material-ui/Drawer'
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
 import { CategoryList } from '../components/'
-// import {  } from 'material-ui/Progress'
 
-const LeftDrawerC = (props: {
+interface Props {
   handleDrawerToggle: () => void
   open: boolean
   loading: boolean
-} & WithMyStyle) => {
-  const { classes, theme, loading } = props
+}
+
+export const LeftDrawer = decorate<Props>((props) => {
+  const { loading } = props
+  const { classes, theme } = props
   const drawer = (
     <div>
       <div className={classes.drawerHeader} />
@@ -28,7 +30,7 @@ const LeftDrawerC = (props: {
         <Drawer
           type="temporary"
           onClick={props.handleDrawerToggle}
-          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+          anchor={theme!.direction === 'rtl' ? 'right' : 'left'}
           open={props.open}
           classes={{
             paper: classes.drawerPaper,
@@ -50,6 +52,4 @@ const LeftDrawerC = (props: {
       </Hidden>
     </div>
   )
-}
-
-export const LeftDrawer = withMyStyle(LeftDrawerC)
+})

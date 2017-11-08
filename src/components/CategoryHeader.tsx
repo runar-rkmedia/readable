@@ -7,15 +7,15 @@ import { Dispatch } from 'react-redux'
 import { push } from 'react-router-redux'
 import { urls } from '../utils/'
 
-import { withMyStyle, WithMyStyle } from '../style'
+import decorate, { WithStyles } from '../style'
 
-interface CategoryHeaderI {
+interface Props {
   category: CategoryI
   type: 'header' | 'listitem'
 }
 
-const CategoryHeaderC = (props: CategoryHeaderI & AppDispatchProps & WithMyStyle) => {
-  const { category, classes, goTo, type } = props
+const CategoryHeaderC = decorate<Props & AppDispatchProps & WithStyles>((props) => {
+  const { classes, goTo, type, category } = props
   const { path, icon, name, description } = category
   if (!path) {
     return (
@@ -52,7 +52,7 @@ const CategoryHeaderC = (props: CategoryHeaderI & AppDispatchProps & WithMyStyle
     default:
       return null
   }
-}
+})
 
 interface AppDispatchProps {
   goTo: (path: string) => void
@@ -64,4 +64,4 @@ function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any)
   }
 }
 
-export const CategoryHeader = connect(null, mapDispatchToProps)(withMyStyle(CategoryHeaderC))
+export const CategoryHeader = connect(null, mapDispatchToProps)(CategoryHeaderC)
