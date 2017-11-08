@@ -7,6 +7,7 @@ import { CommentsRetriever } from './'
 import { withMyStyle, WithMyStyle } from '../style'
 import Typography from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
+import Divider from 'material-ui/Divider'
 import Grid from 'material-ui/Grid'
 import ThumbUp from 'material-ui-icons/ThumbUp'
 import ThumbDown from 'material-ui-icons/ThumbDown'
@@ -54,11 +55,11 @@ export class PostViewC extends React.Component<{
               </Grid>
             </Grid>
           </Typography>
-        </Paper>
-        <Paper className={classes.formRoot} elevation={4}>
+          <Divider className={classes.commentListDivider}/>
+          <Typography type="title" gutterBottom={true}>
+            Comments to this post
+          </Typography>
           <ReactMarkdown source={body} />
-        </Paper>
-        <Paper className={classes.formRoot} elevation={4}>
           <CommentsRetriever post={post} />
         </Paper>
       </div>

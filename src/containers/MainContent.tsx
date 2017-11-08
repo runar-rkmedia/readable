@@ -25,7 +25,7 @@ interface MainContentProps {
 }
 
 export class MainContentC extends React.Component
-  <SidebarMappedProps & DispatchProps & WithMyStyle & DispatchProps> {
+  <SidebarMappedProps & DispatchProps & WithMyStyle> {
   componentDidMount() {
     this.retrievePosts()
   }
@@ -174,7 +174,7 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
 // export default connect(mapStateToProps)(withStyles((styles as any), { withTheme: true })(MainContent))
 
 interface DispatchProps {
-  fetchPosts: (category?: string) => void,
+  fetchPosts: (category?: string) => Promise<PostActionType>,
   fetchSinglePost: (postID: string) => Promise<PostActionType>,
   addNewPost: (post: PostI) => void,
   voteOnPost: (post: PostI, isUpVote: boolean) => void,

@@ -7,7 +7,7 @@ import { withMyStyle, WithMyStyle } from '../style'
 // import Typography from 'material-ui/Typography'
 // import Hidden from 'material-ui/Hidden'
 import {
-  ListItem,
+  // ListItem,
   // ListItemIcon,
   // ListItemSecondaryAction,
   // ListItemText,
@@ -15,7 +15,7 @@ import {
 // import IconButton from 'material-ui/IconButton'
 // import { mapCatagory } from '../store/mapper'
 // import urls from '../utils/urls'
-// import * as moment from 'moment'
+import * as moment from 'moment'
 // import Badge from 'material-ui/Badge'
 import { CommentI } from '../interfaces'
 import { connect, Dispatch } from 'react-redux'
@@ -26,10 +26,24 @@ interface Props {
 }
 
 const CommentItemC = (props: Props & WithMyStyle & DispatchProps) => {
+  const { classes, comment } = props
+  const {
+    author,
+    body,
+    // parentDeleted,
+    timestamp,
+    // voteScore
+  } = comment
   return (
-    <ListItem>
-      Here there be a comment
-    </ListItem>
+    <div className={classes.comment}>
+      <div
+        className={classes.commentHeader}
+      >
+        <span className={classes.authorName}>{author}</span>
+        <span className={classes.commentTime}>{moment(timestamp).calendar()}</span>
+      </div>
+      <div className={classes.commentBody}>{body}</div>
+    </div>
   )
 }
 interface DispatchProps {

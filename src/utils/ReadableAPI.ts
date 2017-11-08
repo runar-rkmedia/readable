@@ -19,30 +19,6 @@ export interface APICategoriesI {
   name: string
   path: string
 }
-
-export interface APIPostI {
-  id: string
-  timestamp: number | null
-  title: string
-  body: string
-  author: string
-  category: string
-  voteScore: number
-  deleted: boolean
-  commentCount: number
-}
-export interface APICommentI {
-  // TODO: Needs verification
-  id: string
-  timestamp: number | null
-  title: string
-  body: string
-  author: string
-  category: string
-  voteScore: number
-  deleted: boolean
-  commentCount: number
-}
 export interface APIPostSendNewI {
   id: string
   timestamp: number | null
@@ -51,12 +27,24 @@ export interface APIPostSendNewI {
   author: string
   category: string
 }
+export interface APIPostI extends APIPostSendNewI {
+  timestamp: number | null
+  voteScore: number
+  deleted: boolean
+  commentCount: number
+}
+export interface APICommentI extends APICommentSendNewI {
+  category: string
+  voteScore: number
+  deleted: boolean
+  commentCount: number
+}
 export interface APICommentSendNewI {
   id: string
   timestamp: number | null
   body: string
   author: string
-  parentID: string
+  parentId: string
 }
 export interface APIPostSendEditI {
   title: string

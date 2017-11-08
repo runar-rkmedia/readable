@@ -12,6 +12,7 @@ const headerIconsHeight = '1.5em'
 export default (theme: typeof myTheme): StyleRules => ({
   root: {
     width: '100%',
+    height: 'calc(100% - 56px)',
     zIndex: 1,
     // overflow: 'hidden',
     flexGrow: 1
@@ -39,7 +40,25 @@ export default (theme: typeof myTheme): StyleRules => ({
       display: 'none',
     },
   },
-
+  authorName: {
+    fontWeight: 'bold',
+    marginRight: theme.spacing.unit,
+  },
+  commentHeader: {
+    marginBottom: '2ex'
+  },
+  commentTime: {
+    fontSize: '.75em',
+    color: grey[500]
+  },
+  commentDivider: {
+    width: 'calc(100% - 2em)',
+    margin: [theme.spacing.unit * 2, 'auto', theme.spacing.unit * 3]
+  },
+  commentListDivider: {
+    width: 'calc(100% - 2em)',
+    margin: [theme.spacing.unit * 4, 'auto', theme.spacing.unit * 5],
+  },
   authorAvatar: {
     margin: 10,
     color: '#fff',

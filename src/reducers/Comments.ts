@@ -1,8 +1,9 @@
 import { CommentActions, CommentActionType } from '../actions/'
 import { LOCATION_CHANGE, LocationChangeAction } from 'react-router-redux'
+import { APICommentI } from '../interfaces'
 
 export interface CommentStateI {
-  items: { [s: string]: {} }
+  items: { [s: string]: APICommentI }
   loading: boolean
   sending: boolean
   hasError: boolean
@@ -52,7 +53,6 @@ export function comments(
       }
       return state
     case CommentActions.RECIEVE:
-      console.log(action)
       return {
         ...state,
         loading: false,

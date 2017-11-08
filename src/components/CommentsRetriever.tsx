@@ -1,29 +1,51 @@
 import * as React from 'react'
 import { connect, Dispatch, } from 'react-redux'
 import { push } from 'react-router-redux'
-import List from 'material-ui/List'
-import { PostI } from '../interfaces'
-import { withMyStyle } from '../style/'
+import { PostI, CommentI, StoreStateI } from '../interfaces'
+import { fetchComments } from '../actions'
+import { CommentsList } from './'
+import { withMyStyle, WithMyStyle } from '../style/'
 import { } from './'
 
-export const CommentsRetrieverC = (props: {
+interface OwnProps {
   post: PostI
-}) => {
-  return (
-    <List>
-      Loading commments.
-    </List>
-  )
 }
+export class CommentsRetrieverC extends React.Component<OwnProps & WithMyStyle & DispatchProps & MappedProps> {
+    componentDidMount() {
+      this.props.fetchComments(this.props.post)
+    }
+  render() {
 
-interface AppDispatchProps {
-  goHome: () => void
+    return (
+        <CommentsList comments={this.props.comments}/>
+    )
+  }
 }
-function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any) {
+interface MappedProps {
+  comments: CommentI[]
+}
+const mapStateToProps = (state: StoreStateI, ownprops: any) => {
+  const { comments } = state
   return {
-    goHome: () => dispatch(push('/')),
+    comments: Object.keys(comments.items).map(
+      key => comments.items[key]).filter(
+        c => c.parentId === ownprops.post.id
+      ),
+    ...ownprops
+  }
+}
+interface DispatchProps {
+  fetchComments: (post: PostI) => void,
+  // addNewPost: (post: PostI) => void,
+  // voteOnPost: (post: PostI, isUpVote: boolean) => void,
+  goTo: (path: string) => void,
+}
+function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ownprops: any) {
+  return {
+    goTo: (path: string) => dispatch(push(path)),
+    fetchComments: (post: PostI) => dispatch(fetchComments(post.id)),
     ...ownprops
   }
 }
 
-export const CommentsRetriever = connect(null, mapDispatchToProps)(withMyStyle(CommentsRetrieverC))
+export const CommentsRetriever = connect(mapStateToProps, mapDispatchToProps)(withMyStyle(CommentsRetrieverC))
