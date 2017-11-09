@@ -2,7 +2,8 @@ import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 import { RouterState, push } from 'react-router-redux'
-import { CategoryHeader, PostList, PostForm, PostView } from '../components/'
+import { CategoryHeader, PostList, PostView } from '../components/'
+import { PostFormContainer } from './'
 import {
   PostI,
   CategoryI,
@@ -75,14 +76,19 @@ export const MainContentC = decorate(
             <Route
               path="/category/:category/post/add"
               render={() => this.checkCorrectPath(
-                <PostForm
-                  category={category}
-                  post={initializeNewPost(category.id)}
-                  onSubmit={addNewPost}
-                  postIsSending={postIsSending}
-                  classes={{}}
-                />
+                <div>
+                  <Typography gutterBottom={true} type="headline" color="inherit" noWrap={true}>
+                    New post in {category.name}
+                  </Typography>
+                  <PostFormContainer
+                    post={initializeNewPost(category.id)}
+                    onSubmit={addNewPost}
+                    postIsSending={postIsSending}
+                    classes={{}}
+                  />
+                </div>
               )
+
               }
 
             />
@@ -122,8 +128,7 @@ export const MainContentC = decorate(
                     }
                   />
                 </div>
-              )
-              )}
+              ))}
           />
             <Route
               exact={true}
@@ -173,7 +178,7 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
     ...ownprops
   }
 }
-// export default connect(mapStateToProps)(withStyles((styles as any), { withTheme: true })(MainContent))
+// export default connect(mapStateToProps)(withStyles((styles as any), {withTheme: true })(MainContent))
 
 interface DispatchProps {
   fetchPosts: (category?: string) => Promise<PostActionType>,
