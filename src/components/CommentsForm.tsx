@@ -56,8 +56,8 @@ export const CommentsForm = decorate<Props>((props) => {
         multiline={true}
       />
       <FormHelperText>
-        Body text {body.length} characters. (max {maxLengths.body}).
-       <b>*bold*</b>, <i>_italics_</i>, ~strike~ `code`, ```preformatted``` >quote`
+        Body text {body.length} characters. (max {maxLengths.body}). <br/>
+        Markdown allowed (except headlines)
       </FormHelperText>
       <Button
         disabled={commentIsSending || !verifyOkToSubmitComment(comment)}

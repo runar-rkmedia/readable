@@ -19,7 +19,7 @@ export const PostView = decorate<Props>((props) => {
     <Paper className={classes.formRoot} elevation={4}>
       <PostHeader {...{ post, isVoting, onVote }} />
       <Divider />
-      <ReactMarkdown source={post.body} />
+      <ReactMarkdown escapeHtml={true} source={post.body} />
     </Paper>
   )
 })

@@ -3,6 +3,7 @@ import * as moment from 'moment'
 import { APICommentI } from '../interfaces'
 import decorate from '../style'
 import { Voter } from './'
+import * as ReactMarkdown from 'react-markdown'
 
 interface Props {
   comment: APICommentI
@@ -32,7 +33,12 @@ export const CommentItem = decorate<Props>((props) => {
           isVoting={isVoting || false}
         />
       </div>
-      <div className={classes.commentBody}>{body}</div>
+      <ReactMarkdown
+        escapeHtml={true}
+        source={body}
+        disallowedTypes={['Heading']}
+        unwrapDisallowed={true}
+      />
     </div>
   )
 })
