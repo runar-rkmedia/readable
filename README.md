@@ -13,7 +13,7 @@ There is an example-server added that can be used, and is provided here for you.
 
 ```bash
 npm install
-npm run start
+npm start
 ```
 
 This will install everything needed, and also run the server alongside the webapplicaiton itself.

@@ -5,7 +5,6 @@ import { RouterState, push } from 'react-router-redux'
 import { CategoryHeader, PostList, PostView } from '../components/'
 import { PostFormContainer } from './'
 import {
-  PostI,
   CategoryI,
   StoreStateI,
   APIPostI
@@ -150,9 +149,9 @@ export const MainContentC = decorate(
   })
 interface SidebarMappedProps extends Props {
   router: RouterState
-  posts: PostI[]
+  posts: APIPostI[]
   postsHash: { [s: string]: APIPostI }
-  selectedPost: PostI
+  selectedPost: APIPostI
   postID: string
   category: CategoryI
   postIsSending: boolean
@@ -183,8 +182,8 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
 interface DispatchProps {
   fetchPosts: (category?: string) => Promise<PostActionType>,
   fetchSinglePost: (postID: string) => Promise<PostActionType>,
-  addNewPost: (post: PostI) => void,
-  voteOnPost: (post: PostI, isUpVote: boolean) => void,
+  addNewPost: (post: APIPostI) => void,
+  voteOnPost: (post: APIPostI, isUpVote: boolean) => void,
   goTo: (path: string) => void,
 }
 

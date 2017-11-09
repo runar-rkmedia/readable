@@ -1,5 +1,4 @@
 import { Dispatch } from 'react-redux'
-import { CommentI } from '../interfaces'
 import {
   APICommentI,
   // APICommentSendNewI
@@ -29,7 +28,7 @@ export type CommentActionType =
   { type: CommentActions.SENDING, sending: boolean } |
   { type: CommentActions.VOTING, isVoting: boolean } |
   { type: CommentActions.VOTE, isUpVote: boolean } |
-  { type: CommentActions.ADD, comment: CommentI }
+  { type: CommentActions.ADD, comment: APICommentI }
 
 export const recieveComments = (comments: APICommentI[], previousComments: any): CommentActionType => {
   return {
@@ -47,7 +46,7 @@ export const recieveCommentAfterSend = (comment: APICommentI, previousComments: 
   }
 }
 
-export const sendComment = (comment: CommentI): CommentActionType => {
+export const sendComment = (comment: APICommentI): CommentActionType => {
   return {
     type: CommentActions.ADD,
     comment
@@ -79,7 +78,7 @@ export const commentIsVoting = (isVoting: boolean): CommentActionType => {
     isVoting,
   }
 }
-export const fetchComments = (postID: string) => ((dispatch: Dispatch<CommentI>, getState: any) => {
+export const fetchComments = (postID: string) => ((dispatch: Dispatch<APICommentI>, getState: any) => {
   dispatch(commentsAreLoading(true))
   const state: StoreStateI = getState()
   return CommentAPI.get(postID)
@@ -114,12 +113,13 @@ export const fetchComments = (postID: string) => ((dispatch: Dispatch<CommentI>,
 // }
 // )
 //
-// export const voteComment = (comment: CommentI, isUpVote: boolean) => ((dispatch: Dispatch<CommentI>, getState: any) => {
-//   dispatch(commentIsVoting(true))
-//   const state: StoreStateI = getState()
-//   return CommentAPI.vote(comment.id, isUpVote ? 'upVote' : 'downVote')
-//     .then(returnedComment => dispatch(recieveAfterSend(returnedComment, state.comments.items)))
-//     .catch((e) => dispatch(commentsHasError(true, `Vote on comment: ${e.message}`)))
-//     .then(() => setTimeout(() => dispatch(commentIsVoting(false)), 1000))
-// }
-// )
+export const voteComment = (
+  comment: APICommentI, isUpVote: boolean) => ((dispatch: Dispatch<APICommentI>, getState: any) => {
+    dispatch(commentIsVoting(true))
+    const state: StoreStateI = getState()
+    return CommentAPI.vote(comment.id, isUpVote ? 'upVote' : 'downVote')
+      .then(returnedComment => dispatch(recieveCommentAfterSend(returnedComment, state.comments.items)))
+      .catch((e) => dispatch(commentsHasError(true, `Vote on comment: ${e.message}`)))
+      .then(() => setTimeout(() => dispatch(commentIsVoting(false)), 1000))
+  }
+  )

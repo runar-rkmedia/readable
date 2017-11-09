@@ -1,14 +1,13 @@
 import * as React from 'react'
 import { connect, Dispatch, } from 'react-redux'
-import { push } from 'react-router-redux'
-import { PostI, CommentI, StoreStateI } from '../interfaces'
+import { APIPostI, APICommentI, StoreStateI } from '../interfaces'
 import { fetchComments } from '../actions'
 import { CommentsList } from './'
 import decorate, { WithStyles } from '../style/'
 import { } from './'
 
 interface OwnProps {
-  post: PostI
+  post: APIPostI
 }
 export const CommentsRetrieverC = decorate(
   class extends React.Component<OwnProps & WithStyles & DispatchProps & MappedProps> {
@@ -24,7 +23,7 @@ export const CommentsRetrieverC = decorate(
   }
 )
 interface MappedProps {
-  comments: CommentI[]
+  comments: APICommentI[]
 }
 const mapStateToProps = (state: StoreStateI, ownprops: any) => {
   const { comments } = state
@@ -37,15 +36,11 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
   }
 }
 interface DispatchProps {
-  fetchComments: (post: PostI) => void,
-  // addNewPost: (post: PostI) => void,
-  // voteOnPost: (post: PostI, isUpVote: boolean) => void,
-  goTo: (path: string) => void,
+  fetchComments: (post: APIPostI) => void,
 }
 function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ownprops: any) {
   return {
-    goTo: (path: string) => dispatch(push(path)),
-    fetchComments: (post: PostI) => dispatch(fetchComments(post.id)),
+    fetchComments: (post: APIPostI) => dispatch(fetchComments(post.id)),
     ...ownprops
   }
 }

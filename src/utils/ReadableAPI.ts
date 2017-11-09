@@ -1,5 +1,4 @@
-import { PostI, CommentI } from '../components/'
-import uuid from 'uuid'
+import uuid from 'uuid/v4'
 
 const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
 
@@ -21,7 +20,7 @@ export interface APICategoriesI {
 }
 export interface APIPostSendNewI {
   id: string
-  timestamp: string
+  timestamp: number
   title: string
   body: string
   author: string
@@ -40,7 +39,7 @@ export interface APICommentI extends APICommentSendNewI {
 }
 export interface APICommentSendNewI {
   id: string
-  timestamp: number | null
+  timestamp: number
   body: string
   author: string
   parentId: string
@@ -50,7 +49,7 @@ export interface APIPostSendEditI {
   body: string
 }
 export interface APICommentSendEditI {
-  timestamp: number | null
+  timestamp: number
   body: string
 }
 export const initializeNewPost = (category: string): APIPostI => ({
@@ -58,7 +57,7 @@ export const initializeNewPost = (category: string): APIPostI => ({
   title: '',
   body: '',
   id: uuid(),
-  timestamp: '',
+  timestamp: 0,
   voteScore: 1,
   deleted: false,
   commentCount: 0,
@@ -96,15 +95,15 @@ export const PostAPI = {
   getByID: (id: string): Promise<APIPostI> => myFetch(`posts/${id}`),
   getByCategory: (category: string) => CategoryAPI.getPostsInCategory(category),
   getComments: (id: string) => CommentAPI.get(id),
-  add: (post: PostI) => {
+  add: (post: APIPostI) => {
     const { id, title, body, author, category } = post
     const postWithNewDate: APIPostSendNewI = {
-      timestamp: String(Date.now()),
+      timestamp: Date.now(),
       id, title, body, author, category
     }
     return myFetch(`posts/`, 'POST', postWithNewDate)
   },
-  edit: (post: PostI) => (
+  edit: (post: APIPostI) => (
     myFetch(
       `posts/${post.id}`,
       'PUT',
@@ -120,12 +119,12 @@ export const PostAPI = {
 export const CommentAPI = {
   remove: (id: string) => myFetch(`comments/${id}`, 'DELETE'),
   get: (id: string) => myFetch(`posts/${id}/comments`),
-  add: (comment: CommentI) => myFetch(`comments/`, 'POST', comment),
+  add: (comment: APICommentI) => myFetch(`comments/`, 'POST', comment),
   vote: (
     id: string,
     option: voteOption
   ) => myFetch(`comments/${id}`, 'POST', { option }),
-  edit: (comment: CommentI) => (
+  edit: (comment: APICommentI) => (
     myFetch(
       `comments/${comment.id}`,
       'PUT',

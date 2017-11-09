@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const PostView = decorate<Props>((props) => {
-  const { post, classes, hideComments } = props
+  const { post, classes, hideComments} = props
   return (
     <div className={classes.root}>
       <Paper className={classes.formRoot} elevation={4}>
@@ -25,8 +25,8 @@ export const PostView = decorate<Props>((props) => {
       </Paper>
       {!hideComments && (
         <Paper className={classNames(classes.formRoot, classes.commentsPaper)} elevation={2}>
-          <Typography type="title" gutterBottom={true}>
-            Comments to this post
+          <Typography type="subheading" gutterBottom={true}>
+            {post.commentCount ? 'Comments to this post:' : 'Be the very first to post a comment to this post.'}
                 </Typography>
           <CommentsRetriever post={post} />
         </Paper>

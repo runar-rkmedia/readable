@@ -18,13 +18,13 @@ import { mapCatagory } from '../store/mapper'
 import { urls } from '../utils/'
 import * as moment from 'moment'
 import Badge from 'material-ui/Badge'
-import { PostI } from '../interfaces'
+import { APIPostI } from '../interfaces'
 import { connect, Dispatch } from 'react-redux'
 import { push } from 'react-router-redux'
 const removeMd = require('remove-markdown')
 
 interface Props {
-  post: PostI
+  post: APIPostI
   showCategory?: boolean
 }
 

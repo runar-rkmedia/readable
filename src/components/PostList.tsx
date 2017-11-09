@@ -1,22 +1,11 @@
 import * as React from 'react'
 import List from 'material-ui/List'
-import { PostItem } from './PostItem'
+import { PostItem } from './'
+import { APIPostI } from '../interfaces'
 import Divider from 'material-ui/Divider'
 
-export interface PostI {
-  id: string
-  timestamp: string
-  title: string
-  body: string
-  author: string
-  category: string
-  voteScore: number,
-  deleted: boolean
-  commentCount: number
-}
-
 interface Props {
-  posts: PostI[]
+  posts: APIPostI[]
   showCategory?: boolean
 }
 

@@ -1,5 +1,4 @@
 import { Dispatch } from 'react-redux'
-import { PostI } from '../interfaces'
 import { APIPostI, APIPostSendNewI } from '../interfaces'
 import { PostAPI } from '../utils/ReadableAPI'
 import { StoreStateI } from '../reducers'
@@ -26,7 +25,7 @@ export type PostActionType =
   { type: PostActions.SENDING, sending: boolean } |
   { type: PostActions.VOTING, isVoting: boolean } |
   { type: PostActions.VOTE, isUpVote: boolean } |
-  { type: PostActions.ADD, post: PostI }
+  { type: PostActions.ADD, post: APIPostI }
 
 export const recievePosts = (posts: APIPostI[], previousPosts: any): PostActionType => {
   return {
@@ -44,7 +43,7 @@ export const recieveAfterSend = (post: APIPostI, previousPosts: any): PostAction
   }
 }
 
-export const sendPost = (post: PostI): PostActionType => {
+export const sendPost = (post: APIPostI): PostActionType => {
   return {
     type: PostActions.ADD,
     post
@@ -76,7 +75,7 @@ export const postIsVoting = (isVoting: boolean): PostActionType => {
     isVoting,
   }
 }
-export const fetchPosts = (categoryID?: string) => ((dispatch: Dispatch<PostI>, getState: any) => {
+export const fetchPosts = (categoryID?: string) => ((dispatch: Dispatch<APIPostI>, getState: any) => {
   dispatch(postsAreLoading(true))
   const state: StoreStateI = getState()
   return PostAPI.get(categoryID)
@@ -84,7 +83,7 @@ export const fetchPosts = (categoryID?: string) => ((dispatch: Dispatch<PostI>, 
     .catch((e) => dispatch(postsHasError(true, `Retrieve posts: ${e.message}`)))
 }
 )
-export const fetchSinglePost = (postID: string) => ((dispatch: Dispatch<PostI>, getState: any) => {
+export const fetchSinglePost = (postID: string) => ((dispatch: Dispatch<APIPostI>, getState: any) => {
   dispatch(postsAreLoading(true))
   const state: StoreStateI = getState()
   return PostAPI.getByID(postID)
@@ -103,7 +102,7 @@ export function verifyOkToSubmitPost(post: APIPostSendNewI) {
   return true
 }
 
-export const addPost = (post: PostI) => ((dispatch: Dispatch<PostI>, getState: any) => {
+export const addPost = (post: APIPostI) => ((dispatch: Dispatch<APIPostI>, getState: any) => {
   dispatch(postIsSending(true))
   const state: StoreStateI = getState()
   return PostAPI.add(post)
@@ -113,7 +112,7 @@ export const addPost = (post: PostI) => ((dispatch: Dispatch<PostI>, getState: a
 }
 )
 
-export const votePost = (post: PostI, isUpVote: boolean) => ((dispatch: Dispatch<PostI>, getState: any) => {
+export const votePost = (post: APIPostI, isUpVote: boolean) => ((dispatch: Dispatch<APIPostI>, getState: any) => {
   dispatch(postIsVoting(true))
   const state: StoreStateI = getState()
   return PostAPI.vote(post.id, isUpVote ? 'upVote' : 'downVote')

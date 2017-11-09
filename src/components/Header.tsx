@@ -29,7 +29,7 @@ const HeaderC = decorate<Props & SidebarMappedProps & DispatchProps>((props) => 
           >
             <MenuIcon />
           </IconButton>
-          <Typography onClick={props.goHome} type="title" color="inherit" noWrap={true} className={classes.link}>
+          <Typography onClick={props.goHome} type="title" color="inherit" className={classes.link}>
             Readable
           </Typography>
         </Toolbar>
