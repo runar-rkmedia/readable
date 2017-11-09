@@ -1,4 +1,6 @@
 export * from './App'
 export * from './FrontPage'
 export * from './MainContent'
-export * from './PostFormContainer'
+export * from './PostForm'
+export * from './Post'
+export * from './Comments'

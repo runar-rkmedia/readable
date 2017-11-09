@@ -15,8 +15,7 @@ export const PostList = (props: Props) => {
   return (
     <List>
       {posts.map((post, i) => (
-        // For some reason, redux complaints of non-unique keys if I don't append this key with some string.
-        <div key={'post ' + post.id}>
+        <div key={'post' + post.id}>
           <PostItem post={post} />
           {postCount !== i + 1 && (
             <Divider inset={true} />

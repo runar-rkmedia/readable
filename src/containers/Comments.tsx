@@ -2,22 +2,32 @@ import * as React from 'react'
 import { connect, Dispatch, } from 'react-redux'
 import { APIPostI, APICommentI, StoreStateI } from '../interfaces'
 import { fetchComments } from '../actions'
-import { CommentsList } from './'
+import { CommentsList } from '../components'
+import Typography from 'material-ui/Typography'
+import Paper from 'material-ui/Paper'
 import decorate, { WithStyles } from '../style/'
 import { } from './'
+const classNames = require('classnames')
 
 interface OwnProps {
   post: APIPostI
 }
-export const CommentsRetrieverC = decorate(
+export const CommentsC = decorate(
   class extends React.Component<OwnProps & WithStyles & DispatchProps & MappedProps> {
     componentDidMount() {
       this.props.fetchComments(this.props.post)
     }
     render() {
-
+      const { classes, post } = this.props
       return (
-        <CommentsList comments={this.props.comments} />
+        <div>
+          <Paper className={classNames(classes.formRoot, classes.commentsPaper)} elevation={2}>
+            <Typography type="subheading" gutterBottom={true}>
+              {post.commentCount ? 'Comments to this post:' : 'Be the very first to post a comment to this post.'}
+            </Typography>
+            <CommentsList comments={this.props.comments} />
+          </Paper>
+        </div>
       )
     }
   }
@@ -45,4 +55,4 @@ function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ownprops: any) {
   }
 }
 
-export const CommentsRetriever = connect(mapStateToProps, mapDispatchToProps)(CommentsRetrieverC)
+export const Comments = connect(mapStateToProps, mapDispatchToProps)(CommentsC)

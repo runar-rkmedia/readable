@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { APIPostSendNewI, APIPostI } from '../interfaces'
 import { verifyOkToSubmitPost } from '../actions/'
-import { PostPreview, PostForm } from '../components'
+import { PostPreview, PostForm as PostFormComp } from '../components'
 
 import decorate, { WithStyles } from '../style'
 import Paper from 'material-ui/Paper'
@@ -24,7 +24,7 @@ interface Props {
 }
 type postform = Props & WithStyles
 
-export const PostFormContainer = decorate(
+export const PostForm = decorate(
   class extends React.Component<postform> {
     state: {
       post: APIPostI,
@@ -74,7 +74,7 @@ export const PostFormContainer = decorate(
           {selectedTab === 1 ? (
             <PostPreview post={post} />
           ) : (
-              <PostForm
+              <PostFormComp
                 onSubmit={onSubmit}
                 post={post}
                 postIsSending={postIsSending}

@@ -2,15 +2,15 @@ import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 import { RouterState, push } from 'react-router-redux'
-import { CategoryHeader, PostList, PostView } from '../components/'
-import { PostFormContainer } from './'
+import { CategoryHeader, PostList } from '../components/'
+import { PostForm, Post } from './'
 import {
   CategoryI,
   StoreStateI,
   APIPostI
 } from '../interfaces'
 import { mapCatagory } from '../store/mapper'
-import { fetchSinglePost, fetchPosts, addPost, votePost, PostActionType } from '../actions/'
+import { fetchSinglePost, fetchPosts, addPost, PostActionType } from '../actions/'
 import FrontPage from './FrontPage'
 import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
@@ -57,8 +57,6 @@ export const MainContentC = decorate(
     render() {
       const {
       classes, category, posts, selectedPost, goTo,
-        onVote,
-        isVoting,
         addNewPost,
         postIsSending, loading,
     } = this.props
@@ -79,11 +77,10 @@ export const MainContentC = decorate(
                   <Typography gutterBottom={true} type="headline" color="inherit" noWrap={true}>
                     New post in {category.name}
                   </Typography>
-                  <PostFormContainer
+                  <PostForm
                     post={initializeNewPost(category.id)}
                     onSubmit={addNewPost}
                     postIsSending={postIsSending}
-                    classes={{}}
                   />
                 </div>
               )
@@ -96,7 +93,7 @@ export const MainContentC = decorate(
               render={() =>
                 selectedPost ? (
                   this.checkCorrectPath(
-                    <PostView {...{ isVoting, onVote }} post={selectedPost} />
+                    <Post post={selectedPost} />
                   )) : (loading ? (
                     <div>Finding your post....</div>
                   ) : (
@@ -156,7 +153,6 @@ interface SidebarMappedProps extends Props {
   postsAreLoading: boolean
   categoriesAreloading: boolean
   loading: boolean
-  isVoting: boolean
 }
 const mapStateToProps = (state: StoreStateI, ownprops: any) => {
   const { categories, router, posts } = state
@@ -169,7 +165,6 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
     postIsSending: posts.sending,
     postsAreLoading: posts.loading,
     categoriesAreloading: categories.loading,
-    isVoting: posts.isVoting,
     loading: posts.sending || posts.loading || categories.loading,
     router: router,
     ...ownprops
@@ -181,7 +176,6 @@ interface DispatchProps {
   fetchPosts: (category?: string) => Promise<PostActionType>,
   fetchSinglePost: (postID: string) => Promise<PostActionType>,
   addNewPost: (post: APIPostI) => void,
-  onVote: (post: APIPostI, isUpVote: boolean) => void,
   goTo: (path: string) => void,
 }
 
@@ -190,7 +184,6 @@ function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ): DispatchProps 
     fetchPosts: (category) => dispatch(fetchPosts(category)),
     fetchSinglePost: (postID) => dispatch(fetchSinglePost(postID)),
     addNewPost: (post) => dispatch(addPost(post)),
-    onVote: (post, isUpVote) => dispatch(votePost(post, isUpVote)),
     goTo: (path: string) => dispatch(push(path)),
   }
 }
