@@ -4985,6 +4985,10 @@ react@^16.0.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+"reactnd-project-readable-starter@https://github.com/udacity/reactnd-project-readable-starter.git":
+  version "0.0.0"
+  resolved "https://github.com/udacity/reactnd-project-readable-starter.git#87f81ad068d4efa6cbf9996a76268f85bf4ad463"
+
 read-all-stream@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/read-all-stream/-/read-all-stream-3.1.0.tgz#35c3e177f2078ef789ee4bfafa4373074eaef4fa"
