@@ -30,6 +30,19 @@ export const PostForm = decorate<Props>((props) => {
   return (
     <Paper className={classes.formRoot} elevation={4}>
       <TextField
+        autoFocus={!author}
+        label="Author name"
+        InputLabelProps={{
+          shrink: true,
+        }}
+        placeholder="Author name"
+        value={author}
+        helperText="Your name, or nickname"
+        onChange={handleChange('author')}
+        margin="normal"
+      />
+      <TextField
+        autoFocus={!!author}
         className="fullWidthFix"
         label="Title"
         InputLabelProps={{
@@ -40,17 +53,6 @@ export const PostForm = decorate<Props>((props) => {
         helperText="A nice little descriptive title here."
         onChange={handleChange('title')}
         fullWidth={true}
-        margin="normal"
-      />
-      <TextField
-        label="Author name"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        placeholder="Author name"
-        value={author}
-        helperText="Your name, or nickname"
-        onChange={handleChange('author')}
         margin="normal"
       />
       <TextField

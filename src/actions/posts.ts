@@ -4,6 +4,7 @@ import { PostAPI } from '../utils/ReadableAPI'
 import { StoreStateI } from '../reducers'
 import { urls } from '../utils/'
 import { push } from 'react-router-redux'
+import { setAuthor } from './'
 
 export const enum PostActions {
   FETCH = 'POST_FETCH',
@@ -108,6 +109,7 @@ export const addPost = (post: APIPostI) => ((dispatch: Dispatch<APIPostI>, getSt
   return PostAPI.add(post)
     .then(returnedPost => dispatch(recieveAfterSend(returnedPost, state.posts.items)))
     .then(() => dispatch(push(urls.viewPost(post))))
+    .then(() => dispatch(setAuthor(post.author)))
     .catch((e) => dispatch(postsHasError(true, `Add post: ${e.message}`)))
 }
 )

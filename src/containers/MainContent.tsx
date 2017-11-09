@@ -57,7 +57,7 @@ export const MainContentC = decorate(
     render() {
       const {
       classes, category, posts, selectedPost, goTo,
-        addNewPost,
+        addNewPost, author,
         postIsSending, loading,
     } = this.props
       return (
@@ -78,7 +78,7 @@ export const MainContentC = decorate(
                     New post in {category.name}
                   </Typography>
                   <PostForm
-                    post={initializeNewPost(category.id)}
+                    post={{...initializeNewPost(category.id), author}}
                     onSubmit={addNewPost}
                     postIsSending={postIsSending}
                   />
@@ -153,9 +153,10 @@ interface SidebarMappedProps extends Props {
   postsAreLoading: boolean
   categoriesAreloading: boolean
   loading: boolean
+  author: string
 }
 const mapStateToProps = (state: StoreStateI, ownprops: any) => {
-  const { categories, router, posts } = state
+  const { categories, router, posts, author } = state
   return {
     posts: Object.keys(posts.items).map(key => posts.items[key]),
     postsHash: posts.items,
@@ -167,6 +168,7 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
     categoriesAreloading: categories.loading,
     loading: posts.sending || posts.loading || categories.loading,
     router: router,
+    author: author.name,
     ...ownprops
   }
 }

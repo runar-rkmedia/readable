@@ -40,6 +40,18 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
       display: 'none',
     },
   },
+  pullRight: {
+    // width: '100%',
+    float: 'right',
+    // extend: 'clearFix'
+  },
+  clearFix: {
+    '&:after': {
+      display: 'block',
+      clear: 'both',
+      content: '""'
+    }
+  },
   authorName: {
     fontWeight: 'bold',
     marginRight: theme.spacing.unit,

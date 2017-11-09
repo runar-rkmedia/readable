@@ -30,6 +30,7 @@ export const CommentsForm = decorate<Props>((props) => {
   return (
     <div>
       <TextField
+        autoFocus={!author}
         label="Author name"
         InputLabelProps={{
           shrink: true,
@@ -41,6 +42,7 @@ export const CommentsForm = decorate<Props>((props) => {
         margin="normal"
       />
       <TextField
+        autoFocus={!!author}
         className="fullWidthFix"
         label="Body text"
         InputLabelProps={{

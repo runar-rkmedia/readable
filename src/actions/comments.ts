@@ -5,8 +5,7 @@ import {
 } from '../interfaces'
 import { CommentAPI } from '../utils/ReadableAPI'
 import { StoreStateI } from '../reducers'
-// import { urls } from '../utils/'
-// import { push } from 'react-router-redux'
+import { setAuthor } from './'
 
 export const enum CommentActions {
   FETCH = 'COMMENT_FETCH',
@@ -107,6 +106,7 @@ export const addComment = (comment: APICommentI) => ((dispatch: Dispatch<APIComm
   const state: StoreStateI = getState()
   return CommentAPI.add(comment)
     .then(returnedComment => dispatch(recieveCommentAfterSend(returnedComment, state.comments.items)))
+    .then(() => dispatch(setAuthor(comment.author)))
     .catch((e) => dispatch(commentsHasError(true, `Add comment: ${e.message}`)))
 }
 )
