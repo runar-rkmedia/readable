@@ -118,6 +118,6 @@ export const votePost = (post: APIPostI, isUpVote: boolean) => ((dispatch: Dispa
   return PostAPI.vote(post.id, isUpVote ? 'upVote' : 'downVote')
     .then(returnedPost => dispatch(recieveAfterSend(returnedPost, state.posts.items)))
     .catch((e) => dispatch(postsHasError(true, `Vote on post: ${e.message}`)))
-    .then(() => setTimeout(() => dispatch(postIsVoting(false)), 1000))
+    .then(() => dispatch(postIsVoting(false)))
 }
 )

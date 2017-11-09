@@ -120,6 +120,6 @@ export const voteComment = (
     return CommentAPI.vote(comment.id, isUpVote ? 'upVote' : 'downVote')
       .then(returnedComment => dispatch(recieveCommentAfterSend(returnedComment, state.comments.items)))
       .catch((e) => dispatch(commentsHasError(true, `Vote on comment: ${e.message}`)))
-      .then(() => setTimeout(() => dispatch(commentIsVoting(false)), 1000))
+      .then(() => dispatch(commentIsVoting(false)))
   }
   )

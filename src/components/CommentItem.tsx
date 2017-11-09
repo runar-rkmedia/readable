@@ -22,13 +22,15 @@ export const CommentItem = decorate<Props>((props) => {
   return (
     <div className={classes.comment}>
       <div className={classes.commentHeader}>
+        <span>
+          <span className={classes.authorName}>{author}</span>
+          <span className={classes.commentTime}>{moment(timestamp).calendar()}</span>
+        </span>
         <Voter
           onVote={(isUpvote: boolean) => onVote(comment, isUpvote)}
           voteScore={voteScore}
           isVoting={isVoting || false}
         />
-        <span className={classes.authorName}>{author}</span>
-        <span className={classes.commentTime}>{moment(timestamp).calendar()}</span>
       </div>
       <div className={classes.commentBody}>{body}</div>
     </div>

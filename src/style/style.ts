@@ -48,6 +48,7 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
     backgroundColor: grey[100],
   },
   commentHeader: {
+    extend: 'postcommentDetails',
     marginBottom: '2ex'
   },
   commentTime: {
@@ -84,6 +85,8 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
     margin: theme.spacing.unit,
   },
   voteButton: {
+    marginRight: '-5px',
+    marginLeft: '-5px',
     '&:disabled': {
       color: grey[500]
     },
@@ -132,6 +135,11 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexWrap: 'wrap'
+  },
+  postcommentDetails: {
+    extend: 'justifyContent',
+    alignItems: 'baseline',
+    marginTop: '-20px'
   },
   sidebaricon: {
     // padding: '0.2em',

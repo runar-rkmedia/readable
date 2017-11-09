@@ -57,8 +57,8 @@ export const MainContentC = decorate(
     render() {
       const {
       classes, category, posts, selectedPost, goTo,
-        // voteOnPost,
-        // isVoting
+        onVote,
+        isVoting,
         addNewPost,
         postIsSending, loading,
     } = this.props
@@ -96,9 +96,7 @@ export const MainContentC = decorate(
               render={() =>
                 selectedPost ? (
                   this.checkCorrectPath(
-                    <PostView
-                      post={selectedPost}
-                    />
+                    <PostView {...{ isVoting, onVote }} post={selectedPost} />
                   )) : (loading ? (
                     <div>Finding your post....</div>
                   ) : (
@@ -183,7 +181,7 @@ interface DispatchProps {
   fetchPosts: (category?: string) => Promise<PostActionType>,
   fetchSinglePost: (postID: string) => Promise<PostActionType>,
   addNewPost: (post: APIPostI) => void,
-  voteOnPost: (post: APIPostI, isUpVote: boolean) => void,
+  onVote: (post: APIPostI, isUpVote: boolean) => void,
   goTo: (path: string) => void,
 }
 
@@ -192,7 +190,7 @@ function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ): DispatchProps 
     fetchPosts: (category) => dispatch(fetchPosts(category)),
     fetchSinglePost: (postID) => dispatch(fetchSinglePost(postID)),
     addNewPost: (post) => dispatch(addPost(post)),
-    voteOnPost: (post, isUpVote) => dispatch(votePost(post, isUpVote)),
+    onVote: (post, isUpVote) => dispatch(votePost(post, isUpVote)),
     goTo: (path: string) => dispatch(push(path)),
   }
 }

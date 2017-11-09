@@ -7,8 +7,8 @@ import decorate from '../style'
 
 interface Props {
   post: APIPostI
-  isVoting?: boolean
-  onVote?: (post: APIPostI, isUpvote: boolean) => void
+  isVoting: boolean
+  onVote: (post: APIPostI, isUpvote: boolean) => void
 }
 
 export const PostHeader = decorate<Props>((props) => {
@@ -23,7 +23,7 @@ export const PostHeader = decorate<Props>((props) => {
       <Typography gutterBottom={true} type="headline" color="inherit">
         {title}
       </Typography>
-      <Typography gutterBottom={true} type="subheading" color="inherit" className={classes.justifyContent}>
+      <Typography type="subheading" color="inherit" className={classes.postcommentDetails}>
         <span>by {author}. {date}</span>
         <Voter
           onVote={VoteFunc}

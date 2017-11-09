@@ -11,7 +11,10 @@ interface Props {
 }
 
 export const PostPreview = decorate<Props>((props) => {
-  const { classes } = props
+  const { classes, post } = props
+  const hideComments = true
+  const onVote = () => null
+  const isVoting = false
   return (
     <div>
       <Paper className={classes.formRoot} elevation={4}>
@@ -23,7 +26,7 @@ export const PostPreview = decorate<Props>((props) => {
                 You can make changes and publish it by pressing the WRITE-button above.
                 </Typography>
       </Paper>
-      <PostView post={props.post} hideComments={true} />
+      <PostView {...{ post, isVoting, onVote, hideComments }} />
     </div>
   )
 })
