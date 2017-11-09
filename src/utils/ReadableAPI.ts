@@ -32,7 +32,6 @@ export interface APIPostI extends APIPostSendNewI {
   commentCount: number
 }
 export interface APICommentI extends APICommentSendNewI {
-  category: string
   voteScore: number
   deleted: boolean
   commentCount: number
@@ -62,6 +61,17 @@ export const initializeNewPost = (category: string): APIPostI => ({
   deleted: false,
   commentCount: 0,
   category
+}
+)
+export const initializeNewComment = (parentId: string): APICommentI => ({
+  author: '',
+  body: '',
+  id: uuid(),
+  timestamp: 0,
+  voteScore: 1,
+  deleted: false,
+  commentCount: 0,
+  parentId
 }
 )
 

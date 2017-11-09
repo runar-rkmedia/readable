@@ -1,7 +1,7 @@
 import { Dispatch } from 'react-redux'
 import {
   APICommentI,
-  // APICommentSendNewI
+  APICommentSendNewI
 } from '../interfaces'
 import { CommentAPI } from '../utils/ReadableAPI'
 import { StoreStateI } from '../reducers'
@@ -94,25 +94,23 @@ export const fetchComments = (postID: string) => ((dispatch: Dispatch<APIComment
 //     .catch((e) => dispatch(commentsHasError(true, `Retrieve comment: ${e.message}`)))
 // }
 // )
-// export function verifyOkToSubmitComment(comment: APICommentSendNewI) {
-//   const { author, title, body } = comment
-//   if (!(author && title && body)) {
-//     return false
-//   }
-//   // Other checks should be put here. redux-form could be used.
-//   return true
-// }
-//
-// export const addComment = (comment: CommentI) => ((dispatch: Dispatch<CommentI>, getState: any) => {
-//   dispatch(commentIsSending(true))
-//   const state: StoreStateI = getState()
-//   return CommentAPI.add(comment)
-//     .then(returnedComment => dispatch(recieveAfterSend(returnedComment, state.comments.items)))
-//     .then(() => dispatch(push(urls.viewComment(comment))))
-//     .catch((e) => dispatch(commentsHasError(true, `Add comment: ${e.message}`)))
-// }
-// )
-//
+export function verifyOkToSubmitComment(comment: APICommentSendNewI) {
+  const { author, body } = comment
+  if (!(author && body)) {
+    return false
+  }
+  // Other checks should be put here. redux-form could be used.
+  return true
+}
+export const addComment = (comment: APICommentI) => ((dispatch: Dispatch<APICommentI>, getState: any) => {
+  dispatch(commentIsSending(true))
+  const state: StoreStateI = getState()
+  return CommentAPI.add(comment)
+    .then(returnedComment => dispatch(recieveCommentAfterSend(returnedComment, state.comments.items)))
+    .catch((e) => dispatch(commentsHasError(true, `Add comment: ${e.message}`)))
+}
+)
+
 export const voteComment = (
   comment: APICommentI, isUpVote: boolean) => ((dispatch: Dispatch<APICommentI>, getState: any) => {
     dispatch(commentIsVoting(true))
