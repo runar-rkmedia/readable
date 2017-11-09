@@ -8,7 +8,7 @@ import { posts, initialPostState } from './Posts'
 import { comments, initialCommentState } from './Comments'
 import { categories, initialCategoriesState } from './Categories'
 import { initialAuthorStateI, author } from './Author'
-
+import * as storage from 'redux-storage'
 import { PostStateI, CategoriesStateI, CommentStateI, AuthorStateI } from '../interfaces'
 import { RouterState } from 'react-router-redux'
 
@@ -26,10 +26,10 @@ export const initialStoreState: StoreStateI = {
   author: initialAuthorStateI
 }
 
-export default combineReducers({
+export default storage.reducer(combineReducers({
   posts,
   categories,
   comments,
   author,
   router: routerReducer
-}, )
+}, ))
