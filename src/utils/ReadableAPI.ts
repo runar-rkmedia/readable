@@ -129,7 +129,14 @@ export const PostAPI = {
 export const CommentAPI = {
   remove: (id: string) => myFetch(`comments/${id}`, 'DELETE'),
   get: (id: string) => myFetch(`posts/${id}/comments`),
-  add: (comment: APICommentI) => myFetch(`comments/`, 'POST', comment),
+  add: (comment: APICommentI): Promise<APICommentI> => {
+    const { id, body, author, parentId } = comment
+    const postWithNewDate: APICommentSendNewI = {
+      timestamp: Date.now(),
+      id, body, author, parentId,
+    }
+    return myFetch(`comments/`, 'POST', postWithNewDate)
+  },
   vote: (
     id: string,
     option: voteOption
