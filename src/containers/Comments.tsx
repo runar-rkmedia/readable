@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect, Dispatch, } from 'react-redux'
 import { APIPostI, APICommentI, StoreStateI } from '../interfaces'
-import { addComment } from '../actions'
+import { addComment, editComment as editCommentA } from '../actions'
 import { fetchComments } from '../actions'
 import { CommentsList, CommentsForm } from '../components'
 import { initializeNewComment } from '../utils/ReadableAPI'
@@ -40,9 +40,9 @@ export const CommentsC = decorate(
     }
     newComment = () => ({
       ...initializeNewComment(this.props.post.id),
-        author: this.props.author
+      author: this.props.author
     })
-    handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleFormChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
       let value = event.target.value
       const maxLength = maxLengths[prop]
       if (maxLength && value.length > maxLength) {
@@ -55,8 +55,8 @@ export const CommentsC = decorate(
         }
       })
     }
-    onSubmit = (comment: APICommentI) => {
-      this.props.onAddComment(comment)
+    onSubmitForm = (func: any, comment: APICommentI) => {
+      func(comment)
         .then(() => {
           this.setState({
             comment: this.newComment()
@@ -65,23 +65,41 @@ export const CommentsC = decorate(
         }
         )
     }
+    onSubmitEdit = (comment: APICommentI) => {
+      this.onSubmitForm(this.props.onEditComment, comment)
+    }
+    onSubmitNew = (comment: APICommentI) => {
+      this.onSubmitForm(this.props.onAddComment, comment)
+    }
     toggleNewPost = (open: boolean = !this.state.newPostIsOpen) => {
       this.setState({
-        newPostIsOpen: open
+        newPostIsOpen: open,
+        comment: this.newComment()
       })
     }
+    editComment = (comment: APICommentI) => this.setState({ comment })
 
     render() {
-      const { state, props, onSubmit, handleChange, toggleNewPost } = this
-      const { classes, post, commentIsSending, comments } = props
+      const { state, props, onSubmitNew, onSubmitEdit, handleFormChange, toggleNewPost, editComment } = this
+      const { classes, post, commentIsSending, comments, author } = props
       const { comment, newPostIsOpen } = state
       return (
         <div>
           <Paper className={classNames(classes.formRoot, classes.commentsPaper, classes)} elevation={2}>
-            <Typography type="subheading" gutterBottom={true}>
+            <Typography type="title">
               {post.commentCount ? 'Comments to this post:' : 'Be the very first to post a comment to this post.'}
             </Typography>
-            <CommentsList comments={comments} />
+            {post.commentCount && (
+              <Typography type="body2" gutterBottom={true}>
+                To edit a comment, click on its text.
+              </Typography>
+            )}
+
+            <CommentsList
+              {...{
+                comments, onSubmitForm: onSubmitEdit, commentIsSending, handleFormChange, author, comment, editComment
+              }}
+            />
           </Paper>
           {newPostIsOpen ? (
             <Paper className={classNames(classes.formRoot, classes.commentsPaper)} elevation={2}>
@@ -89,7 +107,10 @@ export const CommentsC = decorate(
                 Post a comment
                       </Typography>
               <CommentsForm
-                {...{ comment, commentIsSending, onSubmit, handleChange }}
+                {...{
+                  comment, commentIsSending, handleFormChange,
+                  onSubmitForm: onSubmitNew
+                }}
               />
             </Paper>
           ) : (
@@ -125,12 +146,14 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
 }
 interface DispatchProps {
   fetchComments: (post: APIPostI) => void,
-  onAddComment: (comment: APICommentI) => Promise<APIPostI>,
+  onAddComment: (comment: APICommentI) => Promise<APICommentI>,
+  onEditComment: (comment: APICommentI) => Promise<APICommentI>,
 }
 function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ownprops: any) {
   return {
     fetchComments: (post: APIPostI) => dispatch(fetchComments(post.id)),
     onAddComment: (comment: APICommentI) => dispatch(addComment(comment)),
+    onEditComment: (comment: APICommentI) => dispatch(editCommentA(comment)),
     ...ownprops
   }
 }

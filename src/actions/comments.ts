@@ -16,6 +16,7 @@ export const enum CommentActions {
   SENDING = 'COMMENT_SENDING',
   VOTING = 'COMMENT_VOTING',
   ADD = 'COMMENT_ADD',
+  EDIT = 'COMMENT_EDIT',
   VOTE = 'COMMENT_VOTE',
 }
 export type CommentActionType =
@@ -27,7 +28,8 @@ export type CommentActionType =
   { type: CommentActions.SENDING, sending: boolean } |
   { type: CommentActions.VOTING, isVoting: boolean } |
   { type: CommentActions.VOTE, isUpVote: boolean } |
-  { type: CommentActions.ADD, comment: APICommentI }
+  { type: CommentActions.ADD, comment: APICommentI } |
+  { type: CommentActions.EDIT, comment: APICommentI }
 
 export const recieveComments = (comments: APICommentI[], previousComments: any): CommentActionType => {
   return {
@@ -85,14 +87,6 @@ export const fetchComments = (postID: string) => ((dispatch: Dispatch<APIComment
     .catch((e) => dispatch(commentsHasError(true, `Retrieve comments: ${e.message}`)))
 }
 )
-// export const fetchSingleComment = (commentID: string) => ((dispatch: Dispatch<CommentI>, getState: any) => {
-//   dispatch(commentsAreLoading(true))
-//   const state: StoreStateI = getState()
-//   return CommentAPI.getByID(commentID)
-//     .then(singleComment => dispatch(recieveComments([singleComment], state.comments.items)))
-//     .catch((e) => dispatch(commentsHasError(true, `Retrieve comment: ${e.message}`)))
-// }
-// )
 export function verifyOkToSubmitComment(comment: APICommentSendNewI) {
   const { author, body } = comment
   if (!(author && body)) {
@@ -108,6 +102,14 @@ export const addComment = (comment: APICommentI) => ((dispatch: Dispatch<APIComm
     .then(returnedComment => dispatch(recieveCommentAfterSend(returnedComment, state.comments.items)))
     .then(() => dispatch(setAuthor(comment.author)))
     .catch((e) => dispatch(commentsHasError(true, `Add comment: ${e.message}`)))
+}
+)
+export const editComment = (comment: APICommentI) => ((dispatch: Dispatch<APICommentI>, getState: any) => {
+  dispatch(commentIsSending(true))
+  const state: StoreStateI = getState()
+  return CommentAPI.edit(comment)
+    .then(returnedComment => dispatch(recieveCommentAfterSend(returnedComment, state.comments.items)))
+    .catch((e) => dispatch(commentsHasError(true, `Edit comment: ${e.message}`)))
 }
 )
 

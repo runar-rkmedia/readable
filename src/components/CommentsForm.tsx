@@ -17,15 +17,15 @@ const maxLengths = {
   body: 99500
 }
 
-interface Props {
-  onSubmit: (comment: APICommentSendNewI) => void
+export interface CommentsFormProps {
   comment: APICommentI
+  onSubmitForm: (comment: APICommentSendNewI) => void
   commentIsSending: boolean
-  handleChange: (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleFormChange: (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const CommentsForm = decorate<Props>((props) => {
-  const { classes, onSubmit, commentIsSending, handleChange, comment } = props
+export const CommentsForm = decorate<CommentsFormProps>((props) => {
+  const { classes, onSubmitForm, commentIsSending, handleFormChange, comment } = props
   const { author, body } = comment
   return (
     <div>
@@ -38,7 +38,7 @@ export const CommentsForm = decorate<Props>((props) => {
         placeholder="Author name"
         value={author}
         helperText="Your name, or nickname"
-        onChange={handleChange('author')}
+        onChange={handleFormChange('author')}
         margin="normal"
       />
       <TextField
@@ -50,7 +50,7 @@ export const CommentsForm = decorate<Props>((props) => {
         }}
         placeholder="Your comment goes here."
         value={body}
-        onChange={handleChange('body')}
+        onChange={handleFormChange('body')}
         fullWidth={true}
         margin="normal"
         rowsMax={40}
@@ -58,7 +58,7 @@ export const CommentsForm = decorate<Props>((props) => {
         multiline={true}
       />
       <FormHelperText>
-        Body text {body.length} characters. (max {maxLengths.body}). <br/>
+        Body text {body.length} characters. (max {maxLengths.body}). <br />
         Markdown allowed (except headlines)
       </FormHelperText>
       <Button
@@ -66,7 +66,7 @@ export const CommentsForm = decorate<Props>((props) => {
         raised={true}
         color="primary"
         aria-label="Submit form"
-        onClick={() => onSubmit(comment)}
+        onClick={() => onSubmitForm(comment)}
         className={classes.button}
       >
         {commentIsSending ? (

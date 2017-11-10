@@ -145,7 +145,7 @@ export const CommentAPI = {
     myFetch(
       `comments/${comment.id}`,
       'PUT',
-      { body: comment.body }
+      { body: comment.body, timestamp: Date.now() }
     )
   ),
 }

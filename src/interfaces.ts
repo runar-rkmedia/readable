@@ -1,4 +1,4 @@
-export { CategoryI, CommentI } from './components/'
+export { CategoryI, CommentI, CommentsFormProps } from './components/'
 export { StoreStateI } from './reducers'
 export { CategoriesStateI, PostStateI, CommentStateI, AuthorStateI } from './reducers/'
 export {

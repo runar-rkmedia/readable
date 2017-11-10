@@ -80,6 +80,9 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
     color: '#fff',
     backgroundColor: green[500],
   },
+  editCommentField: {
+    backgroundColor: '#fff'
+  },
   drawerHeader: theme.mixins.toolbar,
   drawerPaper: {
     width: 250,
@@ -95,6 +98,7 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
   },
   button: {
     margin: theme.spacing.unit,
+    marginLeft: 0
   },
   voteButton: {
     marginRight: '-5px',
