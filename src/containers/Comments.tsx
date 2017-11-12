@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { connect, Dispatch, } from 'react-redux'
 import { APIPostI, APICommentI, StoreStateI } from '../interfaces'
-import { addComment, editComment as editCommentA } from '../actions'
 import { fetchComments } from '../actions'
-import { CommentsList, CommentsForm } from '../components'
+import { CommentsList } from '../components'
 import { initializeNewComment } from '../utils/ReadableAPI'
+import { FormHandler, FormHandlerType } from './'
 
 import decorate, { WithStyles } from '../style/'
 import Typography from 'material-ui/Typography'
@@ -38,10 +38,7 @@ export const CommentsC = decorate(
         newPostIsOpen: false
       }
     }
-    newComment = () => ({
-      ...initializeNewComment(this.props.post.id),
-      author: this.props.author
-    })
+    newComment = () => initializeNewComment(this.props.post.id)
     handleFormChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
       let value = event.target.value
       const maxLength = maxLengths[prop]
@@ -65,52 +62,40 @@ export const CommentsC = decorate(
         }
         )
     }
-    onSubmitEdit = (comment: APICommentI) => {
-      this.onSubmitForm(this.props.onEditComment, comment)
-    }
-    onSubmitNew = (comment: APICommentI) => {
-      this.onSubmitForm(this.props.onAddComment, comment)
-    }
     toggleNewPost = (open: boolean = !this.state.newPostIsOpen) => {
       this.setState({
         newPostIsOpen: open,
         comment: this.newComment()
       })
     }
-    editComment = (comment: APICommentI) => this.setState({ comment })
 
     render() {
-      const { state, props, onSubmitNew, onSubmitEdit, handleFormChange, toggleNewPost, editComment } = this
-      const { classes, post, commentIsSending, comments, author } = props
-      const { comment, newPostIsOpen } = state
+      const { state, props, toggleNewPost, newComment } = this
+      const { classes, post, comments } = props
+      const { newPostIsOpen } = state
       return (
         <div>
           <Paper className={classNames(classes.formRoot, classes.commentsPaper, classes)} elevation={2}>
             <Typography type="title">
-              {post.commentCount ? 'Comments to this post:' : 'Be the very first to post a comment to this post.'}
+              {(!!post.commentCount || !!comments.length) ?
+                'Comments to this post:' : 'Be the very first to post a comment to this post.'}
             </Typography>
-            {post.commentCount && (
+            {!post.commentCount && (
               <Typography type="body2" gutterBottom={true}>
                 To edit a comment, click on its text.
               </Typography>
             )}
-
-            <CommentsList
-              {...{
-                comments, onSubmitForm: onSubmitEdit, commentIsSending, handleFormChange, author, comment, editComment
-              }}
-            />
+            <CommentsList comments={comments} />
           </Paper>
           {newPostIsOpen ? (
             <Paper className={classNames(classes.formRoot, classes.commentsPaper)} elevation={2}>
               <Typography type="subheading" gutterBottom={true}>
                 Post a comment
                       </Typography>
-              <CommentsForm
-                {...{
-                  comment, commentIsSending, handleFormChange,
-                  onSubmitForm: onSubmitNew
-                }}
+              <FormHandler
+                comment={newComment()}
+                type={FormHandlerType.addComment}
+                submitCallBack={() => { toggleNewPost(false) }}
               />
             </Paper>
           ) : (
@@ -130,30 +115,23 @@ export const CommentsC = decorate(
 )
 interface MappedProps {
   comments: APICommentI[]
-  commentIsSending: boolean
-  author: string
 }
 const mapStateToProps = (state: StoreStateI, ownprops: any) => {
-  const { comments, author } = state
+  const { comments } = state
   return {
     comments: Object.keys(comments.items).map(
       key => comments.items[key]).filter(
       c => c.parentId === ownprops.post.id
       ),
-    author: author.name,
     ...ownprops
   }
 }
 interface DispatchProps {
   fetchComments: (post: APIPostI) => void,
-  onAddComment: (comment: APICommentI) => Promise<APICommentI>,
-  onEditComment: (comment: APICommentI) => Promise<APICommentI>,
 }
 function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ownprops: any) {
   return {
     fetchComments: (post: APIPostI) => dispatch(fetchComments(post.id)),
-    onAddComment: (comment: APICommentI) => dispatch(addComment(comment)),
-    onEditComment: (comment: APICommentI) => dispatch(editCommentA(comment)),
     ...ownprops
   }
 }

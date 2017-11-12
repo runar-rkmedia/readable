@@ -1,10 +1,9 @@
 import * as React from 'react'
+import { connect, Dispatch } from 'react-redux'
+import { push } from 'react-router-redux'
 import { CategoryI } from '../interfaces'
 import Typography from 'material-ui/Typography'
 import { ListItem, ListItemText } from 'material-ui/List'
-import { connect } from 'react-redux'
-import { Dispatch } from 'react-redux'
-import { push } from 'react-router-redux'
 import { urls } from '../utils/'
 
 import decorate, { WithStyles } from '../style'

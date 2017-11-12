@@ -91,7 +91,7 @@ export const fetchSinglePost = (postID: string) => ((dispatch: Dispatch<APIPostI
     .then(singlePost => {
       return dispatch(recievePosts([singlePost], state.posts.items))
     })
-    .catch((e) => dispatch(postsHasError(true, `Retrievescres post: ${e.message}`)))
+    .catch((e) => dispatch(postsHasError(true, `Retrieve post: ${e.message}`)))
 }
 )
 export function verifyOkToSubmitPost(post: APIPostSendNewI) {
@@ -110,6 +110,15 @@ export const addPost = (post: APIPostI) => ((dispatch: Dispatch<APIPostI>, getSt
     .then(returnedPost => dispatch(recieveAfterSend(returnedPost, state.posts.items)))
     .then(() => dispatch(push(urls.viewPost(post))))
     .then(() => dispatch(setAuthor(post.author)))
+    .catch((e) => dispatch(postsHasError(true, `Add post: ${e.message}`)))
+}
+)
+export const editPost = (post: APIPostI) => ((dispatch: Dispatch<APIPostI>, getState: any) => {
+  dispatch(postIsSending(true))
+  const state: StoreStateI = getState()
+  return PostAPI.edit(post)
+    .then(returnedPost => dispatch(recieveAfterSend(returnedPost, state.posts.items)))
+    .then(() => dispatch(push(urls.viewPost(post))))
     .catch((e) => dispatch(postsHasError(true, `Add post: ${e.message}`)))
 }
 )

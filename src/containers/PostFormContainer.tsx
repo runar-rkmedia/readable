@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { APIPostSendNewI, APIPostI } from '../interfaces'
 import { verifyOkToSubmitPost } from '../actions/'
-import { PostPreview, PostForm as PostFormComp } from '../components'
+import { PostPreview, PostForm } from '../components'
 
 import decorate, { WithStyles } from '../style'
 import Paper from 'material-ui/Paper'
@@ -18,13 +18,13 @@ const maxLengths = {
 }
 
 interface Props {
-  onSubmit: (post: APIPostSendNewI) => void
+  onSubmitForm: (post: APIPostSendNewI) => void
   post: APIPostI
   postIsSending: boolean
 }
 type postform = Props & WithStyles
 
-export const PostForm = decorate(
+export const PostFormContainer = decorate(
   class extends React.Component<postform> {
     state: {
       post: APIPostI,
@@ -55,7 +55,7 @@ export const PostForm = decorate(
     }
 
     render() {
-      const { classes, onSubmit, postIsSending, } = this.props
+      const { classes, onSubmitForm, postIsSending, } = this.props
       const { post, selectedTab } = this.state
       return (
         <div>
@@ -74,11 +74,11 @@ export const PostForm = decorate(
           {selectedTab === 1 ? (
             <PostPreview post={post} />
           ) : (
-              <PostFormComp
-                onSubmit={onSubmit}
+              <PostForm
+                onSubmit={onSubmitForm}
                 post={post}
                 postIsSending={postIsSending}
-                handleChange={this.handleChange}
+                handleFormChange={this.handleChange}
               />
             )
           }

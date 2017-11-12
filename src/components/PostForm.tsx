@@ -18,16 +18,18 @@ const maxLengths = {
 interface Props {
   onSubmit: (post: APIPostSendNewI) => void
   post: APIPostI
+  edit?: boolean
   postIsSending: boolean
-  handleChange: (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleFormChange: (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export const PostForm = decorate<Props>((props) => {
-  const { classes, onSubmit, postIsSending, handleChange, post } = props
+  const { classes, onSubmit, postIsSending, handleFormChange, post, edit } = props
   const { author, title, body } = post
   return (
     <Paper className={classes.formRoot} elevation={4}>
       <TextField
+        disabled={edit}
         autoFocus={!author}
         label="Author name"
         InputLabelProps={{
@@ -36,7 +38,7 @@ export const PostForm = decorate<Props>((props) => {
         placeholder="Author name"
         value={author}
         helperText="Your name, or nickname"
-        onChange={handleChange('author')}
+        onChange={handleFormChange('author')}
         margin="normal"
       />
       <TextField
@@ -49,7 +51,7 @@ export const PostForm = decorate<Props>((props) => {
         placeholder="Title"
         value={title}
         helperText="A nice little descriptive title here."
-        onChange={handleChange('title')}
+        onChange={handleFormChange('title')}
         fullWidth={true}
         margin="normal"
       />
@@ -62,7 +64,7 @@ export const PostForm = decorate<Props>((props) => {
         placeholder="Your post goes here."
         value={body}
         helperText={`Body text ${body.length} characters. (max ${maxLengths.body}). Markdown is supported.`}
-        onChange={handleChange('body')}
+        onChange={handleFormChange('body')}
         fullWidth={true}
         margin="normal"
         rowsMax={40}

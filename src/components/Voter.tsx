@@ -3,14 +3,31 @@ import ThumbUp from 'material-ui-icons/ArrowUpward'
 import ThumbDown from 'material-ui-icons/ArrowDownward'
 import IconButton from 'material-ui/IconButton'
 import decorate from '../style'
+import { StoreStateI, APICommentI, APIPostI } from '../interfaces'
+import { voteComment, votePost } from '../actions'
+import { connect, Dispatch, } from 'react-redux'
 
 interface Props {
-  voteScore: number
-  isVoting: boolean
-  onVote: (isUpvote: boolean) => void
+  comment?: APICommentI
+  post?: APIPostI
 }
-export const Voter = decorate<Props>((props) => {
-  const { voteScore, isVoting, onVote, classes } = props
+
+type ExtendedProps = Props & MappedProps & DispatchProps
+export const VoterC = decorate<ExtendedProps>((props) => {
+  const { comment, post, isVoting, onVotePost, onVoteComment, classes } = props
+
+  let onVote: (isUpvote: boolean) => any
+  let voteScore
+  if (post) {
+    voteScore = post.voteScore
+    onVote = (isUpvote) => onVotePost(post, isUpvote)
+  } else if (comment) {
+    onVote = (isUpvote) => onVoteComment(comment, isUpvote)
+    voteScore = comment.voteScore
+  } else {
+    return null
+  }
+
   return (
     <span>
       <IconButton
@@ -35,4 +52,25 @@ export const Voter = decorate<Props>((props) => {
     </span>
   )
 })
-// export const Voter = decorate(VoterC)
+interface MappedProps {
+  isVoting: boolean
+}
+const mapStateToProps = (state: StoreStateI, ownprops: any) => {
+  return {
+    isVoting: state.comments.isVoting,
+    ...ownprops
+  }
+}
+interface DispatchProps {
+  onVoteComment: (comment: APICommentI, isUpvote: boolean) => void,
+  onVotePost: (post: APIPostI, isUpvote: boolean) => void,
+}
+function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ownprops: any) {
+  return {
+    onVoteComment: (comment: APICommentI, isUpvote: boolean) => dispatch(voteComment(comment, isUpvote)),
+    onVotePost: (post: APIPostI, isUpvote: boolean) => dispatch(votePost(post, isUpvote)),
+    ...ownprops
+  }
+}
+
+export const Voter = connect(mapStateToProps, mapDispatchToProps)(VoterC)

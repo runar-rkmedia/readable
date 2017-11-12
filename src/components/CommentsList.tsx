@@ -1,42 +1,41 @@
 import * as React from 'react'
 import List from 'material-ui/List'
 import Divider from 'material-ui/Divider'
-import { connect, Dispatch, } from 'react-redux'
-import { APICommentI, StoreStateI, CommentsFormProps } from '../interfaces'
-import { voteComment } from '../actions'
+import { APICommentI } from '../interfaces'
 import { CommentItem } from './'
 import decorate, { WithStyles } from '../style'
 
-interface Props extends CommentsFormProps {
+interface Props {
   comments: APICommentI[]
-  author: string
-  editComment: (comment: APICommentI) => void
 }
 interface State {
-  currentlyEditingCommentID: string
+  editingComment: string
 }
 
-type commentslist = Props & MappedProps & DispatchProps & WithStyles
+type commentslist = Props & WithStyles
 
-export const CommentsListC = decorate(
+export const CommentsList = decorate(
   class extends React.Component<commentslist, State> {
     constructor(props: commentslist) {
       super(props)
       this.state = {
-        currentlyEditingCommentID: ''
+        editingComment: ''
       }
     }
     handleCurrentlyEditing = (commentId: string) => {
       this.setState({
-        currentlyEditingCommentID: commentId
+        editingComment: commentId
+      })
+    }
+    onToggleEdit = (comment: APICommentI) => {
+      this.setState({
+        editingComment: comment.id
       })
     }
     render() {
-      const {
-         comments, classes, isVoting, onVote, onSubmitForm, commentIsSending,
-        handleFormChange, editComment } = this.props
+      const { onToggleEdit } = this
+      const { comments, classes } = this.props
       const commentsLength = comments.length
-      const editingComment = this.props.comment
       return (
         <List className={classes.commentsList}>
           {comments.map((comment, i) => (
@@ -44,14 +43,13 @@ export const CommentsListC = decorate(
               <div>
                 <CommentItem
                   {...{
-                    comment, isVoting, onVote,
-                    handleFormChange, onSubmitForm, commentIsSending,
-                    editingComment: editingComment.id === comment.id ? editingComment : null,
-                    onToggleEdit: () => editComment(comment)
+                    comment,
+                    onToggleEdit,
+                    editingComment: !!this.state.editingComment
                   }}
                 />
                 {commentsLength !== i + 1 && (
-                  // All comments, except the last
+                  // All comments, except the lastonToggleEdit
                   <Divider className={classes.commentDivider} />
                 )}
               </div>
@@ -61,24 +59,3 @@ export const CommentsListC = decorate(
       )
     }
   })
-
-interface MappedProps {
-  isVoting: boolean
-}
-const mapStateToProps = (state: StoreStateI, ownprops: any) => {
-  return {
-    isVoting: state.comments.isVoting,
-    ...ownprops
-  }
-}
-interface DispatchProps {
-  onVote: (comment: APICommentI, isUpvote: boolean) => void,
-}
-function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ownprops: any) {
-  return {
-    onVote: (comment: APICommentI, isUpvote: boolean) => dispatch(voteComment(comment, isUpvote)),
-    ...ownprops
-  }
-}
-
-export const CommentsList = connect(mapStateToProps, mapDispatchToProps)(CommentsListC)

@@ -3,7 +3,7 @@ import { connect, Dispatch } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 import { RouterState, push } from 'react-router-redux'
 import { CategoryHeader, PostList } from '../components/'
-import { PostForm, Post } from './'
+import { PostFormView, Post } from './'
 import {
   CategoryI,
   StoreStateI,
@@ -57,8 +57,7 @@ export const MainContentC = decorate(
     render() {
       const {
       classes, category, posts, selectedPost, goTo,
-        addNewPost, author,
-        postIsSending, loading,
+        loading,
     } = this.props
       return (
         <main className={classes.content}>
@@ -66,7 +65,6 @@ export const MainContentC = decorate(
             path="/category/"
             render={() => (
               <CategoryHeader category={category} type="header" />
-
             )}
           />
           <Switch>
@@ -77,16 +75,25 @@ export const MainContentC = decorate(
                   <Typography gutterBottom={true} type="headline" color="inherit" noWrap={true}>
                     New post in {category.name}
                   </Typography>
-                  <PostForm
-                    post={{...initializeNewPost(category.id), author}}
-                    onSubmit={addNewPost}
-                    postIsSending={postIsSending}
+                  <PostFormView
+                    post={{ ...initializeNewPost(category.id) }}
                   />
                 </div>
               )
-
               }
-
+            />
+            <Route
+              path="/category/:category/post/:postID/edit"
+              render={() =>
+                selectedPost ? (
+                  this.checkCorrectPath(
+                    <PostFormView post={selectedPost} edit={true} />
+                  )) : (loading ? (
+                    <div>Finding your post....</div>
+                  ) : (
+                      <div>Post appears to not exist. It might have been deleted.</div>
+                    ))
+              }
             />
             <Route
               path="/category/:category/post/:postID"
@@ -153,10 +160,9 @@ interface SidebarMappedProps extends Props {
   postsAreLoading: boolean
   categoriesAreloading: boolean
   loading: boolean
-  author: string
 }
 const mapStateToProps = (state: StoreStateI, ownprops: any) => {
-  const { categories, router, posts, author } = state
+  const { categories, router, posts } = state
   return {
     posts: Object.keys(posts.items).map(key => posts.items[key]),
     postsHash: posts.items,
@@ -168,11 +174,9 @@ const mapStateToProps = (state: StoreStateI, ownprops: any) => {
     categoriesAreloading: categories.loading,
     loading: posts.sending || posts.loading || categories.loading,
     router: router,
-    author: author.name,
     ...ownprops
   }
 }
-// export default connect(mapStateToProps)(withStyles((styles as any), {withTheme: true })(MainContent))
 
 interface DispatchProps {
   fetchPosts: (category?: string) => Promise<PostActionType>,

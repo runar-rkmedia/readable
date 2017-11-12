@@ -51,27 +51,34 @@ export interface APICommentSendEditI {
   timestamp: number
   body: string
 }
-export const initializeNewPost = (category: string): APIPostI => ({
+
+export const initialComment: APICommentI = {
+  author: '',
+  body: '',
+  id: '',
+  timestamp: 0,
+  voteScore: 1,
+  deleted: false,
+  commentCount: 0,
+  parentId: ''
+}
+export const initialPost: APIPostI = {
   author: '',
   title: '',
   body: '',
-  id: uuid(),
+  id: '',
   timestamp: 0,
   voteScore: 1,
   deleted: false,
   commentCount: 0,
-  category
+  category: ''
+}
+export const initializeNewPost = (category: string): APIPostI => ({
+  ...initialPost, category, id: uuid(),
 }
 )
 export const initializeNewComment = (parentId: string): APICommentI => ({
-  author: '',
-  body: '',
-  id: uuid(),
-  timestamp: 0,
-  voteScore: 1,
-  deleted: false,
-  commentCount: 0,
-  parentId
+  ...initialComment, parentId, id: uuid(),
 }
 )
 
