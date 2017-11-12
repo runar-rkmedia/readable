@@ -9,11 +9,13 @@ There is an example-server added that can be used, and is provided here for you.
 
 ## Getting up and running
 
+Please use `yarn` instead of `npm`, as one of the dependencies has a missing `package.json` in root, and `npm` does not handle this appropriatly.
+
 ### With provided example-server
 
 ```bash
-npm install
-npm start
+yarn install
+yarn start
 ```
 
 This will install everything needed, and also run the server alongside the webapplicaiton itself.
@@ -21,8 +23,8 @@ This will install everything needed, and also run the server alongside the webap
 ### With your own server
 
 ```bash
-npm install
-npm run start-front
+yarn install
+yarn run start-front
 ```
 
 This will launch the webapplicaiton only, and will listen for a server-api at port 3001 by default.
@@ -31,5 +33,5 @@ This will launch the webapplicaiton only, and will listen for a server-api at po
 ### Build for production
 
 ```bash
-npm run build
+yarn run build
 ```

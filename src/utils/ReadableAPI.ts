@@ -102,7 +102,7 @@ export const CategoryAPI = {
 }
 
 export const PostAPI = {
-  remove: (id: string) => myFetch(`posts/${id}`, 'DELETE'),
+  remove: (id: string) => myFetch(`posts/${id}`, 'GET'),
   get: (categoryID?: string): Promise<APIPostI[]> => {
     if (categoryID) {
       return PostAPI.getByCategory(categoryID)

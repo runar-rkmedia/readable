@@ -3,7 +3,7 @@ import { APIPostSendNewI, APIPostI } from '../interfaces'
 import { verifyOkToSubmitPost } from '../actions/'
 import { LoadingButton } from './'
 
-import decorate from '../style'
+import decorate, { WithStyles } from '../style'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 
@@ -22,8 +22,9 @@ interface Props {
   postIsSending: boolean
   handleFormChange: (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => void
 }
+type ExtpendedProps = Props & WithStyles
 
-export const PostForm = decorate<Props>((props) => {
+export const PostForm = decorate<Props>((props: ExtpendedProps) => {
   const { classes, onSubmit, postIsSending, handleFormChange, post, edit } = props
   const { author, title, body } = post
   return (

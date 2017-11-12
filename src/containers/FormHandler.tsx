@@ -60,9 +60,9 @@ class FormHandlerC extends React.Component<postform, State> {
       this.props.submitCallBack(data)
     }
   }
-  isPost = () => [FormHandlerType.addPost, FormHandlerType.editPost].includes(this.props.type)
+  isPost = () => [FormHandlerType.addPost, FormHandlerType.editPost].indexOf(this.props.type) >= 0
 
-  isComment = () => [FormHandlerType.addComment, FormHandlerType.editComment].includes(this.props.type)
+  isComment = () => [FormHandlerType.addComment, FormHandlerType.editComment].indexOf(this.props.type) >= 0
 
   constructor(props: postform) {
     super(props)

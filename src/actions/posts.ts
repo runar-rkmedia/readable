@@ -10,6 +10,7 @@ export const enum PostActions {
   FETCH = 'POST_FETCH',
   RECIEVE = 'POST_RECIEVE',
   RECIEVEAFTERSEND = 'POST_RECIEVEAFTERSEND',
+  RECIEVEAFTERDELETE = 'POST_RECIEVEAFTERDELETE',
   ERROR = 'POST_ERROR',
   LOADING = 'POST_LOADING',
   SENDING = 'POST_SENDING',
@@ -21,6 +22,7 @@ export type PostActionType =
   { type: PostActions.FETCH } |
   { type: PostActions.RECIEVE, posts: APIPostI[], previousPosts: any } |
   { type: PostActions.RECIEVEAFTERSEND, post: APIPostI, previousPosts: any } |
+  { type: PostActions.RECIEVEAFTERDELETE, post: APIPostI, previousPosts: any } |
   { type: PostActions.ERROR, hasError: boolean, error: string } |
   { type: PostActions.LOADING, loading: boolean } |
   { type: PostActions.SENDING, sending: boolean } |
@@ -39,6 +41,14 @@ export const recievePosts = (posts: APIPostI[], previousPosts: any): PostActionT
 export const recieveAfterSend = (post: APIPostI, previousPosts: any): PostActionType => {
   return {
     type: PostActions.RECIEVEAFTERSEND,
+    post,
+    previousPosts
+  }
+}
+
+export const recieveAfterDelete = (post: APIPostI, previousPosts: any): PostActionType => {
+  return {
+    type: PostActions.RECIEVEAFTERDELETE,
     post,
     previousPosts
   }
@@ -130,5 +140,13 @@ export const votePost = (post: APIPostI, isUpVote: boolean) => ((dispatch: Dispa
     .then(returnedPost => dispatch(recieveAfterSend(returnedPost, state.posts.items)))
     .catch((e) => dispatch(postsHasError(true, `Vote on post: ${e.message}`)))
     .then(() => dispatch(postIsVoting(false)))
+}
+)
+export const deletePost = (post: APIPostI) => ((dispatch: Dispatch<APIPostI>, getState: any) => {
+  dispatch(postIsSending(true))
+  const state: StoreStateI = getState()
+  return PostAPI.remove(post.id)
+    .then(returnedPost => dispatch(recieveAfterDelete(returnedPost, state.posts.items)))
+    .catch((e) => dispatch(postsHasError(true, `Delete post: ${e.message}`)))
 }
 )

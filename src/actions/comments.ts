@@ -11,6 +11,7 @@ export const enum CommentActions {
   FETCH = 'COMMENT_FETCH',
   RECIEVE = 'COMMENT_RECIEVE',
   RECIEVEAFTERSEND = 'COMMENT_RECIEVEAFTERSEND',
+  RECIEVEAFTERDELETE = 'COMMENT_RECIEVEAFTERDELETE',
   ERROR = 'COMMENT_ERROR',
   LOADING = 'COMMENT_LOADING',
   SENDING = 'COMMENT_SENDING',
@@ -23,6 +24,7 @@ export type CommentActionType =
   { type: CommentActions.FETCH } |
   { type: CommentActions.RECIEVE, comments: APICommentI[], previousComments: any } |
   { type: CommentActions.RECIEVEAFTERSEND, comment: APICommentI, previousComments: any } |
+  { type: CommentActions.RECIEVEAFTERDELETE, comment: APICommentI, previousComments: any } |
   { type: CommentActions.ERROR, hasError: boolean, error: string } |
   { type: CommentActions.LOADING, loading: boolean } |
   { type: CommentActions.SENDING, sending: boolean } |
@@ -42,6 +44,13 @@ export const recieveComments = (comments: APICommentI[], previousComments: any):
 export const recieveCommentAfterSend = (comment: APICommentI, previousComments: any): CommentActionType => {
   return {
     type: CommentActions.RECIEVEAFTERSEND,
+    comment,
+    previousComments
+  }
+}
+export const recieveCommentAfterDelete = (comment: APICommentI, previousComments: any): CommentActionType => {
+  return {
+    type: CommentActions.RECIEVEAFTERDELETE,
     comment,
     previousComments
   }
@@ -123,3 +132,11 @@ export const voteComment = (
       .then(() => dispatch(commentIsVoting(false)))
   }
   )
+export const deleteComment = (comment: APICommentI) => ((dispatch: Dispatch<APICommentI>, getState: any) => {
+  dispatch(commentIsSending(true))
+  const state: StoreStateI = getState()
+  return CommentAPI.remove(comment.id)
+    .then(returnedPost => dispatch(recieveCommentAfterDelete(returnedPost, state.comments.items)))
+    .catch((e) => dispatch(commentsHasError(true, `Delete comment: ${e.message}`)))
+}
+)

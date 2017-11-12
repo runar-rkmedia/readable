@@ -70,6 +70,16 @@ export function posts(
         sending: false,
         items: { ...action.previousPosts, [action.post.id]: action.post }
       }
+    case PostActions.RECIEVEAFTERDELETE:
+      let items = state.items
+      if (items.hasOwnProperty(action.post.id)) {
+        delete items[action.post.id]
+      }
+      return {
+        ...state,
+        sending: false,
+        items
+      }
     default:
       return state
   }

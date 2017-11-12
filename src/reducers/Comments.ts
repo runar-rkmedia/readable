@@ -70,6 +70,16 @@ export function comments(
         sending: false,
         items: { ...action.previousComments, [action.comment.id]: action.comment }
       }
+    case CommentActions.RECIEVEAFTERDELETE:
+      let items = state.items
+      if (items.hasOwnProperty(action.comment.id)) {
+        delete items[action.comment.id]
+      }
+      return {
+        ...state,
+        sending: false,
+        items
+      }
     default:
       return state
   }

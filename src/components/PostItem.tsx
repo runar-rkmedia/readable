@@ -1,21 +1,17 @@
 import * as React from 'react'
 import MailIcon from 'material-ui-icons/Mail'
 import decorate, { WithStyles } from '../style'
-import DeleteIcon from 'material-ui-icons/Delete'
-import KeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
-import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import Typography from 'material-ui/Typography'
 import Truncate from 'react-truncate'
-import Hidden from 'material-ui/Hidden'
 import {
   ListItem,
   ListItemIcon,
   ListItemSecondaryAction,
   // ListItemText,
 } from 'material-ui/List'
-import IconButton from 'material-ui/IconButton'
 import { mapCatagory } from '../store/mapper'
 import { urls } from '../utils/'
+import { Voter } from './'
 import * as moment from 'moment'
 import Badge from 'material-ui/Badge'
 import { APIPostI } from '../interfaces'
@@ -27,10 +23,10 @@ interface Props {
   post: APIPostI
   showCategory?: boolean
 }
-
-const PostItemC = decorate<Props & WithStyles & DispatchProps>((props) => {
+type ExtendedProps = Props & WithStyles & DispatchProps
+const PostItemC = decorate<ExtendedProps>((props) => {
   const {
-     title, body, author, timestamp, category, commentCount, voteScore } = props.post
+     title, body, author, timestamp, category, commentCount } = props.post
   return (
     <ListItem button={true} onClick={() => props.goTo(urls.viewPost(props.post))}>
       <ListItemIcon>
@@ -53,23 +49,6 @@ const PostItemC = decorate<Props & WithStyles & DispatchProps>((props) => {
           )}
           <span>. {moment(timestamp).calendar()}
           </span>
-          <span> <Hidden mdDown={true}>popularity:</Hidden> {voteScore === 0 ? (voteScore) :
-            (voteScore > 0 ? (
-              <span
-                // style={{ color: status.upVote }}
-              >
-                {voteScore}
-                <KeyboardArrowUp />
-              </span>
-            ) : (
-                <span
-                  // style={{ color: status.downVote }}
-                >
-                  {voteScore}
-                  <KeyboardArrowDown />
-                </span>
-              ))}
-          </span>
         </Typography>
         <div>
           <Truncate lines={3} ellipsis={<b> Click to read more</b>}>
@@ -78,9 +57,7 @@ const PostItemC = decorate<Props & WithStyles & DispatchProps>((props) => {
         </div>
       </div>
       <ListItemSecondaryAction>
-        <IconButton aria-label="Delete">
-          <DeleteIcon />
-        </IconButton>
+        <Voter post={props.post}/>
       </ListItemSecondaryAction>
     </ListItem>
   )
