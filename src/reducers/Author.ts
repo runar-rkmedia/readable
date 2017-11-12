@@ -1,4 +1,4 @@
-import { AuthorActions, AuthorActionType } from '../actions/'
+import { AuthorActions, AuthorActionType } from 'actions'
 
 export interface AuthorStateI {
   name: string

@@ -1,6 +1,6 @@
-import { CommentActions, CommentActionType } from '../actions/'
+import { CommentActions, CommentActionType } from 'actions'
 import { LOCATION_CHANGE, LocationChangeAction } from 'react-router-redux'
-import { APICommentI } from '../interfaces'
+import { APICommentI } from 'interfaces'
 
 export interface CommentStateI {
   items: { [s: string]: APICommentI }

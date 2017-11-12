@@ -1,6 +1,6 @@
 import * as React from 'react'
 import MailIcon from 'material-ui-icons/Mail'
-import decorate, { WithStyles } from '../style'
+import decorate, { WithStyles } from 'style'
 import Typography from 'material-ui/Typography'
 import Truncate from 'react-truncate'
 import {
@@ -9,12 +9,12 @@ import {
   ListItemSecondaryAction,
   // ListItemText,
 } from 'material-ui/List'
-import { mapCatagory } from '../store/mapper'
-import { urls } from '../utils/'
-import { Voter } from './'
+import { mapCatagory } from 'store/mapper'
+import { urls } from 'utils/'
+import { Voter } from 'components'
 import * as moment from 'moment'
 import Badge from 'material-ui/Badge'
-import { APIPostI } from '../interfaces'
+import { APIPostI } from 'interfaces'
 import { connect, Dispatch } from 'react-redux'
 import { push } from 'react-router-redux'
 const removeMd = require('remove-markdown')

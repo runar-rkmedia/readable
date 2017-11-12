@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { APIPostI, APICommentI, StoreStateI } from '../interfaces'
-import { PostForm, CommentsForm, CommentsEditForm } from '../components'
+import { APIPostI, APICommentI, StoreStateI } from 'interfaces'
+import { PostForm, CommentsForm, CommentsEditForm } from 'components'
 import { connect, Dispatch } from 'react-redux'
 
-import { addPost, editComment, addComment, editPost } from '../actions/'
+import { addPost, editComment, addComment, editPost } from 'actions'
 
 // The maxiumum total payload-length is 102263, so we neeed to have
 // some limit on input-length, and have a bit extra room for other stuff.

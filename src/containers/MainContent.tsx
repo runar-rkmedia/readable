@@ -2,22 +2,20 @@ import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 import { RouterState, push } from 'react-router-redux'
-import { CategoryHeader, PostList } from '../components/'
-import { PostFormView, Post } from './'
+import { CategoryHeader, PostList } from 'components'
+import { PostFormView, Post, FrontPage } from './'
 import {
   CategoryI,
   StoreStateI,
   APIPostI
-} from '../interfaces'
-import { mapCatagory } from '../store/mapper'
-import { fetchSinglePost, fetchPosts, addPost, PostActionType } from '../actions/'
-import FrontPage from './FrontPage'
+} from 'interfaces'
+import { mapCatagory } from 'store/mapper'
+import { fetchSinglePost, fetchPosts, addPost, PostActionType } from 'actions'
 import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
 import Typography from 'material-ui/Typography'
-import { initializeNewPost } from '../utils/ReadableAPI'
-import { urls } from '../utils'
-import decorate, { WithStyles } from '../style'
+import { initializeNewPost, urls } from 'utils'
+import decorate, { WithStyles } from 'style'
 
 interface Props {
   onSetOpen: (open: boolean) => void

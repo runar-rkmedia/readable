@@ -1,7 +1,7 @@
 import * as React from 'react'
 import List from 'material-ui/List'
 import { PostItem } from './'
-import { APIPostI } from '../interfaces'
+import { APIPostI } from 'interfaces'
 import Divider from 'material-ui/Divider'
 
 interface Props {

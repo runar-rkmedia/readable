@@ -6,10 +6,10 @@ import EditIcon from 'material-ui-icons/Edit'
 import DeleteIcon from 'material-ui-icons/Delete'
 import IconButton from 'material-ui/IconButton'
 import * as moment from 'moment'
-import { APIPostI } from '../interfaces'
-import { Voter, DeleteDialog, DeleteDialogType } from './'
-import decorate, { WithStyles } from '../style'
-import { urls } from '../utils'
+import { APIPostI } from 'interfaces'
+import { Voter, DeleteDialog, DeleteDialogType } from 'components'
+import decorate, { WithStyles } from 'style'
+import { urls } from 'utils'
 
 interface Props {
   post: APIPostI

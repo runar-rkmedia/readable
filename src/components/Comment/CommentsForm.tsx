@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { APICommentI, APICommentSendNewI } from '../interfaces'
-import { verifyOkToSubmitComment } from '../actions/'
+import { APICommentI, APICommentSendNewI } from 'interfaces'
+import { verifyOkToSubmitComment } from 'actions/'
 
-import decorate from '../style'
+import decorate from 'style'
 import { CircularProgress } from 'material-ui/Progress'
 import Button from 'material-ui/Button'
 import MenuIcon from 'material-ui-icons/Add'

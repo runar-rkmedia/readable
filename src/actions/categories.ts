@@ -1,6 +1,6 @@
 import { Dispatch } from 'react-redux'
-import { CategoryI } from '../interfaces'
-import { CategoryAPI, APICategoriesI } from '../utils/ReadableAPI'
+import { CategoryI } from 'interfaces'
+import { CategoryAPI, APICategoriesI } from 'utils'
 
 export const enum CategoriesActions {
   FETCH = 'CATEGORIES_FETCH',

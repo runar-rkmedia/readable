@@ -2,8 +2,8 @@ import { Dispatch } from 'react-redux'
 import {
   APICommentI,
   APICommentSendNewI
-} from '../interfaces'
-import { CommentAPI } from '../utils/ReadableAPI'
+} from 'interfaces'
+import { CommentAPI } from 'utils/ReadableAPI'
 import { setAuthor } from './'
 
 export const enum CommentActions {

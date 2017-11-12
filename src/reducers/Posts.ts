@@ -1,5 +1,5 @@
-import { PostActions, PostActionType } from '../actions/'
-import { APIPostI } from '../interfaces'
+import { PostActions, PostActionType } from 'actions/'
+import { APIPostI } from 'interfaces'
 import { LOCATION_CHANGE, LocationChangeAction } from 'react-router-redux'
 
 export interface PostStateI {

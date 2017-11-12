@@ -2,9 +2,9 @@ import * as React from 'react'
 import ThumbUp from 'material-ui-icons/ArrowUpward'
 import ThumbDown from 'material-ui-icons/ArrowDownward'
 import IconButton from 'material-ui/IconButton'
-import decorate from '../style'
-import { StoreStateI, APICommentI, APIPostI } from '../interfaces'
-import { voteComment, votePost } from '../actions'
+import decorate from 'style'
+import { StoreStateI, APICommentI, APIPostI } from 'interfaces'
+import { voteComment, votePost } from 'actions'
 import { connect, Dispatch, } from 'react-redux'
 
 interface Props {

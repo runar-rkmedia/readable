@@ -1,9 +1,9 @@
 import * as React from 'react'
 import List from 'material-ui/List'
 import Divider from 'material-ui/Divider'
-import { APICommentI } from '../interfaces'
+import { APICommentI } from 'interfaces'
 import { CommentItem } from './'
-import decorate, { WithStyles } from '../style'
+import decorate, { WithStyles } from 'style'
 
 interface Props {
   comments: APICommentI[]
