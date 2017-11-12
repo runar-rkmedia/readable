@@ -61,14 +61,14 @@ export function comments(
             map[obj.id] = obj
             return map
           },
-          { ...action.previousComments }
+          { ...state.items }
         )
       }
     case CommentActions.RECIEVEAFTERSEND:
       return {
         ...state,
         sending: false,
-        items: { ...action.previousComments, [action.comment.id]: action.comment }
+        items: { ...state.items, [action.comment.id]: action.comment }
       }
     case CommentActions.RECIEVEAFTERDELETE:
       let items = state.items

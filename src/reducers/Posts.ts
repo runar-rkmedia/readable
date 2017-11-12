@@ -61,14 +61,14 @@ export function posts(
             map[obj.id] = obj
             return map
           },
-          { ...action.previousPosts }
+          { ...state.items }
         )
       }
     case PostActions.RECIEVEAFTERSEND:
       return {
         ...state,
         sending: false,
-        items: { ...action.previousPosts, [action.post.id]: action.post }
+        items: { ...state.items, [action.post.id]: action.post }
       }
     case PostActions.RECIEVEAFTERDELETE:
       let items = state.items

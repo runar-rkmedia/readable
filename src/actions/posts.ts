@@ -1,7 +1,6 @@
 import { Dispatch } from 'react-redux'
 import { APIPostI, APIPostSendNewI } from '../interfaces'
 import { PostAPI } from '../utils/ReadableAPI'
-import { StoreStateI } from '../reducers'
 import { urls } from '../utils/'
 import { push } from 'react-router-redux'
 import { setAuthor } from './'
@@ -20,9 +19,9 @@ export const enum PostActions {
 }
 export type PostActionType =
   { type: PostActions.FETCH } |
-  { type: PostActions.RECIEVE, posts: APIPostI[], previousPosts: any } |
-  { type: PostActions.RECIEVEAFTERSEND, post: APIPostI, previousPosts: any } |
-  { type: PostActions.RECIEVEAFTERDELETE, post: APIPostI, previousPosts: any } |
+  { type: PostActions.RECIEVE, posts: APIPostI[] } |
+  { type: PostActions.RECIEVEAFTERSEND, post: APIPostI } |
+  { type: PostActions.RECIEVEAFTERDELETE, post: APIPostI } |
   { type: PostActions.ERROR, hasError: boolean, error: string } |
   { type: PostActions.LOADING, loading: boolean } |
   { type: PostActions.SENDING, sending: boolean } |
@@ -30,27 +29,24 @@ export type PostActionType =
   { type: PostActions.VOTE, isUpVote: boolean } |
   { type: PostActions.ADD, post: APIPostI }
 
-export const recievePosts = (posts: APIPostI[], previousPosts: any): PostActionType => {
+export const recievePosts = (posts: APIPostI[]): PostActionType => {
   return {
     type: PostActions.RECIEVE,
     posts,
-    previousPosts
   }
 }
 
-export const recieveAfterSend = (post: APIPostI, previousPosts: any): PostActionType => {
+export const recieveAfterSend = (post: APIPostI): PostActionType => {
   return {
     type: PostActions.RECIEVEAFTERSEND,
     post,
-    previousPosts
   }
 }
 
-export const recieveAfterDelete = (post: APIPostI, previousPosts: any): PostActionType => {
+export const recieveAfterDelete = (post: APIPostI): PostActionType => {
   return {
     type: PostActions.RECIEVEAFTERDELETE,
     post,
-    previousPosts
   }
 }
 
@@ -88,18 +84,16 @@ export const postIsVoting = (isVoting: boolean): PostActionType => {
 }
 export const fetchPosts = (categoryID?: string) => ((dispatch: Dispatch<APIPostI>, getState: any) => {
   dispatch(postsAreLoading(true))
-  const state: StoreStateI = getState()
   return PostAPI.get(categoryID)
-    .then(posts => dispatch(recievePosts(posts, state.posts.items)))
+    .then(posts => dispatch(recievePosts(posts)))
     .catch((e) => dispatch(postsHasError(true, `Retrieve posts: ${e.message}`)))
 }
 )
 export const fetchSinglePost = (postID: string) => ((dispatch: Dispatch<APIPostI>, getState: any) => {
   dispatch(postsAreLoading(true))
-  const state: StoreStateI = getState()
   return PostAPI.getByID(postID)
     .then(singlePost => {
-      return dispatch(recievePosts([singlePost], state.posts.items))
+      return dispatch(recievePosts([singlePost]))
     })
     .catch((e) => dispatch(postsHasError(true, `Retrieve post: ${e.message}`)))
 }
@@ -115,9 +109,8 @@ export function verifyOkToSubmitPost(post: APIPostSendNewI) {
 
 export const addPost = (post: APIPostI) => ((dispatch: Dispatch<APIPostI>, getState: any) => {
   dispatch(postIsSending(true))
-  const state: StoreStateI = getState()
   return PostAPI.add(post)
-    .then(returnedPost => dispatch(recieveAfterSend(returnedPost, state.posts.items)))
+    .then(returnedPost => dispatch(recieveAfterSend(returnedPost)))
     .then(() => dispatch(push(urls.viewPost(post))))
     .then(() => dispatch(setAuthor(post.author)))
     .catch((e) => dispatch(postsHasError(true, `Add post: ${e.message}`)))
@@ -125,9 +118,8 @@ export const addPost = (post: APIPostI) => ((dispatch: Dispatch<APIPostI>, getSt
 )
 export const editPost = (post: APIPostI) => ((dispatch: Dispatch<APIPostI>, getState: any) => {
   dispatch(postIsSending(true))
-  const state: StoreStateI = getState()
   return PostAPI.edit(post)
-    .then(returnedPost => dispatch(recieveAfterSend(returnedPost, state.posts.items)))
+    .then(returnedPost => dispatch(recieveAfterSend(returnedPost)))
     .then(() => dispatch(push(urls.viewPost(post))))
     .catch((e) => dispatch(postsHasError(true, `Add post: ${e.message}`)))
 }
@@ -135,18 +127,16 @@ export const editPost = (post: APIPostI) => ((dispatch: Dispatch<APIPostI>, getS
 
 export const votePost = (post: APIPostI, isUpVote: boolean) => ((dispatch: Dispatch<APIPostI>, getState: any) => {
   dispatch(postIsVoting(true))
-  const state: StoreStateI = getState()
   return PostAPI.vote(post.id, isUpVote ? 'upVote' : 'downVote')
-    .then(returnedPost => dispatch(recieveAfterSend(returnedPost, state.posts.items)))
+    .then(returnedPost => dispatch(recieveAfterSend(returnedPost)))
     .catch((e) => dispatch(postsHasError(true, `Vote on post: ${e.message}`)))
     .then(() => dispatch(postIsVoting(false)))
 }
 )
 export const deletePost = (post: APIPostI) => ((dispatch: Dispatch<APIPostI>, getState: any) => {
   dispatch(postIsSending(true))
-  const state: StoreStateI = getState()
   return PostAPI.remove(post.id)
-    .then(returnedPost => dispatch(recieveAfterDelete(returnedPost, state.posts.items)))
+    .then(returnedPost => dispatch(recieveAfterDelete(returnedPost)))
     .catch((e) => dispatch(postsHasError(true, `Delete post: ${e.message}`)))
 }
 )

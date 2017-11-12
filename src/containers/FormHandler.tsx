@@ -7,7 +7,7 @@ import { addPost, editComment, addComment, editPost } from '../actions/'
 
 // The maxiumum total payload-length is 102263, so we neeed to have
 // some limit on input-length, and have a bit extra room for other stuff.
-const maxLengths = {
+export const formMaxLengths = {
   title: 100,
   author: 20,
   body: 99500
@@ -83,9 +83,9 @@ class FormHandlerC extends React.Component<postform, State> {
   }
   handleFormChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value
-    const maxLength = maxLengths[prop]
+    const maxLength = formMaxLengths[prop]
     if (maxLength && value.length > maxLength) {
-      value = value.substring(0, maxLengths[prop])
+      value = value.substring(0, formMaxLengths[prop])
     }
     if (this.isPost()) {
       this.setState({

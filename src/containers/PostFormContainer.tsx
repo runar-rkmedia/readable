@@ -2,21 +2,13 @@ import * as React from 'react'
 import { APIPostSendNewI, APIPostI } from '../interfaces'
 import { verifyOkToSubmitPost } from '../actions/'
 import { PostPreview, PostForm } from '../components'
+import { formMaxLengths } from './'
 
 import decorate, { WithStyles } from '../style'
 import Paper from 'material-ui/Paper'
 import TextFieldsIcon from 'material-ui-icons/TextFields'
 import PreviewIcon from 'material-ui-icons/RemoveRedEye'
 import Tabs, { Tab } from 'material-ui/Tabs'
-
-// The maxiumum total payload-length is 102263, so we neeed to have
-// some limit on input-length, and have a bit extra room for other stuff.
-const maxLengths = {
-  title: 100,
-  author: 20,
-  body: 99500
-}
-
 interface Props {
   onSubmitForm: (post: APIPostSendNewI) => void
   post: APIPostI
@@ -39,9 +31,9 @@ export const PostFormContainer = decorate(
     }
     handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
       let value = event.target.value
-      const maxLength = maxLengths[prop]
+      const maxLength = formMaxLengths[prop]
       if (maxLength && value.length > maxLength) {
-        value = value.substring(0, maxLengths[prop])
+        value = value.substring(0, formMaxLengths[prop])
       }
       this.setState({
         post: {

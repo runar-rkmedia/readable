@@ -4,7 +4,6 @@ import {
   APICommentSendNewI
 } from '../interfaces'
 import { CommentAPI } from '../utils/ReadableAPI'
-import { StoreStateI } from '../reducers'
 import { setAuthor } from './'
 
 export const enum CommentActions {
@@ -22,9 +21,9 @@ export const enum CommentActions {
 }
 export type CommentActionType =
   { type: CommentActions.FETCH } |
-  { type: CommentActions.RECIEVE, comments: APICommentI[], previousComments: any } |
-  { type: CommentActions.RECIEVEAFTERSEND, comment: APICommentI, previousComments: any } |
-  { type: CommentActions.RECIEVEAFTERDELETE, comment: APICommentI, previousComments: any } |
+  { type: CommentActions.RECIEVE, comments: APICommentI[] } |
+  { type: CommentActions.RECIEVEAFTERSEND, comment: APICommentI } |
+  { type: CommentActions.RECIEVEAFTERDELETE, comment: APICommentI } |
   { type: CommentActions.ERROR, hasError: boolean, error: string } |
   { type: CommentActions.LOADING, loading: boolean } |
   { type: CommentActions.SENDING, sending: boolean } |
@@ -33,26 +32,23 @@ export type CommentActionType =
   { type: CommentActions.ADD, comment: APICommentI } |
   { type: CommentActions.EDIT, comment: APICommentI }
 
-export const recieveComments = (comments: APICommentI[], previousComments: any): CommentActionType => {
+export const recieveComments = (comments: APICommentI[]): CommentActionType => {
   return {
     type: CommentActions.RECIEVE,
     comments,
-    previousComments
   }
 }
 
-export const recieveCommentAfterSend = (comment: APICommentI, previousComments: any): CommentActionType => {
+export const recieveCommentAfterSend = (comment: APICommentI): CommentActionType => {
   return {
     type: CommentActions.RECIEVEAFTERSEND,
     comment,
-    previousComments
   }
 }
-export const recieveCommentAfterDelete = (comment: APICommentI, previousComments: any): CommentActionType => {
+export const recieveCommentAfterDelete = (comment: APICommentI): CommentActionType => {
   return {
     type: CommentActions.RECIEVEAFTERDELETE,
     comment,
-    previousComments
   }
 }
 
@@ -90,9 +86,8 @@ export const commentIsVoting = (isVoting: boolean): CommentActionType => {
 }
 export const fetchComments = (postID: string) => ((dispatch: Dispatch<APICommentI>, getState: any) => {
   dispatch(commentsAreLoading(true))
-  const state: StoreStateI = getState()
   return CommentAPI.get(postID)
-    .then(comments => dispatch(recieveComments(comments, state.comments.items)))
+    .then(comments => dispatch(recieveComments(comments)))
     .catch((e) => dispatch(commentsHasError(true, `Retrieve comments: ${e.message}`)))
 }
 )
@@ -106,18 +101,16 @@ export function verifyOkToSubmitComment(comment: APICommentSendNewI) {
 }
 export const addComment = (comment: APICommentI) => ((dispatch: Dispatch<APICommentI>, getState: any) => {
   dispatch(commentIsSending(true))
-  const state: StoreStateI = getState()
   return CommentAPI.add(comment)
-    .then(returnedComment => dispatch(recieveCommentAfterSend(returnedComment, state.comments.items)))
+    .then(returnedComment => dispatch(recieveCommentAfterSend(returnedComment)))
     .then(() => dispatch(setAuthor(comment.author)))
     .catch((e) => dispatch(commentsHasError(true, `Add comment: ${e.message}`)))
 }
 )
 export const editComment = (comment: APICommentI) => ((dispatch: Dispatch<APICommentI>, getState: any) => {
   dispatch(commentIsSending(true))
-  const state: StoreStateI = getState()
   return CommentAPI.edit(comment)
-    .then(returnedComment => dispatch(recieveCommentAfterSend(returnedComment, state.comments.items)))
+    .then(returnedComment => dispatch(recieveCommentAfterSend(returnedComment)))
     .catch((e) => dispatch(commentsHasError(true, `Edit comment: ${e.message}`)))
 }
 )
@@ -125,18 +118,16 @@ export const editComment = (comment: APICommentI) => ((dispatch: Dispatch<APICom
 export const voteComment = (
   comment: APICommentI, isUpVote: boolean) => ((dispatch: Dispatch<APICommentI>, getState: any) => {
     dispatch(commentIsVoting(true))
-    const state: StoreStateI = getState()
     return CommentAPI.vote(comment.id, isUpVote ? 'upVote' : 'downVote')
-      .then(returnedComment => dispatch(recieveCommentAfterSend(returnedComment, state.comments.items)))
+      .then(returnedComment => dispatch(recieveCommentAfterSend(returnedComment)))
       .catch((e) => dispatch(commentsHasError(true, `Vote on comment: ${e.message}`)))
       .then(() => dispatch(commentIsVoting(false)))
   }
   )
 export const deleteComment = (comment: APICommentI) => ((dispatch: Dispatch<APICommentI>, getState: any) => {
   dispatch(commentIsSending(true))
-  const state: StoreStateI = getState()
   return CommentAPI.remove(comment.id)
-    .then(returnedPost => dispatch(recieveCommentAfterDelete(returnedPost, state.comments.items)))
+    .then(returnedPost => dispatch(recieveCommentAfterDelete(returnedPost)))
     .catch((e) => dispatch(commentsHasError(true, `Delete comment: ${e.message}`)))
 }
 )
