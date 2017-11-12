@@ -1,4 +1,4 @@
-import { CategoriesActions, CategoriesActionType } from '../actions/'
+import { CategoriesActions, CategoriesActionType } from 'actions'
 import { LOCATION_CHANGE, LocationChangeAction } from 'react-router-redux'
 
 export interface StoreCategories {

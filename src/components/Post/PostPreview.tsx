@@ -2,9 +2,9 @@ import * as React from 'react'
 import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
 
-import { APIPostI } from '../interfaces'
+import { APIPostI } from 'interfaces'
 import { PostView } from './'
-import decorate from '../style'
+import decorate from 'style'
 
 interface Props {
   post: APIPostI

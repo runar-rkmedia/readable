@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { CategoriesStateI } from '../interfaces'
+import { CategoriesStateI } from 'interfaces'
 import { CategoryHeader } from './'
-import { mapCategories, } from '../store/mapper'
+import { mapCategories, } from 'store/mapper'
 import List from 'material-ui/List'
 import Divider from 'material-ui/Divider'
 export interface CategoryI {

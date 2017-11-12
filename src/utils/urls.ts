@@ -1,4 +1,4 @@
-import { APIPostI } from '../interfaces'
+import { APIPostI } from 'interfaces'
 
 export const urls = {
   root: '/',

@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { APIPostSendNewI, APIPostI } from '../interfaces'
-import { verifyOkToSubmitPost } from '../actions/'
-import { LoadingButton } from './'
+import { APIPostSendNewI, APIPostI } from 'interfaces'
+import { verifyOkToSubmitPost } from 'actions'
+import { LoadingButton } from 'components'
 
-import decorate, { WithStyles } from '../style'
+import decorate, { WithStyles } from 'style'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 

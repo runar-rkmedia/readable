@@ -6,7 +6,6 @@ import red from 'material-ui/colors/red'
 
 const drawerWidth = 280
 const sidebariconWidth = '3em'
-// const sidebariconHeight = '3em'
 const headerIconsWidth = '1.5em'
 const headerIconsHeight = '1.5em'
 export const styles = (theme: typeof myTheme): StyleRules => ({

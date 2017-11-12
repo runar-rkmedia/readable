@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { APICommentI, APICommentSendNewI } from '../interfaces'
+import { APICommentI, APICommentSendNewI } from 'interfaces'
 
-import decorate from '../style'
-import { LoadingButton } from './'
+import decorate from 'style'
+import { LoadingButton } from 'components'
 import Typography from 'material-ui/Typography'
 import TextField from 'material-ui/TextField'
 

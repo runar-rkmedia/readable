@@ -1,8 +1,8 @@
-import { CategoryI } from '../interfaces'
-import { StoreCategories } from '../reducers/'
-const reduxLogo = require('../icons/redux.svg')
-const reactLogo = require('../icons/react.svg')
-const udacityLogo = require('../icons/udacity.svg')
+import { CategoryI } from 'interfaces'
+import { StoreCategories } from 'reducers/'
+const reduxLogo = require('icons/redux.svg')
+const reactLogo = require('icons/react.svg')
+const udacityLogo = require('icons/udacity.svg')
 
 // Hardcoded since API doesn't serve enough information.
 const defaultCategories: {

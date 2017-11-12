@@ -7,9 +7,9 @@ import MenuIcon from 'material-ui-icons/Menu'
 import { push } from 'react-router-redux'
 import { LinearProgress } from 'material-ui/Progress'
 import { connect, Dispatch } from 'react-redux'
-import { StoreStateI } from '../interfaces'
-import { urls } from '../utils/'
-import decorate from '../style'
+import { StoreStateI } from 'interfaces'
+import { urls } from 'utils'
+import decorate from 'style'
 
 interface Props {
   handleDrawerToggle: () => void

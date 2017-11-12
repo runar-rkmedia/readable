@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { push } from 'react-router-redux'
-import { APIPostI, APICommentI } from '../interfaces'
-import { deletePost, deleteComment } from '../actions'
+import { APIPostI, APICommentI } from 'interfaces'
+import { deletePost, deleteComment } from 'actions'
 import { MyDialog } from './'
-import { urls } from '../utils'
+import { urls } from 'utils'
 
 interface Props {
   post?: APIPostI

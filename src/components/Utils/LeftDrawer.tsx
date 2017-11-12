@@ -1,9 +1,9 @@
 import * as React from 'react'
-import decorate from '../style'
+import decorate from 'style'
 import Drawer from 'material-ui/Drawer'
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
-import { CategoryList } from '../components/'
+import { CategoryList } from 'components/'
 
 interface Props {
   handleDrawerToggle: () => void

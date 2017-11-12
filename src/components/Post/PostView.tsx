@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { APIPostI } from '../interfaces'
+import { APIPostI } from 'interfaces'
 import { PostHeader } from './'
 
-import decorate from '../style'
+import decorate from 'style'
 import Paper from 'material-ui/Paper'
 import Divider from 'material-ui/Divider'
 import * as ReactMarkdown from 'react-markdown'

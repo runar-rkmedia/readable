@@ -1,14 +1,17 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { MainContent } from './'
-import { fetchCategories, categoriesHasError as removeCategoriesError } from '../actions/'
-import { postsHasError as removePostError } from '../actions/posts'
-import { CategoryI, StoreStateI } from '../interfaces'
-import { Header, SnackBar, LeftDrawer } from '../components/'
+import {
+  fetchCategories,
+  categoriesHasError as removeCategoriesError,
+  postsHasError as removePostError
+} from 'actions'
+import { CategoryI, StoreStateI } from 'interfaces'
+import { Header, SnackBar, LeftDrawer } from 'components'
 import { Dispatch } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
-import { history } from '../store/store'
-import decorate, { WithStyles } from '../style'
+import { history } from 'store'
+import decorate, { WithStyles } from 'style'
 
 interface Props {
   category: CategoryI | null

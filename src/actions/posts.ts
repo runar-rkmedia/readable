@@ -1,7 +1,6 @@
 import { Dispatch } from 'react-redux'
-import { APIPostI, APIPostSendNewI } from '../interfaces'
-import { PostAPI } from '../utils/ReadableAPI'
-import { urls } from '../utils/'
+import { APIPostI, APIPostSendNewI } from 'interfaces'
+import { PostAPI, urls } from 'utils'
 import { push } from 'react-router-redux'
 import { setAuthor } from './'
 
