@@ -15,8 +15,8 @@ export const LeftDrawer = decorate<Props>((props) => {
   const { loading } = props
   const { classes, theme } = props
   const drawer = (
-    <div>
-      <div className={classes.drawerHeader} />
+    <div >
+      <div className={classes.drawerHeader}/>
       {loading && (
         <div className={classes.textCenter}>Categories are loading...</div>
       )}
@@ -25,7 +25,7 @@ export const LeftDrawer = decorate<Props>((props) => {
     </div>
   )
   return (
-    <div className="">
+    <div className="" >
       <Hidden mdUp={true}>
         <Drawer
           type="temporary"
@@ -41,6 +41,7 @@ export const LeftDrawer = decorate<Props>((props) => {
       </Hidden>
       <Hidden mdDown={true} implementation="css">
         <Drawer
+          style={{height: '100%'}}
           type="permanent"
           open={true}
           classes={{

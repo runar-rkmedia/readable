@@ -34,6 +34,7 @@ const AppC = decorate(
       const { loading, categoriesHasError, categoriesErrorMsg, postsHasError, postsErrorMsg, classes } = this.props
       return (
         <div className={classes.root}>
+        <div className={classes.appFrame}>
           <Header handleDrawerToggle={this.handleDrawerToggle} />
           <LeftDrawer
             open={this.state.mobileOpen}
@@ -53,6 +54,7 @@ const AppC = decorate(
             message={postsErrorMsg}
             onClose={this.props.closePostErrorMessage}
           />
+          </div>
         </div>
       )
     }

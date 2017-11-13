@@ -26,7 +26,7 @@ const CategoryListC = (props: {
             category={item}
             type="listitem"
           />
-          <Divider inset={CategoriesLength !== i + 1} />
+          {CategoriesLength !== i + 1 && (<Divider inset={true} />)}
         </div>
 
       ))}

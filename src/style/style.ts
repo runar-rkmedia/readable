@@ -94,10 +94,11 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
   drawerHeader: theme.mixins.toolbar,
   drawerPaper: {
     width: 250,
+    height: '100%',
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
-      position: 'relative',
       height: '100%',
+      position: 'relative',
     },
   },
   close: {
@@ -139,6 +140,7 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
   content: {
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
+    width: '100%',
     height: 'calc(100% - 56px)',
     marginTop: 56,
     [theme.breakpoints.up('sm')]: {
