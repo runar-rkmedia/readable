@@ -1,4 +1,4 @@
 export * from './categories'
 export * from './posts'
 export * from './comments'
-export * from './author'
+export * from './settings'

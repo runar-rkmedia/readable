@@ -3,33 +3,33 @@ import { routerReducer } from 'react-router-redux'
 export * from './Categories'
 export * from './Posts'
 export * from './Comments'
-export * from './Author'
+export * from './Settings'
 import { posts, initialPostState } from './Posts'
 import { comments, initialCommentState } from './Comments'
 import { categories, initialCategoriesState } from './Categories'
-import { initialAuthorStateI, author } from './Author'
+import { initialSettingsStateI, settings } from './Settings'
 import * as storage from 'redux-storage'
-import { PostStateI, CategoriesStateI, CommentStateI, AuthorStateI } from '../interfaces'
+import { PostStateI, CategoriesStateI, CommentStateI, SettingsStateI } from '../interfaces'
 import { RouterState } from 'react-router-redux'
 
 export type StoreStateI = {
   categories: CategoriesStateI,
   posts: PostStateI
   comments: CommentStateI
-  author: AuthorStateI
+  settings: SettingsStateI
   router?: RouterState
 }
 export const initialStoreState: StoreStateI = {
   categories: initialCategoriesState,
   posts: initialPostState,
   comments: initialCommentState,
-  author: initialAuthorStateI
+  settings: initialSettingsStateI
 }
 
 export default storage.reducer(combineReducers({
   posts,
   categories,
   comments,
-  author,
+  settings,
   router: routerReducer
 }, ))

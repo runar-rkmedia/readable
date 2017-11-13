@@ -156,11 +156,11 @@ interface MappedProps extends Props {
   author: string
 }
 const mapStateToProps = (state: StoreStateI, ownprops: any) => {
-  const { posts, author, comments } = state
+  const { posts, settings, comments } = state
   return {
     postIsSending: posts.sending,
     commentIsSending: comments.sending,
-    author: author.name,
+    author: settings.name,
     ...ownprops
   }
 }
