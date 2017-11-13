@@ -5,17 +5,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Example-server
 
-There is an example-server added that can be used, and is provided here for you. For more information about the server, head over to [Readable API server on github](https://github.com/udacity/reactnd-project-readable-starter).
+There is an example-server added that can be used, and is provided here for you. For more information about the server, head over to [Readable API server on github](https://github.com/runar-rkmedia/reactnd-project-readable-starter/tree/myStuff.
+
+I've made minor changes to the server provided, mostly just added some extra initial posts.
 
 ## Getting up and running
-
-Please use `yarn` instead of `npm`, as one of the dependencies has a missing `package.json` in root, and `npm` does not handle this appropriatly.
 
 ### With provided example-server
 
 ```bash
-yarn install
-yarn start
+npm install
+npm start
 ```
 
 This will install everything needed, and also run the server alongside the webapplicaiton itself.
@@ -23,8 +23,8 @@ This will install everything needed, and also run the server alongside the webap
 ### With your own server
 
 ```bash
-yarn install
-yarn run start-front
+npm install
+npm run start-front
 ```
 
 This will launch the webapplicaiton only, and will listen for a server-api at port 3001 by default.
@@ -33,5 +33,11 @@ This will launch the webapplicaiton only, and will listen for a server-api at po
 ### Build for production
 
 ```bash
-yarn run build
+npm run build
+```
+
+### Running the server only
+
+```bash
+npm run start-server
 ```

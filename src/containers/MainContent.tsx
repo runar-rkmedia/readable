@@ -135,13 +135,7 @@ export const MainContentC = decorate(
               exact={true}
               path="/"
               render={() => (
-                <div>
-                  <FrontPage/>
-                  <PostList
-                    showCategory={true}
-                    posts={posts}
-                  />
-                </div>
+                <FrontPage {...{ posts }} />
               )}
             />
           </Switch>
