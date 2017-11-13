@@ -33,6 +33,11 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
     height: 30,
     verticalAlign: 'middle'
   },
+  post: {
+    '& img': {
+      maxWidth: '100%'
+    }
+  },
   formRoot: theme.mixins.gutters({
     paddingTop: 16,
     paddingBottom: 16,
