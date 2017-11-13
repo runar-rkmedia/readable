@@ -34,28 +34,25 @@ const AppC = decorate(
       const { loading, categoriesHasError, categoriesErrorMsg, postsHasError, postsErrorMsg, classes } = this.props
       return (
         <div className={classes.root}>
-          <div className={classes.appFrame}>
-            <Header handleDrawerToggle={this.handleDrawerToggle} />
-            <LeftDrawer
-              open={this.state.mobileOpen}
-              handleDrawerToggle={this.handleDrawerToggle}
-              loading={loading}
-            />
-            <ConnectedRouter history={history}>
-              <MainContent />
-            </ConnectedRouter>
-            <SnackBar
-              open={categoriesHasError}
-              message={categoriesErrorMsg}
-              onClose={this.props.closeCategoriesErrorMessage}
-            />
-            <SnackBar
-              open={postsHasError}
-              message={postsErrorMsg}
-              onClose={this.props.closePostErrorMessage}
-            />
-          </div>
-          <footer>This is a footer</footer>
+          <Header handleDrawerToggle={this.handleDrawerToggle} />
+          <LeftDrawer
+            open={this.state.mobileOpen}
+            handleDrawerToggle={this.handleDrawerToggle}
+            loading={loading}
+          />
+          <ConnectedRouter history={history}>
+            <MainContent />
+          </ConnectedRouter>
+          <SnackBar
+            open={categoriesHasError}
+            message={categoriesErrorMsg}
+            onClose={this.props.closeCategoriesErrorMessage}
+          />
+          <SnackBar
+            open={postsHasError}
+            message={postsErrorMsg}
+            onClose={this.props.closePostErrorMessage}
+          />
         </div>
       )
     }
