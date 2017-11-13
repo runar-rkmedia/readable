@@ -11,10 +11,10 @@ const headerIconsHeight = '1.5em'
 export const styles = (theme: typeof myTheme): StyleRules => ({
   root: {
     width: '100%',
-    height: 'calc(100% - 56px)',
+    minHeight: '100%',
     zIndex: 1,
-    // overflow: 'hidden',
-    flexGrow: 1
+    flexGrow: 1,
+    fontFamily: theme.typography.fontFamily
   },
   appFrame: {
     position: 'relative',
@@ -129,7 +129,6 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
   },
   content: {
     backgroundColor: theme.palette.background.default,
-    width: '100%',
     padding: theme.spacing.unit * 3,
     height: 'calc(100% - 56px)',
     marginTop: 56,
@@ -155,6 +154,10 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
     extend: 'justifyContent',
     alignItems: 'baseline',
     marginTop: '-20px'
+  },
+  postDetails: {
+    extend: 'postcommentDetails',
+    marginTop: '-5px'
   },
   sidebaricon: {
     // padding: '0.2em',

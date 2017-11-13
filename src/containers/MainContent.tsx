@@ -121,11 +121,13 @@ export const MainContentC = decorate(
                   >
                     <AddIcon />
                   </Button>
-                  <PostList
-                    posts={posts.filter(
-                      post => post.category === category.id)
-                    }
-                  />
+                  {posts.length ? (
+                    <PostList posts={posts.filter(post => post.category === category.id)} />
+                  ) : (
+                      <Typography type="subheading">
+                        There doesn't seem to be any posts in this category yet. Why don't you create one?
+                    </Typography>
+                    )}
                 </div>
               ))}
           />
@@ -134,7 +136,7 @@ export const MainContentC = decorate(
               path="/"
               render={() => (
                 <div>
-                  <FrontPage />
+                  <FrontPage/>
                   <PostList
                     showCategory={true}
                     posts={posts}

@@ -10,13 +10,13 @@ interface Props {
 }
 
 export const PostList = (props: Props) => {
-  const { posts } = props
+  const { posts, showCategory } = props
   const postCount = posts.length
   return (
     <List>
       {posts.map((post, i) => (
         <div key={'post' + post.id}>
-          <PostItem post={post} />
+          <PostItem {...{post, showCategory}} />
           {postCount !== i + 1 && (
             <Divider inset={true} />
           )}

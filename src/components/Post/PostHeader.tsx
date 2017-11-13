@@ -27,7 +27,7 @@ export const PostHeaderC = decorate(
           <Typography gutterBottom={true} type="headline" color="inherit">
             {title}
           </Typography>
-          <Typography type="subheading" color="inherit" className={classes.postcommentDetails}>
+          <Typography type="subheading" color="inherit" className={classes.postDetails}>
             <span>by {author}. {date}</span>
             <span>
               <IconButton onClick={() => goTo(urls.editPost(post))}>
@@ -36,7 +36,7 @@ export const PostHeaderC = decorate(
               <IconButton onClick={() => this.delDialog.dialog.open()}>
                 <DeleteIcon />
               </IconButton>
-              <Voter post={post} />
+              <Voter post={post}/>
             </span>
           </Typography>
           <DeleteDialog
