@@ -41,12 +41,15 @@
     "typeface-roboto": "^0.0.43",
     "uuid": "^3.1.0"
   },
+  "engines": {
+    "node": "8.9.1"
+  },
   "scripts": {
     "postinstall": "npm run set:env && cd node_modules/readable-server && npm install",
     "start-front": "react-scripts-ts start",
     "start-server": "cd node_modules/readable-server && npm start",
     "start": "npm run start-server | npm run start-front",
-    "set:env": "node setenv.js > .env",
+    "set:env": "node setEnv.js > .env",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"

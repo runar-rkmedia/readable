@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
+View on [Heroku](https://runar-readable.herokuapp.com/)
+
 
 # Readable - Udacity assignment built with React
 
