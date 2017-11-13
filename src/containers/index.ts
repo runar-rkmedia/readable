@@ -1,5 +1,5 @@
 export * from './App'
-export * from './FrontPage'
+export * from './SortablePostList'
 export * from './MainContent'
 export * from './PostFormView'
 export * from './FormHandler'

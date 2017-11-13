@@ -2,8 +2,8 @@ import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 import { RouterState, push } from 'react-router-redux'
-import { CategoryHeader, PostList } from 'components'
-import { PostFormView, Post, FrontPage } from './'
+import { CategoryHeader } from 'components'
+import { PostFormView, Post, SortablePostList } from './'
 import {
   CategoryI,
   StoreStateI,
@@ -112,22 +112,22 @@ export const MainContentC = decorate(
               path="/category/"
               render={() => (this.checkCorrectPath(
                 <div>
-                  <Button
-                    fab={true}
-                    color="primary"
-                    aria-label="add"
-                    className={classes.button}
-                    onClick={() => goTo(urls.addPost(category.id))}
-                  >
-                    <AddIcon />
-                  </Button>
                   {posts.length ? (
-                    <PostList posts={posts.filter(post => post.category === category.id)} />
+                    <SortablePostList posts={posts.filter(post => post.category === category.id)} />
                   ) : (
                       <Typography type="subheading">
                         There doesn't seem to be any posts in this category yet. Why don't you create one?
                     </Typography>
                     )}
+                  <Button
+                    fab={true}
+                    color="primary"
+                    aria-label="add"
+                    className={classes.pullRight}
+                    onClick={() => goTo(urls.addPost(category.id))}
+                  >
+                    <AddIcon />
+                  </Button>
                 </div>
               ))}
           />
@@ -135,7 +135,12 @@ export const MainContentC = decorate(
               exact={true}
               path="/"
               render={() => (
-                <FrontPage {...{ posts }} />
+                <div>
+                  <Typography type="display1" gutterBottom={true}>
+                    Readable – Main page
+                  </Typography>
+                  <SortablePostList {...{ posts }} />
+                </div>
               )}
             />
           </Switch>
