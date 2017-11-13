@@ -43,15 +43,15 @@ export function posts(
     case LOCATION_CHANGE:
       const pathcomps = action.payload.pathname.split('/')
       const ignoreList = ['add', 'edit']
+      let selectedPost = ''
       if (
         pathcomps.length > 4 &&
         pathcomps[3] === 'post' &&
         ignoreList.indexOf(pathcomps[4]) === -1
       ) {
-        const selectedPost = pathcomps[4]
-        return { ...state, selectedPost }
+        selectedPost = pathcomps[4]
       }
-      return state
+      return { ...state, selectedPost }
     case PostActions.RECIEVE:
       return {
         ...state,
