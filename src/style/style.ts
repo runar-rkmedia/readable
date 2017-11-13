@@ -29,6 +29,10 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
       width: `calc(100% - ${drawerWidth}px)`,
     },
   },
+  buttonLabel: {
+    height: 30,
+    verticalAlign: 'middle'
+  },
   formRoot: theme.mixins.gutters({
     paddingTop: 16,
     paddingBottom: 16,
