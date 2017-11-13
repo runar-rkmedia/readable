@@ -50,14 +50,14 @@ const PostItemC = decorate<ExtendedProps>((props) => {
           <span>. {moment(timestamp).calendar()}
           </span>
         </Typography>
-        <div>
+        <div style={{ marginRight: 100 }}>
           <Truncate lines={3} ellipsis={<b> Click to read more</b>}>
             {removeMd(body)}
           </Truncate>
         </div>
       </div>
       <ListItemSecondaryAction>
-        <Voter post={props.post}/>
+      <Voter post={props.post} />
       </ListItemSecondaryAction>
     </ListItem>
   )

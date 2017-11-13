@@ -4,6 +4,7 @@ import { APIPostI, APICommentI, StoreStateI } from 'interfaces'
 import { fetchComments } from 'actions'
 import { CommentsList } from 'components'
 import { initializeNewComment } from 'utils/ReadableAPI'
+import { CircularProgress } from 'material-ui/Progress'
 import { FormHandler, FormHandlerType } from './'
 
 import decorate, { WithStyles } from 'style'
@@ -71,11 +72,12 @@ export const CommentsC = decorate(
 
     render() {
       const { state, props, toggleNewPost, newComment } = this
-      const { classes, post, comments } = props
+      const { classes, post, comments, loading } = props
       const { newPostIsOpen } = state
       return (
         <div>
           <Paper className={classNames(classes.formRoot, classes.commentsPaper, classes)} elevation={2}>
+            {loading && (<CircularProgress className={classes.pullRight}/>)}
             <Typography type="title">
               {(!!post.commentCount || !!comments.length) ?
                 'Comments to this post:' : 'Be the very first to post a comment to this post.'}
@@ -115,10 +117,12 @@ export const CommentsC = decorate(
 )
 interface MappedProps {
   comments: APICommentI[]
+  loading: boolean
 }
 const mapStateToProps = (state: StoreStateI, ownprops: any) => {
   const { comments } = state
   return {
+    loading: comments.loading,
     comments: Object.keys(comments.items).map(
       key => comments.items[key]).filter(
       c => c.parentId === ownprops.post.id
