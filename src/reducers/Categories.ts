@@ -28,11 +28,11 @@ export function categories(
       return { ...state, loading: action.loading }
     case LOCATION_CHANGE:
       const pathcomps = action.payload.pathname.split('/')
+      let selectedCatagory = ''
       if (pathcomps.length > 2 && pathcomps[1] === 'category') {
-        const selectedCatagory = pathcomps[2]
-        return { ...state, selectedCatagory }
+        selectedCatagory = pathcomps[2]
       }
-      return state
+      return { ...state, selectedCatagory }
 
     case CategoriesActions.ERROR:
       const error = action.error || state.error

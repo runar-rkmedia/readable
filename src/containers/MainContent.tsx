@@ -9,39 +9,49 @@ import {
   StoreStateI,
   APIPostI
 } from 'interfaces'
-import { mapCatagory } from 'store/mapper'
+import { mapCatagory } from 'store'
 import { fetchSinglePost, fetchPosts, addPost, PostActionType } from 'actions'
 import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
 import Typography from 'material-ui/Typography'
+import { CircularProgress } from 'material-ui/Progress'
 import { initializeNewPost, urls } from 'utils'
 import decorate, { WithStyles } from 'style'
-
+//
 interface Props {
   onSetOpen: (open: boolean) => void
 }
 
 type maincontent = SidebarMappedProps & DispatchProps & WithStyles
 
+const FrontPage: CategoryI = {
+  id: 'front',
+  name: 'Readable',
+  description: 'A Udacity assignment built with React.',
+  path: '/',
+  icon: '',
+}
+
 export const MainContentC = decorate(
   class extends React.Component<maincontent> {
     componentDidMount() {
       this.retrievePosts()
     }
-    componentWillReceiveProps(nextProps: SidebarMappedProps) {
-      const newCategoryPath = nextProps.category.path
-      if (this.props.category.path !== newCategoryPath) {
+    componentWillReceiveProps(nextProps: maincontent) {
+      if (nextProps.router.location!.key !== this.props.router.location!.key) {
         this.retrievePosts(nextProps)
       }
     }
-    retrievePosts = (nextProps?: SidebarMappedProps) => {
-      const { postID, postsHash, postsAreLoading } = this.props
-      const { category } = nextProps || this.props
-      // Fetch single post, but only if viewed directly, and post is not already downloaded.
-      if (postID && (!postsAreLoading || !postsHash[postID])) {
-        this.props.fetchSinglePost(postID)
+    retrievePosts = (nextProps?: maincontent) => {
+      const { postID, postsHash, postsAreLoading, category } = nextProps || this.props
+      if (!postsAreLoading || !postsHash[postID]) {
+        if (postID) {
+          this.props.fetchSinglePost(postID)
+        } else {
+          this.props.fetchPosts(category.path)
+        }
       }
-      this.props.fetchPosts(category.path)
+
     }
     checkCorrectPath = (renderThis: JSX.Element) => {
       if (!this.props.category.path) {
@@ -59,11 +69,10 @@ export const MainContentC = decorate(
     } = this.props
       return (
         <main className={classes.content}>
-          <Route
-            path="/category/"
-            render={() => (
-              <CategoryHeader category={category} type="header" />
-            )}
+        {loading && <CircularProgress className={classes.pullRight}/>}
+          <CategoryHeader
+            category={category.id ? category : FrontPage}
+            type="header"
           />
           <Switch>
             <Route
@@ -135,12 +144,7 @@ export const MainContentC = decorate(
               exact={true}
               path="/"
               render={() => (
-                <div>
-                  <Typography type="display1" gutterBottom={true}>
-                    Readable – Main page
-                  </Typography>
                   <SortablePostList {...{ posts }} />
-                </div>
               )}
             />
           </Switch>

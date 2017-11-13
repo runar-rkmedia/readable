@@ -4,6 +4,7 @@ import { push } from 'react-router-redux'
 import { CategoryI } from 'interfaces'
 import Typography from 'material-ui/Typography'
 import { ListItem, ListItemText } from 'material-ui/List'
+
 import { urls } from 'utils'
 
 import decorate, { WithStyles } from 'style/'
@@ -21,7 +22,7 @@ const CategoryHeaderC = decorate<Props & AppDispatchProps & WithStyles>((props) 
       <div className="warning">Not a valid category</div>
     )
   }
-  const fullPath = urls.category(path)
+  const fullPath = path === '/' ? urls.root : urls.category(path)
   switch (type) {
     case 'header':
       return (
@@ -31,7 +32,8 @@ const CategoryHeaderC = decorate<Props & AppDispatchProps & WithStyles>((props) 
             onClick={() => goTo(fullPath)}
             className={classes.link}
           >
-            <img className={classes.headericon} src={icon} alt="" />{name}
+            {icon && (<img className={classes.headericon} src={icon} alt="" />)}
+            {name}
           </Typography>
           <Typography type="subheading">{description}</Typography>
           <hr />

@@ -27,7 +27,6 @@ type ExtendedProps = Props & WithStyles & DispatchProps
 const PostItemC = decorate<ExtendedProps>((props) => {
   const {
      title, body, author, timestamp, category, commentCount } = props.post
-  console.log(props.showCategory)
   return (
     <ListItem button={true} onClick={() => props.goTo(urls.viewPost(props.post))}>
       <ListItemIcon>
