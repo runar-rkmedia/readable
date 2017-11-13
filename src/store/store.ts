@@ -4,19 +4,23 @@ import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import reducer from 'reducers/'
 import * as storage from 'redux-storage'
-import { AuthorActions } from 'actions'
+import { SettingsActions } from 'actions'
 
 import createEngine from 'redux-storage-engine-localstorage'
 import filter from 'redux-storage-decorator-filter'
 const Ngin = createEngine('my-save-key')
-const engine = filter(Ngin, ['author'])
+const engine = filter(Ngin, ['settings'])
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export const history = createHistory()
 
 const routerMW = routerMiddleware(history)
-const storageMW = storage.createMiddleware(engine, [], [AuthorActions.SET])
+const storageMW = storage.createMiddleware(engine, [], [
+  SettingsActions.SETAUTHOR,
+  SettingsActions.SETSORTBY,
+  SettingsActions.SETSORTORDER,
+])
 
 export const store = createStore(
   reducer,

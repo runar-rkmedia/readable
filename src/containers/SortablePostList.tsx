@@ -1,12 +1,14 @@
 import * as React from 'react'
+import { connect, Dispatch } from 'react-redux'
 import { PostList } from 'components'
-import { APIPostI } from 'interfaces'
+import { APIPostI, StoreStateI } from 'interfaces'
 import Button from 'material-ui/Button'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import SortIcon from 'material-ui-icons/Sort'
 import AscIcon from 'material-ui-icons/KeyboardArrowUp'
 import DescIcon from 'material-ui-icons/KeyboardArrowDown'
 import decorate, { WithStyles } from 'style'
+import { setSortBy, setSortOrder } from 'actions'
 
 interface Props {
   posts: APIPostI[]
@@ -21,8 +23,6 @@ type orderType = 1 | -1
 interface State {
   anchorElement: any
   menuOpen: boolean
-  selectedSort: string
-  order: orderType
 }
 
 const sortables: Sortables = {
@@ -33,31 +33,31 @@ const sortables: Sortables = {
   voteScore: 'Popularity',
 }
 
-type ExtendedProps = Props & WithStyles
-export const SortablePostList = decorate(
+type ExtendedProps = Props & WithStyles & MappedProps & DispatchProps
+
+export const SortablePostListC = decorate(
   class extends React.Component<ExtendedProps, State> {
     constructor(props: ExtendedProps) {
       super(props)
       this.state = {
         anchorElement: null,
         menuOpen: false,
-        selectedSort: 'timestamp',
-        order: 1
       }
     }
     handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       this.setState({ menuOpen: true, anchorElement: event.currentTarget })
     }
 
-    handleRequestClose = (selectedSort: string = this.state.selectedSort) => {
-      this.setState({ menuOpen: false, selectedSort })
+    handleRequestClose = (selectedSort: string = this.props.sortBy) => {
+      this.props.saveSortby(selectedSort)
+      this.setState({menuOpen: false})
     }
-    toggleOrder(order: orderType = (this.state.order * -1 as orderType)) {
-      this.setState({ order })
+    toggleOrder(order: orderType = (this.props.sortOrder * -1 as orderType)) {
+      this.props.saveSortOrder(order)
     }
     render() {
-      const { posts, classes } = this.props
-      const { menuOpen, anchorElement, selectedSort, order } = this.state
+      const { posts, classes, sortOrder, sortBy } = this.props
+      const { menuOpen, anchorElement } = this.state
       return (
         <div>
           <div className={classes.justifyContent}>
@@ -68,14 +68,14 @@ export const SortablePostList = decorate(
               onClick={this.handleClick}
             >
               <span className={classes.buttonLabel}>
-                <SortIcon />Sort by {sortables[selectedSort]}
+                <SortIcon />Sort by {sortables[sortBy]}
               </span>
             </Button>
             <Button
               raised={true}
               onClick={() => this.toggleOrder()}
             >
-              {order === -1 ? (
+              {sortOrder === -1 ? (
                 <span className={classes.buttonLabel}>
                   <AscIcon style={{ position: 'relative', top: '.5em' }} />Ascending
                   </span>
@@ -103,11 +103,11 @@ export const SortablePostList = decorate(
           <PostList
             showCategory={true}
             posts={posts.sort((a: any, b: any) => {
-              if (a[selectedSort] > b[selectedSort]) {
-                return -1 * order
+              if (a[sortBy] > b[sortBy]) {
+                return -1 * sortOrder
               }
-              if (a[selectedSort] < b[selectedSort]) {
-                return 1 * order
+              if (a[sortBy] < b[sortBy]) {
+                return 1 * sortOrder
               }
               return 0
             })}
@@ -116,3 +116,29 @@ export const SortablePostList = decorate(
       )
     }
   })
+interface MappedProps extends Props {
+  sortBy: string
+  sortOrder: orderType
+}
+const mapStateToProps = (state: StoreStateI, ownprops: any) => {
+  const { settings } = state
+  return {
+    sortBy: settings.sortBy,
+    sortOrder: settings.order,
+    ...ownprops
+  }
+}
+interface DispatchProps {
+  saveSortby: (sortBy: string) => void,
+  saveSortOrder: (order: orderType) => void,
+}
+
+function mapDispatchToProps(dispatch: Dispatch<DispatchProps>, ): DispatchProps {
+  return {
+    saveSortby: (sortBy) => dispatch(setSortBy(sortBy)),
+    saveSortOrder: (order) => dispatch(setSortOrder(order)),
+  }
+}
+export const SortablePostList = connect(
+  mapStateToProps, mapDispatchToProps
+)(SortablePostListC)
