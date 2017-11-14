@@ -28,6 +28,7 @@ export const CommentsList = decorate(
       })
     }
     onToggleEdit = (comment: APICommentI) => {
+      console.log('really got it', comment)
       this.setState({
         editingComment: comment.id
       })

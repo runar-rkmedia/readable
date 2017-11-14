@@ -2,6 +2,7 @@ import { StyleRules } from 'material-ui/styles'
 import { myTheme } from './'
 import green from 'material-ui/colors/green'
 import grey from 'material-ui/colors/grey'
+import blue from 'material-ui/colors/blue'
 import red from 'material-ui/colors/red'
 
 const drawerWidth = 280
@@ -49,9 +50,32 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
     },
   },
   pullRight: {
-    // width: '100%',
     float: 'right',
-    // extend: 'clearFix'
+  },
+  commentCountBadge: {
+    marginBottom: 9,
+    '& span': {
+      backgroundColor: blue[800],
+      color: theme.palette.common.fullWhite
+    }
+  },
+  voteScoreBadgePositive: {
+    '& span': {
+      backgroundColor: green[400],
+      color: theme.palette.common.fullWhite
+    },
+  },
+  voteScoreBadgeNegative: {
+    '& span': {
+      backgroundColor: red[400],
+      color: theme.palette.common.fullWhite
+    },
+  },
+  secondaryAction: {
+    top: 25
+  },
+  delEditVote: {
+    extend: 'justifyContent',
   },
   clearFix: {
     '&:after': {

@@ -3,11 +3,9 @@ import * as moment from 'moment'
 import { APICommentI } from 'interfaces'
 import decorate, { WithStyles } from 'style'
 import { FormHandler, FormHandlerType } from 'containers/'
-import { Voter, DeleteDialog, DeleteDialogType } from 'components/'
+import { DelEditVote } from 'components/'
 import { initialComment } from 'utils'
 import * as ReactMarkdown from 'react-markdown'
-import DeleteIcon from 'material-ui-icons/Delete'
-import IconButton from 'material-ui/IconButton'
 
 interface Props {
   comment: APICommentI
@@ -17,7 +15,6 @@ interface Props {
 type ExtendedProps = Props & WithStyles
 export const CommentItem = decorate(
   class extends React.Component<ExtendedProps> {
-    delDialog: DeleteDialogType
     render() {
       const {
     comment, classes, onToggleEdit, editingComment } = this.props
@@ -29,12 +26,7 @@ export const CommentItem = decorate(
               <span className={classes.authorName}>{author}</span>
               <span className={classes.commentTime}>{moment(timestamp).calendar()}</span>
             </span>
-            <span>
-              <IconButton onClick={() => this.delDialog.dialog.open()}>
-                <DeleteIcon />
-              </IconButton>
-              <Voter comment={comment} />
-            </span>
+            <DelEditVote comment={comment} editAction={() => onToggleEdit(comment)} />
           </div>
           {editingComment ? (
             <FormHandler
@@ -53,10 +45,6 @@ export const CommentItem = decorate(
                 />
               </div>
             )}
-          <DeleteDialog
-            comment={comment}
-            onRef={(ref: DeleteDialogType) => (this.delDialog = ref)}
-          />
         </div>
       )
     }

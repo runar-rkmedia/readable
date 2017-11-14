@@ -1,6 +1,6 @@
 import * as React from 'react'
-import ThumbUp from 'material-ui-icons/ArrowUpward'
-import ThumbDown from 'material-ui-icons/ArrowDownward'
+import ThumbUp from 'material-ui-icons/ThumbUp'
+import ThumbDown from 'material-ui-icons/ThumbDown'
 import IconButton from 'material-ui/IconButton'
 import decorate from 'style'
 import { StoreStateI, APICommentI, APIPostI } from 'interfaces'
@@ -39,7 +39,6 @@ export const VoterC = decorate<ExtendedProps>((props) => {
       >
         <ThumbUp />
       </IconButton>
-      {voteScore}
       <IconButton
         className={[classes.voteButton, classes.downVoteButton].join(' ')}
         aria-label="Vote down"
