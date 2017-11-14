@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import { push } from 'react-router-redux'
-import { APIPostI, APICommentI } from 'interfaces'
+import { APIPostI, APICommentI, StoreStateI } from 'interfaces'
 import { deletePost, deleteComment } from 'actions'
 import { MyDialog } from './'
 import { urls } from 'utils'
@@ -12,7 +12,7 @@ interface Props {
   onRef: (f: any) => any
   open?: boolean
 }
-type ExtendedProps = Props & AppDispatchProps
+type ExtendedProps = Props & AppDispatchProps & MappedProps
 export type DeleteDialogType = DeleteDialogC
 class DeleteDialogC extends React.Component<ExtendedProps> {
   dialog: MyDialog
@@ -26,16 +26,21 @@ class DeleteDialogC extends React.Component<ExtendedProps> {
     action()
   }
   deletePost = () => {
-    const {goTo, post} = this.props
+    const { goTo, post, currentPath } = this.props
     if (post) {
       this.props.deletePost(post!)
-      .then(() => goTo(urls.category(post!.category)))
+        .then(() => {
+          if (currentPath !== '/') {
+            goTo(urls.category(post!.category))
+          }
+        })
     }
   }
   deleteComment = () => {
     this.props.deleteComment(this.props.comment!)
   }
   render() {
+
     const isPost = !!this.props.post
     const isComment = !!this.props.comment
     return (
@@ -51,7 +56,15 @@ class DeleteDialogC extends React.Component<ExtendedProps> {
     )
   }
 }
-
+interface MappedProps extends Props {
+  currentPath: string
+}
+const mapStateToProps = ({ router }: StoreStateI, ownprops: any) => {
+  return {
+    currentPath: router!.location!.pathname,
+    ...ownprops
+  }
+}
 interface AppDispatchProps {
   goTo: (path: string) => void
   deleteComment: (comment: APICommentI) => Promise<any>
@@ -66,4 +79,4 @@ function mapDispatchToProps(dispatch: Dispatch<AppDispatchProps>, ownprops: any)
   }
 }
 
-export const DeleteDialog = connect<null, AppDispatchProps>(null, mapDispatchToProps)(DeleteDialogC)
+export const DeleteDialog = connect(mapStateToProps, mapDispatchToProps)(DeleteDialogC)
