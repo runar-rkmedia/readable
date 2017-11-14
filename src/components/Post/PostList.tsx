@@ -16,7 +16,7 @@ export const PostList = (props: Props) => {
     <List>
       {posts.map((post, i) => (
         <div key={'post' + post.id}>
-          <PostItem {...{post, showCategory}} />
+          <PostItem {...{ post, showCategory }} />
           {postCount !== i + 1 && (
             <Divider inset={true} />
           )}

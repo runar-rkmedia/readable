@@ -69,7 +69,7 @@ export const MainContentC = decorate(
     } = this.props
       return (
         <main className={classes.content}>
-        {loading && <CircularProgress className={classes.pullRight}/>}
+          {loading && <CircularProgress className={classes.pullRight} />}
           <CategoryHeader
             category={category.id ? category : FrontPage}
             type="header"
@@ -121,13 +121,8 @@ export const MainContentC = decorate(
               path="/category/"
               render={() => (this.checkCorrectPath(
                 <div>
-                  {posts.length ? (
-                    <SortablePostList posts={posts.filter(post => post.category === category.id)} />
-                  ) : (
-                      <Typography type="subheading">
-                        There doesn't seem to be any posts in this category yet. Why don't you create one?
-                    </Typography>
-                    )}
+                  <SortablePostList posts={posts
+                    .filter(post => post.category === category.id)} />
                   <Button
                     fab={true}
                     color="primary"
@@ -139,12 +134,12 @@ export const MainContentC = decorate(
                   </Button>
                 </div>
               ))}
-          />
+            />
             <Route
               exact={true}
               path="/"
               render={() => (
-                  <SortablePostList {...{ posts }} />
+                <SortablePostList {...{ posts }} />
               )}
             />
           </Switch>

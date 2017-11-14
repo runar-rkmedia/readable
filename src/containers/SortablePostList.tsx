@@ -7,6 +7,7 @@ import Menu, { MenuItem } from 'material-ui/Menu'
 import SortIcon from 'material-ui-icons/Sort'
 import AscIcon from 'material-ui-icons/KeyboardArrowUp'
 import DescIcon from 'material-ui-icons/KeyboardArrowDown'
+import Typography from 'material-ui/Typography'
 import decorate, { WithStyles } from 'style'
 import { setSortBy, setSortOrder } from 'actions'
 
@@ -56,6 +57,13 @@ export const SortablePostListC = decorate(
       this.props.saveSortOrder(order)
     }
     render() {
+        if (!this.props.posts.length) {
+          return (
+            <Typography type="subheading">
+              There doesn't seem to be any posts in this category yet. Why don't you create one?
+            </Typography>
+          )
+        }
       const { posts, classes, sortOrder, sortBy } = this.props
       const { menuOpen, anchorElement } = this.state
       return (
