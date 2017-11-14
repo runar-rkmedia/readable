@@ -40,6 +40,10 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
     }
   },
   formRoot: theme.mixins.gutters({
+    [theme.breakpoints.down('md')]: {
+      marginLeft: -theme.spacing.unit * 2,
+      marginRight: -theme.spacing.unit * 2,
+    },
     paddingTop: 16,
     paddingBottom: 16,
     marginTop: theme.spacing.unit * 3,
@@ -73,9 +77,6 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
   },
   secondaryAction: {
     top: 25
-  },
-  delEditVote: {
-    extend: 'justifyContent',
   },
   clearFix: {
     '&:after': {

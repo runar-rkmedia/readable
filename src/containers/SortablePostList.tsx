@@ -63,6 +63,7 @@ export const SortablePostListC = decorate(
           <div className={classes.justifyContent}>
             <Button
               raised={true}
+              dense={true}
               aria-owns={menuOpen ? 'simple-menu' : null}
               aria-haspopup="true"
               onClick={this.handleClick}
@@ -73,6 +74,7 @@ export const SortablePostListC = decorate(
             </Button>
             <Button
               raised={true}
+              dense={true}
               onClick={() => this.toggleOrder()}
             >
               {sortOrder === -1 ? (

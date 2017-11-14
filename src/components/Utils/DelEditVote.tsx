@@ -21,6 +21,7 @@ interface Props {
   comment?: APICommentI
   styleName?: any
   editAction?: () => any
+  noBreakPoint?: boolean
 }
 interface State {
   anchorElement: any
@@ -56,12 +57,12 @@ const DelEditVoteC = decorate(
       return post && goTo(urls.editPost(post))
     }
     render() {
-      const { post, comment, classes, styleName } = this.props
+      const { post, comment, classes, styleName, noBreakPoint } = this.props
       const { menuOpen, anchorElement } = this.state
       const { handleRequestClose, editAction, delAction, voter } = this
       return (
         <div className={classNames(classes.delEditVote, styleName)}>
-          <Hidden smUp={true}>
+          {!noBreakPoint && (<Hidden smUp={true}>
             <Button
               dense={true}
               onClick={this.handleClick}
@@ -89,8 +90,8 @@ const DelEditVoteC = decorate(
               ))}
 
             </Menu>
-          </Hidden >
-          <Hidden xsDown={true}>
+          </Hidden >)}
+          <Hidden xsDown={!noBreakPoint}>
             <IconButton onClick={editAction}>
               <EditIcon />
             </IconButton>

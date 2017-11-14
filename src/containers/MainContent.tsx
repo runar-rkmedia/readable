@@ -111,7 +111,7 @@ export const MainContentC = decorate(
                   )) : (loading ? (
                     <div>Finding your post....</div>
                   ) : (
-                      <div>Post appears to not exist. It might have been deleted.</div>
+                      <div>Post appears to not exist. It might have been deleted. <a href="#" onClick={() => goTo(urls.root)}>Click here to go back to the main-page</a></div>
                     ))
               }
             />

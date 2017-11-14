@@ -87,7 +87,12 @@ export const myFetch = (url: string, method: string = 'GET', body?: {}) => {
     method: method,
     headers: headers,
     body: JSON.stringify(body)
-  }).then(res => res.json())
+  }).then(res => {
+    if (res.status !== 200) {
+      throw new Error(`${res.status}, ${res.statusText}`)
+    }
+    return res.json()
+  })
 }
 
 type voteOption = 'upVote' | 'downVote'
@@ -122,7 +127,7 @@ export const PostAPI = {
   },
   edit: (post: APIPostI) => (
     myFetch(
-      `posts/${post.id}`,
+      `posts/ ${post.id}`,
       'PUT',
       { title: post.title, body: post.body }
     )
@@ -150,7 +155,7 @@ export const CommentAPI = {
   ) => myFetch(`comments/${id}`, 'POST', { option }),
   edit: (comment: APICommentI) => (
     myFetch(
-      `comments/${comment.id}`,
+      `comments/ ${comment.id}`,
       'PUT',
       { body: comment.body, timestamp: Date.now() }
     )
