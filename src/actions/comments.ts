@@ -93,7 +93,7 @@ export const fetchComments = (postID: string) => ((dispatch: Dispatch<APIComment
 )
 export function verifyOkToSubmitComment(comment: APICommentSendNewI) {
   const { author, body } = comment
-  if (!(author && body)) {
+  if (!(author.trim() && body.trim())) {
     return false
   }
   // Other checks should be put here. redux-form could be used.

@@ -56,20 +56,29 @@ export const styles = (theme: typeof myTheme): StyleRules => ({
   pullRight: {
     float: 'right',
   },
+  itemIcon: {
+    position: 'absolute',
+    top: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   commentCountBadge: {
-    marginBottom: 9,
+    marginTop: 10,
     '& span': {
       backgroundColor: blue[800],
       color: theme.palette.common.fullWhite
     }
   },
   voteScoreBadgePositive: {
+    display: 'block',
     '& span': {
       backgroundColor: green[400],
       color: theme.palette.common.fullWhite
     },
   },
   voteScoreBadgeNegative: {
+    display: 'block',
     '& span': {
       backgroundColor: red[400],
       color: theme.palette.common.fullWhite

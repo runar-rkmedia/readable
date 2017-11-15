@@ -37,6 +37,7 @@
     "redux-storage-engine-localstorage": "^1.1.4",
     "redux-thunk": "^2.2.0",
     "remove-markdown": "^0.2.2",
+    "seedrandom": "^2.4.3",
     "typed-react-markdown": "^0.1.0",
     "typeface-roboto": "^0.0.43",
     "uuid": "^3.1.0"

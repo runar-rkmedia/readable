@@ -39,7 +39,7 @@ const DelEditVoteC = decorate(
       const { post, comment } = this.props
       return (<Voter {...{ post, comment }} />)
     }
-    handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    handleClick = (event: React.MouseEvent<any>) => {
       this.setState({ menuOpen: true, anchorElement: event.currentTarget })
     }
     handleRequestClose = (action?: () => void) => {

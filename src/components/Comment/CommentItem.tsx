@@ -3,7 +3,7 @@ import * as moment from 'moment'
 import { APICommentI } from 'interfaces'
 import decorate, { WithStyles } from 'style'
 import { FormHandler, FormHandlerType } from 'containers/'
-import { DelEditVote } from 'components/'
+import { DelEditVote, AuthorInitials } from 'components/'
 import { initialComment } from 'utils'
 import * as ReactMarkdown from 'react-markdown'
 
@@ -22,10 +22,11 @@ export const CommentItem = decorate(
       return (
         <div className={classes.comment}>
           <div className={classes.commentHeader}>
-            <span>
+            <div>
+              <AuthorInitials author={author}/>
               <span className={classes.authorName}>{author}</span>
               <span className={classes.commentTime}>{moment(timestamp).calendar()}</span>
-            </span>
+            </div>
             <DelEditVote comment={comment} editAction={() => onToggleEdit(comment)} />
           </div>
           {editingComment ? (

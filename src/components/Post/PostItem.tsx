@@ -12,7 +12,7 @@ import {
 } from 'material-ui/List'
 import { mapCatagory } from 'store/mapper'
 import { urls } from 'utils/'
-import { DelEditVote } from 'components'
+import { DelEditVote, AuthorInitials } from 'components'
 import * as moment from 'moment'
 import Badge from 'material-ui/Badge'
 import { APIPostI } from 'interfaces'
@@ -30,19 +30,28 @@ const PostItemC = decorate<ExtendedProps>((props) => {
      title, body, author, timestamp, category, commentCount, voteScore } = props.post
   const { classes, post, showCategory } = props
   return (
-    <ListItem button={true} onClick={() => props.goTo(urls.viewPost(props.post))}>
-      <ListItemIcon>
+    <ListItem
+      style={{ minHeight: 100 }}
+      button={true}
+      onClick={() => props.goTo(urls.viewPost(props.post))}
+    >
+      <ListItemIcon className={classes.itemIcon}>
         <div >
-          {commentCount ? (
-            <Badge
-              className={classes.commentCountBadge}
-              badgeContent={commentCount}
-              color="default"
-            ><MailIcon />
-            </Badge>
-          ) : (
-              <MailIcon />
-            )}
+          <AuthorInitials author={author} />
+          <div
+            style={{marginBottom: 9, display: 'block'}}
+          >
+            {commentCount ? (
+              <Badge
+                className={classes.commentCountBadge}
+                badgeContent={commentCount}
+                color="default"
+              ><MailIcon />
+              </Badge>
+            ) : (
+                <MailIcon />
+              )}
+          </div>
           <Badge
             badgeContent={voteScore}
             className={
@@ -53,7 +62,7 @@ const PostItemC = decorate<ExtendedProps>((props) => {
           </Badge>
         </div>
       </ListItemIcon>
-      <div style={{ width: '100%' }}>
+      <div style={{ width: '100%', marginLeft: 48 }}>
         <Typography type="subheading" >{title}</Typography>
         <Typography color="secondary" type="body1">
           by <strong>{author}</strong>

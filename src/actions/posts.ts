@@ -99,7 +99,7 @@ export const fetchSinglePost = (postID: string) => ((dispatch: Dispatch<APIPostI
 )
 export function verifyOkToSubmitPost(post: APIPostSendNewI) {
   const { author, title, body } = post
-  if (!(author && title && body)) {
+  if (!(author.trim() && title.trim() && body.trim())) {
     return false
   }
   // Other checks should be put here. redux-form could be used.

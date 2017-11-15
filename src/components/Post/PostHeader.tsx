@@ -4,7 +4,7 @@ import ThumbsUpDown from 'material-ui-icons/ThumbsUpDown'
 import Badge from 'material-ui/Badge'
 import * as moment from 'moment'
 import { APIPostI } from 'interfaces'
-import { DelEditVote } from 'components'
+import { DelEditVote, AuthorInitials } from 'components'
 import decorate, { WithStyles } from 'style'
 const classNames = require('classnames')
 
@@ -22,7 +22,8 @@ export const PostHeader = decorate(
         <div>
           <Badge
             badgeContent={voteScore}
-            className={classNames(classes.pullRight,
+            className={classNames(
+              classes.pullRight,
               voteScore >= 0 ? classes.voteScoreBadgePositive
                 : classes.voteScoreBadgeNegative)}
             color="default"
@@ -32,9 +33,10 @@ export const PostHeader = decorate(
             {title}
           </Typography>
           <Typography type="subheading" color="inherit" className={classes.postDetails}>
-            <span>by {author}. {date}</span>
+            <span><AuthorInitials author={author}/>by {author}. {date}</span>
           </Typography>
           <DelEditVote
+            className={classes.pullRight}
             post={post}
             styleName={classes.pullRightz}
             noBreakPoint={true}

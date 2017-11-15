@@ -45,25 +45,25 @@ export const SortablePostListC = decorate(
         menuOpen: false,
       }
     }
-    handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    handleClick = (event: React.MouseEvent<any>) => {
       this.setState({ menuOpen: true, anchorElement: event.currentTarget })
     }
 
     handleRequestClose = (selectedSort: string = this.props.sortBy) => {
       this.props.saveSortby(selectedSort)
-      this.setState({menuOpen: false})
+      this.setState({ menuOpen: false })
     }
     toggleOrder(order: orderType = (this.props.sortOrder * -1 as orderType)) {
       this.props.saveSortOrder(order)
     }
     render() {
-        if (!this.props.posts.length) {
-          return (
-            <Typography type="subheading">
-              There doesn't seem to be any posts in this category yet. Why don't you create one?
+      if (!this.props.posts.length) {
+        return (
+          <Typography type="subheading">
+            There doesn't seem to be any posts in this category yet. Why don't you create one?
             </Typography>
-          )
-        }
+        )
+      }
       const { posts, classes, sortOrder, sortBy } = this.props
       const { menuOpen, anchorElement } = this.state
       return (

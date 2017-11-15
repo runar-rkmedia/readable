@@ -111,7 +111,14 @@ export const MainContentC = decorate(
                   )) : (loading ? (
                     <div>Finding your post....</div>
                   ) : (
-                      <div>Post appears to not exist. It might have been deleted. <a href="#" onClick={() => goTo(urls.root)}>Click here to go back to the main-page</a></div>
+                      <div>
+                        Post appears to not exist. It might have been deleted. <a
+                          href="#"
+                          onClick={() => goTo(urls.root)}
+                        >
+                          Click here to go back to the main-page
+                        </a>
+                      </div>
                     ))
               }
             />
@@ -121,8 +128,10 @@ export const MainContentC = decorate(
               path="/category/"
               render={() => (this.checkCorrectPath(
                 <div>
-                  <SortablePostList posts={posts
-                    .filter(post => post.category === category.id)} />
+                  <SortablePostList
+                    posts={posts
+                    .filter(post => post.category === category.id)}
+                  />
                   <Button
                     fab={true}
                     color="primary"
@@ -134,7 +143,7 @@ export const MainContentC = decorate(
                   </Button>
                 </div>
               ))}
-            />
+          />
             <Route
               exact={true}
               path="/"

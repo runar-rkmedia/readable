@@ -78,7 +78,7 @@ export const CommentsC = decorate(
         <div>
           <Paper className={classNames(classes.formRoot, classes.commentsPaper, classes)} elevation={2}>
             {loading && (<CircularProgress className={classes.pullRight}/>)}
-            <Typography type="title">
+            <Typography type="title" gutterBottom={true}>
               {(!!post.commentCount || !!comments.length) ?
                 'Comments to this post:' : 'Be the very first to post a comment to this post.'}
             </Typography>

@@ -84,7 +84,7 @@ class FormHandlerC extends React.Component<postform, State> {
   handleFormChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value
     const maxLength = formMaxLengths[prop]
-    if (maxLength && value.length > maxLength) {
+    if (maxLength && value.trim.length > maxLength) {
       value = value.substring(0, formMaxLengths[prop])
     }
     if (this.isPost()) {
