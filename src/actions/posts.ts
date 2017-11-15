@@ -2,31 +2,7 @@ import { Dispatch } from 'react-redux'
 import { APIPostI, APIPostSendNewI } from 'interfaces'
 import { PostAPI, urls } from 'utils'
 import { push } from 'react-router-redux'
-import { setAuthor } from './'
-
-export const enum PostActions {
-  FETCH = 'POST_FETCH',
-  RECIEVE = 'POST_RECIEVE',
-  RECIEVEAFTERSEND = 'POST_RECIEVEAFTERSEND',
-  RECIEVEAFTERDELETE = 'POST_RECIEVEAFTERDELETE',
-  ERROR = 'POST_ERROR',
-  LOADING = 'POST_LOADING',
-  SENDING = 'POST_SENDING',
-  VOTING = 'POST_VOTING',
-  ADD = 'POST_ADD',
-  VOTE = 'POST_VOTE',
-}
-export type PostActionType =
-  { type: PostActions.FETCH } |
-  { type: PostActions.RECIEVE, posts: APIPostI[] } |
-  { type: PostActions.RECIEVEAFTERSEND, post: APIPostI } |
-  { type: PostActions.RECIEVEAFTERDELETE, post: APIPostI } |
-  { type: PostActions.ERROR, hasError: boolean, error: string } |
-  { type: PostActions.LOADING, loading: boolean } |
-  { type: PostActions.SENDING, sending: boolean } |
-  { type: PostActions.VOTING, isVoting: boolean } |
-  { type: PostActions.VOTE, isUpVote: boolean } |
-  { type: PostActions.ADD, post: APIPostI }
+import { setAuthor, PostActions, PostActionType } from './'
 
 export const recievePosts = (posts: APIPostI[]): PostActionType => {
   return {

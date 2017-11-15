@@ -1,18 +1,7 @@
 import { Dispatch } from 'react-redux'
 import { CategoryI } from 'interfaces'
 import { CategoryAPI, APICategoriesI } from 'utils'
-
-export const enum CategoriesActions {
-  FETCH = 'CATEGORIES_FETCH',
-  RECIEVE = 'CATEGORIES_RECIEVE',
-  ERROR = 'CATEGORIES_ERROR',
-  LOADING = 'CATEGORIES_LOADING',
-}
-export type CategoriesActionType =
-  { type: CategoriesActions.FETCH } |
-  { type: CategoriesActions.RECIEVE, categories: APICategoriesI[] } |
-  { type: CategoriesActions.ERROR, hasError: boolean, error: string } |
-  { type: CategoriesActions.LOADING, loading: boolean }
+import { CategoriesActions, CategoriesActionType } from './'
 
 export const recieveCategories = (categories: APICategoriesI[]): CategoriesActionType => {
   return {

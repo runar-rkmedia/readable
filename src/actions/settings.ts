@@ -1,12 +1,4 @@
-export const enum SettingsActions {
-  SETAUTHOR = 'SETTINGS_SETAUTHOR',
-  SETSORTBY = 'SETTINGS_SORTBY',
-  SETSORTORDER = 'SETTINGS_SORTORDER',
-}
-export type SettingsActionType =
-  { type: SettingsActions.SETAUTHOR, author: string } |
-  { type: SettingsActions.SETSORTORDER, order: 1 | -1 } |
-  { type: SettingsActions.SETSORTBY, sortBy: string }
+import { SettingsActionType, SettingsActions } from './'
 
 export const setAuthor = (author: string): SettingsActionType => {
   return {

@@ -4,33 +4,7 @@ import {
   APICommentSendNewI
 } from 'interfaces'
 import { CommentAPI } from 'utils/ReadableAPI'
-import { setAuthor } from './'
-
-export const enum CommentActions {
-  FETCH = 'COMMENT_FETCH',
-  RECIEVE = 'COMMENT_RECIEVE',
-  RECIEVEAFTERSEND = 'COMMENT_RECIEVEAFTERSEND',
-  RECIEVEAFTERDELETE = 'COMMENT_RECIEVEAFTERDELETE',
-  ERROR = 'COMMENT_ERROR',
-  LOADING = 'COMMENT_LOADING',
-  SENDING = 'COMMENT_SENDING',
-  VOTING = 'COMMENT_VOTING',
-  ADD = 'COMMENT_ADD',
-  EDIT = 'COMMENT_EDIT',
-  VOTE = 'COMMENT_VOTE',
-}
-export type CommentActionType =
-  { type: CommentActions.FETCH } |
-  { type: CommentActions.RECIEVE, comments: APICommentI[] } |
-  { type: CommentActions.RECIEVEAFTERSEND, comment: APICommentI } |
-  { type: CommentActions.RECIEVEAFTERDELETE, comment: APICommentI } |
-  { type: CommentActions.ERROR, hasError: boolean, error: string } |
-  { type: CommentActions.LOADING, loading: boolean } |
-  { type: CommentActions.SENDING, sending: boolean } |
-  { type: CommentActions.VOTING, isVoting: boolean } |
-  { type: CommentActions.VOTE, isUpVote: boolean } |
-  { type: CommentActions.ADD, comment: APICommentI } |
-  { type: CommentActions.EDIT, comment: APICommentI }
+import { setAuthor, CommentActions, CommentActionType } from './'
 
 export const recieveComments = (comments: APICommentI[]): CommentActionType => {
   return {
