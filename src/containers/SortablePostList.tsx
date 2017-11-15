@@ -130,8 +130,7 @@ interface MappedProps extends Props {
   sortBy: string
   sortOrder: orderType
 }
-const mapStateToProps = (state: StoreStateI, ownprops: any) => {
-  const { settings } = state
+const mapStateToProps = ({ settings }: StoreStateI, ownprops: any) => {
   return {
     sortBy: settings.sortBy,
     sortOrder: settings.order,

@@ -119,8 +119,7 @@ interface MappedProps {
   comments: APICommentI[]
   loading: boolean
 }
-const mapStateToProps = (state: StoreStateI, ownprops: any) => {
-  const { comments } = state
+const mapStateToProps = ({ comments }: StoreStateI, ownprops: any) => {
   return {
     loading: comments.loading,
     comments: Object.keys(comments.items).map(

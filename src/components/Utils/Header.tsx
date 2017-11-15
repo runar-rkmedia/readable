@@ -44,8 +44,7 @@ const HeaderC = decorate<Props & SidebarMappedProps & DispatchProps>((props) => 
 interface SidebarMappedProps {
   loading: boolean
 }
-const mapStateToProps = (state: StoreStateI, ownprops: any) => {
-  const { categories, posts } = state
+const mapStateToProps = ({ categories, posts }: StoreStateI, ownprops: any) => {
   return {
     postIsSending: posts.sending,
     loading: posts.loading || categories.loading || posts.sending,

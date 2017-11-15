@@ -66,8 +66,7 @@ interface PropsMappedI {
   postsHasError: boolean,
   postsErrorMsg: string,
 }
-const mapStateToProps = (state: StoreStateI, ownprops: any) => {
-  const { categories, posts } = state
+const mapStateToProps = ({ categories, posts }: StoreStateI, ownprops: any) => {
   return {
     loading: categories.loading,
     categoriesHasError: categories.hasError,

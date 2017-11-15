@@ -54,9 +54,9 @@ export const VoterC = decorate<ExtendedProps>((props) => {
 interface MappedProps {
   isVoting: boolean
 }
-const mapStateToProps = (state: StoreStateI, ownprops: any) => {
+const mapStateToProps = ({ comments }: StoreStateI, ownprops: any) => {
   return {
-    isVoting: state.comments.isVoting,
+    isVoting: comments.isVoting,
     ...ownprops
   }
 }

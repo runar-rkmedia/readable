@@ -168,8 +168,7 @@ interface SidebarMappedProps extends Props {
   categoriesAreloading: boolean
   loading: boolean
 }
-const mapStateToProps = (state: StoreStateI, ownprops: any) => {
-  const { categories, router, posts } = state
+const mapStateToProps = ({ categories, router, posts }: StoreStateI, ownprops: any) => {
   return {
     posts: Object.keys(posts.items).map(key => posts.items[key]),
     postsHash: posts.items,
