@@ -31,7 +31,7 @@ const PostItemC = decorate<ExtendedProps>((props) => {
   const { classes, post, showCategory } = props
   return (
     <ListItem
-      style={{ minHeight: 100 }}
+      style={{ minHeight: 110 }}
       button={true}
       onClick={() => props.goTo(urls.viewPost(props.post))}
     >
